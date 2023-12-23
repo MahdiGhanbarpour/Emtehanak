@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">سنجشگر</string>
+    <string name="enter_num_for_login">برای ورود یا ثبت نام، شماره تلفن همراه خود را وارد نمایید.</string>
+    <string name="app_logo">لوگو اپلیکیشن</string>
+</resources>

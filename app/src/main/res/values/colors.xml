@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="black_light">#161616</color>
+    <color name="black_transparent_65_percent">#A6000000</color>
+
+    <color name="gray">#787878</color>
+    <color name="gray_light">#E6E6E6</color>
+    <color name="gray_sightly_light">#A5A5A5</color>
+    <color name="gray_dark">#6E6E6E</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_dark">#F8F8F8</color>
+    <color name="white_very_dark">#F0F0F0</color>
+    <color name="white_transparent_50_percent">#80FFFFFF</color>
+    <color name="white_transparent_65_percent">#A6FFFFFF</color>
+
+    <color name="blue">#674dc4</color>
+    <color name="blue_light">#d0e7fa</color>
+    <color name="blue_very_light">#7fbaf1</color>
+    <color name="blue_dark">#1c83e6</color>
+    <color name="blue_transparent">#337FBAF1</color>
+    <color name="blue_transparent_50_percent">#80499CEB</color>
+
+    <color name="orange">#ec9d52</color>
+
+    <color name="green">#2ACF31</color>
+
+    <color name="red">#FF6054</color>
+
+    <color name="bottom_nav_item_color">#292D32</color>
+
+    <color name="transparent_color_0_percent">#00000000</color>
+    <color name="transparent_color_5_percent">#0D000000</color>
+    <color name="transparent_color_30_percent">#4D000000</color>
+
+    <color name="ic_launcher_background">#FFFFFF</color>
+</resources>
