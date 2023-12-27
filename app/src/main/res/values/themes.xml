@@ -16,4 +16,8 @@
     </style>
 
     <style name="Theme.KhwarazmiApp" parent="Base.Theme.KhwarazmiApp" />
+
+    <style name="TextInputLayoutPlaceHolderTextTheme" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textSize">13sp</item>
+    </style>
 </resources>

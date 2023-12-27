@@ -1,5 +1,12 @@
 <resources>
-    <string name="app_name">سنجشگر</string>
+    <string name="app_name">امتحانک</string>
     <string name="enter_num_for_login">برای ورود یا ثبت نام، شماره تلفن همراه خود را وارد نمایید.</string>
     <string name="app_logo">لوگو اپلیکیشن</string>
+    <string name="student_phone_number">شماره تلفن همراه دانش آموز</string>
+    <string name="student">دانش آموز</string>
+    <string name="teacher">دبیر</string>
+    <string name="your_entry_means_acceptance">ورود شما به معنای پذیرش</string>
+    <string name="terms_and_conditions">قوانین و مقررات</string>
+    <string name="is">است</string>
+    <string name="continue_to">ادامه</string>
 </resources>
