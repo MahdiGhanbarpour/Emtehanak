@@ -18,6 +18,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivHelpLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:contentDescription="@string/help"
+        android:focusable="true"
+        android:padding="2dp"
+        android:src="@drawable/ic_help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/blue" />
+
     <TextView
         android:id="@+id/tvEnterNumForLogin"
         android:layout_width="match_parent"
@@ -81,7 +96,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etLayoutNumLogin"
-        style="@style/TextInputLayoutPlaceHolderTextTheme"
+        style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="36dp"
@@ -132,6 +147,9 @@
             android:id="@+id/tvAcceptanceTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
             android:paddingHorizontal="2dp"
             android:text="@string/terms_and_conditions"
             android:textColor="@color/blue"

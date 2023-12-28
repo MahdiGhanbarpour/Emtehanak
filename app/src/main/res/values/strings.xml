@@ -9,4 +9,10 @@
     <string name="terms_and_conditions">قوانین و مقررات</string>
     <string name="is">است</string>
     <string name="continue_to">ادامه</string>
+    <string name="help">راهنمایی</string>
+    <string name="cancel">انصراف</string>
+    <string name="contact_support">ارتباط با پشتیبانی</string>
+    <string name="frequently_questions">سوالات متداول</string>
+    <string name="our_team_is_ready_to_help_you">تیم ما آماده کمک رسانی به شما است</string>
+    <string name="what_is_the_problem">چه مشکلی پیش آمده ؟</string>
 </resources>

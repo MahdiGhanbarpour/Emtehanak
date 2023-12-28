@@ -9,6 +9,8 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
+    private val helpBottomSheet = HelpBottomSheet()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -29,8 +31,12 @@ class LoginActivity : AppCompatActivity() {
             binding.etLayoutNumLogin.hint = when (id) {
                 R.id.radioBtStudent -> "شماره تلفن همراه دانش آموز"
                 R.id.radioBtTeacher -> "شماره تلفن همراه دبیر"
-                else -> "شماره تلفن"
+                else -> "شماره تلفن همراه"
             }
+        }
+        binding.ivHelpLogin.setOnClickListener {
+            //Display Help Bottom Sheet
+            helpBottomSheet.show(supportFragmentManager, null)
         }
     }
 
