@@ -1,13 +1,17 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var navController: NavController
 
     private val helpBottomSheet = HelpBottomSheet()
 
@@ -16,40 +20,39 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Apply focus on the Text Input Layout
-        binding.etLayoutNumLogin.requestFocus()
+        navController =
+            (binding.fragmentContainerView.getFragment<NavHostFragment>()).findNavController()
 
         listener()
     }
 
     private fun listener() {
         binding.btContinueLogin.setOnClickListener {
-            checkInput()
-        }
-        binding.radioGroupRole.setOnCheckedChangeListener { _, id ->
-            // Change the Text Input Layout hint based on the user's selected role
-            binding.etLayoutNumLogin.hint = when (id) {
-                R.id.radioBtStudent -> "شماره تلفن همراه دانش آموز"
-                R.id.radioBtTeacher -> "شماره تلفن همراه دبیر"
-                else -> "شماره تلفن همراه"
+
+            // Check which page is being displayed
+            if (navController.currentDestination?.label == "fragment_login_main") {
+
+                // Accessing the checkInput function inside the LoginMainFragment
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+                val loginMainFragment =
+                    navHostFragment.childFragmentManager.fragments.firstOrNull { it is LoginMainFragment } as? LoginMainFragment
+                loginMainFragment?.checkInput()
+            } else if (navController.currentDestination?.label == "fragment_login_otp") {
+
+                // Accessing the checkInput function inside the LoginOtpFragment
+                val navHostFragment =
+                    supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+                val loginOtpFragment =
+                    navHostFragment.childFragmentManager.fragments.firstOrNull { it is LoginOtpFragment } as? LoginOtpFragment
+                loginOtpFragment?.checkOtpCode()
             }
         }
         binding.ivHelpLogin.setOnClickListener {
-            //Display Help Bottom Sheet
-            helpBottomSheet.show(supportFragmentManager, null)
-        }
-    }
-
-    // Checking the validity of the entered phone number
-    private fun checkInput() {
-        val enteredNum = binding.etNumLogin.text.toString()
-
-        if (enteredNum.length != 11) {
-            binding.etLayoutNumLogin.error = "شماره تلفن همراه معتبر نیست"
-        } else if (!enteredNum.startsWith("09")) {
-            binding.etLayoutNumLogin.error = "شماره تلفن همراه می بایست با 09 اغاز شود"
-        } else {
-            binding.etLayoutNumLogin.error = null
+            if (!helpBottomSheet.isVisible) {
+                //Display Help Bottom Sheet
+                helpBottomSheet.show(supportFragmentManager, null)
+            }
         }
     }
 }

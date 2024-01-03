@@ -33,99 +33,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/blue" />
 
-    <TextView
-        android:id="@+id/tvEnterNumForLogin"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:text="@string/enter_num_for_login"
-        android:textAlignment="center"
-        android:textColor="@color/black_light"
-        android:textSize="17sp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/btContinueLogin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
-
-    <RadioGroup
-        android:id="@+id/radioGroupRole"
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="56dp"
-        android:background="@drawable/shape_role_radio_button_background"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="2dp"
-        android:weightSum="2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEnterNumForLogin">
-
-        <RadioButton
-            android:id="@+id/radioBtStudent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_role_radio_button_background"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="@string/student"
-            android:textColor="@drawable/selector_role_radio_button"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/radioBtTeacher"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/selector_role_radio_button_background"
-            android:button="@null"
-            android:checked="false"
-            android:gravity="center"
-            android:paddingHorizontal="8dp"
-            android:text="@string/teacher"
-            android:textColor="@drawable/selector_role_radio_button"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-    </RadioGroup>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/etLayoutNumLogin"
-        style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"
-        android:layout_marginTop="12dp"
-        android:hint="@string/student_phone_number"
-        app:boxCornerRadiusBottomEnd="9dp"
-        app:boxCornerRadiusBottomStart="9dp"
-        app:boxCornerRadiusTopEnd="9dp"
-        app:boxCornerRadiusTopStart="9dp"
-        app:boxStrokeWidth="1.5dp"
-        app:errorEnabled="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupRole"
-        app:placeholderText="مثلا : 09123456789"
-        app:startIconDrawable="@drawable/ic_phone">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etNumLogin"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:inputType="phone"
-            android:maxLength="11"
-            android:maxLines="1"
-            android:paddingVertical="2dp"
-            android:textColorHighlight="#33674DC4"
-            android:textSize="14sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:navGraph="@navigation/nav_login" />
 
     <LinearLayout
         android:id="@+id/linearLayoutAcceptanceTerms"
@@ -169,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="36dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="2dp"
         android:outlineProvider="none"
         android:text="@string/continue_to"
         app:cornerRadius="9dp"

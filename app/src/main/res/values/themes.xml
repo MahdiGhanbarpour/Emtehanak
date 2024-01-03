@@ -13,6 +13,7 @@
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/iran_sans</item>
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
+        <item name="android:textColorHighlight">@color/text_highlight_color</item>
     </style>
 
     <style name="Theme.KhwarazmiApp" parent="Base.Theme.KhwarazmiApp" />
