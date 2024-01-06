@@ -22,5 +22,18 @@
         android:id="@+id/loginOtpFragment"
         android:name="ir.mahdighanbarpour.khwarazmiapp.features.loginScreen.LoginOtpFragment"
         android:label="fragment_login_otp"
-        tools:layout="@layout/fragment_login_otp" />
+        tools:layout="@layout/fragment_login_otp" >
+
+        <action
+            android:id="@+id/action_loginOtpFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="ir.mahdighanbarpour.khwarazmiapp.features.regScreen.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+
 </navigation>

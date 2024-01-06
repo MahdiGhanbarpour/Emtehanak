@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
@@ -21,6 +23,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 class LoginOtpFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginOtpBinding
+    private lateinit var navController: NavController
 
     private var editTextsList: ArrayList<EditText> = arrayListOf()
 
@@ -37,6 +40,8 @@ class LoginOtpFragment : Fragment() {
         editTextsList = arrayListOf(
             binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
         )
+
+        navController = Navigation.findNavController(view)
 
         listener()
     }
@@ -130,6 +135,10 @@ class LoginOtpFragment : Fragment() {
             makeShortToast(requireContext(), "کد وارد شده معتبر نیست")
         } else {
             changeEditTextsColor(R.color.blue)
+
+            navController.navigate(
+                R.id.action_loginOtpFragment_to_registerFragment
+            )
         }
     }
 

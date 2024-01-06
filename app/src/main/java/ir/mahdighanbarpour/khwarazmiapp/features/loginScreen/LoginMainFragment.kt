@@ -34,7 +34,7 @@ class LoginMainFragment : Fragment() {
     }
 
     private fun listener() {
-        binding.radioGroupRole.setOnCheckedChangeListener { _, id ->
+        binding.radioGroupRoleLogin.radioGroupRole.setOnCheckedChangeListener { _, id ->
 
             // Change the Text Input Layout hint based on the user's selected role
             binding.etLayoutNumLogin.hint = when (id) {
