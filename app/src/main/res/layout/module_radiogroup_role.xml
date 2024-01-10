@@ -20,7 +20,7 @@
         android:gravity="center"
         android:paddingHorizontal="8dp"
         android:text="@string/student"
-        android:textColor="@drawable/selector_role_radio_button"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold" />
 
@@ -35,7 +35,7 @@
         android:gravity="center"
         android:paddingHorizontal="8dp"
         android:text="@string/teacher"
-        android:textColor="@drawable/selector_role_radio_button"
+        android:textColor="@color/blue"
         android:textSize="14sp"
         android:textStyle="bold" />
 

@@ -38,4 +38,16 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="test" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/teacher_color</item>
+        <item name="android:textColorHint">@color/teacher_color</item>
+        <item name="hintAnimationEnabled">true</item>
+    </style>
+
+    <style name="test2" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/blue</item>
+        <item name="android:textColorHint">@color/blue</item>
+        <item name="hintAnimationEnabled">true</item>
+    </style>
+
 </resources>

@@ -2,12 +2,15 @@ package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.regScreen.RegisterFragment
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 
 class LoginActivity : AppCompatActivity() {
 
@@ -15,6 +18,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var navController: NavController
 
     private val helpBottomSheet = HelpBottomSheet()
+
+    var selectedRole = STUDENT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,7 @@ class LoginActivity : AppCompatActivity() {
                     loginMainFragment?.checkInput()
 
                 }
+
                 "fragment_login_otp" -> {
 
                     // Accessing the checkInput function inside the LoginOtpFragment
@@ -52,6 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     loginOtpFragment?.checkOtpCode()
 
                 }
+
                 "fragment_register" -> {
 
                     // Accessing the checkInputs function inside the RegisterFragment
@@ -65,9 +72,28 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.ivHelpLogin.setOnClickListener {
             if (!helpBottomSheet.isVisible) {
+                val bundle = Bundle()
+                bundle.putString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY, selectedRole)
+
                 //Display Help Bottom Sheet
                 helpBottomSheet.show(supportFragmentManager, null)
+                helpBottomSheet.arguments = bundle
             }
         }
+    }
+
+    fun changeAppColor(color: Int) {
+        binding.btContinueLogin.setBackgroundColor(
+            ContextCompat.getColor(this, color)
+        )
+
+        binding.ivLogo.setColorFilter(
+            ContextCompat.getColor(this, color), android.graphics.PorterDuff.Mode.SRC_IN
+        )
+        binding.ivHelpLogin.setColorFilter(
+            ContextCompat.getColor(this, color), android.graphics.PorterDuff.Mode.SRC_IN
+        )
+
+        binding.tvAcceptanceTerms.setTextColor(ContextCompat.getColor(this, color))
     }
 }

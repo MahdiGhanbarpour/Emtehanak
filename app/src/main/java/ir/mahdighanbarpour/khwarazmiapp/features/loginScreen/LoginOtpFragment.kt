@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,20 +18,27 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
-
 
 class LoginOtpFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginOtpBinding
     private lateinit var navController: NavController
+    private lateinit var selectedRole: String
 
     private var editTextsList: ArrayList<EditText> = arrayListOf()
+
+    private var secondEtIsDelClicked = false
+    private var thirdEtIsDelClicked = false
+    private var fourthEtIsDelClicked = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginOtpBinding.inflate(layoutInflater, container, false)
+        binding = FragmentLoginOtpBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -41,8 +49,11 @@ class LoginOtpFragment : Fragment() {
             binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
         )
 
+        selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY)!!
+
         navController = Navigation.findNavController(view)
 
+        setMainData()
         listener()
     }
 
@@ -124,6 +135,81 @@ class LoginOtpFragment : Fragment() {
             ) {
             }
         })
+        binding.etFirstOtp.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode != KeyEvent.KEYCODE_DEL) {
+                if (binding.etFirstOtp.text.isEmpty()) {
+                    return@setOnKeyListener false
+                } else {
+                    binding.etSecondOtp.requestFocus()
+                    return@setOnKeyListener false
+                }
+            } else {
+                return@setOnKeyListener false
+            }
+        }
+        binding.etSecondOtp.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_DEL) {
+                if (binding.etSecondOtp.text.isEmpty()) {
+                    secondEtIsDelClicked = if (secondEtIsDelClicked) {
+                        binding.etFirstOtp.requestFocus()
+                        false
+                    } else {
+                        true
+                    }
+                }
+                return@setOnKeyListener false
+            } else {
+                if (binding.etSecondOtp.text.length != 1) {
+                    return@setOnKeyListener false
+                } else {
+                    binding.etThirdOtp.requestFocus()
+                    return@setOnKeyListener true
+                }
+            }
+        }
+        binding.etThirdOtp.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_DEL) {
+                if (binding.etThirdOtp.text.isEmpty()) {
+                    thirdEtIsDelClicked = if (thirdEtIsDelClicked) {
+                        binding.etSecondOtp.requestFocus()
+                        false
+                    } else {
+                        true
+                    }
+                }
+                return@setOnKeyListener false
+            } else {
+                if (binding.etThirdOtp.text.length != 1) {
+                    return@setOnKeyListener false
+                } else {
+                    binding.etFourthOtp.requestFocus()
+                    return@setOnKeyListener true
+                }
+            }
+        }
+        binding.etFourthOtp.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_DEL) {
+                if (binding.etFourthOtp.text.isEmpty()) {
+                    fourthEtIsDelClicked = if (fourthEtIsDelClicked) {
+                        binding.etThirdOtp.requestFocus()
+                        false
+                    } else {
+                        true
+                    }
+                }
+                return@setOnKeyListener false
+            } else {
+                return@setOnKeyListener false
+            }
+        }
+    }
+
+    private fun setMainData() {
+        if (selectedRole == STUDENT) {
+            changeEditTextsColor(R.color.blue)
+        } else {
+            changeEditTextsColor(R.color.teacher_color)
+        }
     }
 
     fun checkOtpCode() {
@@ -134,10 +220,15 @@ class LoginOtpFragment : Fragment() {
             changeEditTextsColor(R.color.red)
             makeShortToast(requireContext(), "کد وارد شده معتبر نیست")
         } else {
-            changeEditTextsColor(R.color.blue)
+            changeEditTextsColor(if (selectedRole == STUDENT) R.color.blue else R.color.teacher_color)
+
+            val roleBundle = Bundle()
+            roleBundle.putString(
+                SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
+            )
 
             navController.navigate(
-                R.id.action_loginOtpFragment_to_registerFragment
+                R.id.action_loginOtpFragment_to_registerFragment, roleBundle
             )
         }
     }
