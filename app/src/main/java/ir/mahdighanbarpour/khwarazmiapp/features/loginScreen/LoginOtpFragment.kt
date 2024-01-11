@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
 
+import android.annotation.SuppressLint
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
@@ -21,7 +22,10 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
+import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import java.util.Timer
+import java.util.TimerTask
 
 class LoginOtpFragment : Fragment() {
 
@@ -29,11 +33,14 @@ class LoginOtpFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var selectedRole: String
 
+    private var timer: Timer? = null
+
     private var editTextsList: ArrayList<EditText> = arrayListOf()
 
     private var secondEtIsDelClicked = false
     private var thirdEtIsDelClicked = false
     private var fourthEtIsDelClicked = false
+    private var otpResendTime = 60
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,10 +60,25 @@ class LoginOtpFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        binding.ivResendOTP.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+            ), android.graphics.PorterDuff.Mode.SRC_IN
+        )
+
         setMainData()
+        otpTimer()
         listener()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        timer?.cancel()
+    }
+
+
+    @SuppressLint("SetTextI18n")
     private fun listener() {
         binding.etFirstOtp.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
@@ -202,6 +224,14 @@ class LoginOtpFragment : Fragment() {
                 return@setOnKeyListener false
             }
         }
+        binding.ivResendOTP.setOnClickListener {
+            binding.tvResendOTP.text = "$otpResendTime ثانیه تا ارسال دوباره"
+            binding.tvResendOTP.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+
+            binding.ivResendOTP.visibility = View.GONE
+
+            otpTimer()
+        }
     }
 
     private fun setMainData() {
@@ -210,6 +240,39 @@ class LoginOtpFragment : Fragment() {
         } else {
             changeEditTextsColor(R.color.teacher_color)
         }
+    }
+
+    private fun otpTimer() {
+        timer = Timer()
+        timer!!.schedule(object : TimerTask() {
+            @SuppressLint("SetTextI18n")
+            override fun run() {
+                requireActivity().runOnUiThread {
+                    otpResendTime--
+                    binding.tvResendOTP.text = "$otpResendTime ثانیه تا ارسال دوباره"
+
+                    if (otpResendTime == 0) {
+                        resendOTP()
+                    }
+                }
+            }
+        }, 1000, 1000)
+    }
+
+    private fun resendOTP() {
+        timer!!.cancel()
+        otpResendTime = 60
+
+        binding.ivResendOTP.visibility = View.VISIBLE
+
+
+        binding.tvResendOTP.text = "ارسال دوباره"
+        binding.tvResendOTP.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+            )
+        )
     }
 
     fun checkOtpCode() {

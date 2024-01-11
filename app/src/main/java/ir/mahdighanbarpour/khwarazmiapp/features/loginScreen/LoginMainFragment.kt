@@ -36,6 +36,17 @@ class LoginMainFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        setSelectedRoleColor(
+            STUDENT,
+            "شماره تلفن همراه دانش آموز",
+            R.color.blue,
+            R.color.blue,
+            R.color.white,
+            R.drawable.shape_role_radio_button_background,
+            R.drawable.selector_role_radio_button_background
+        )
+        binding.radioGroupRoleLogin.radioGroupRole.check(R.id.radioBtStudent)
+
         listener()
     }
 

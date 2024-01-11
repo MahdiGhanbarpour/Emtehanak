@@ -21,6 +21,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayoutResendOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="@+id/tvOTP"
+        app:layout_constraintStart_toStartOf="@+id/tvOTP"
+        app:layout_constraintTop_toBottomOf="@+id/tvOTP">
+
+        <TextView
+            android:id="@+id/tvResendOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="60 ثانیه تا ارسال دوباره" />
+
+        <ImageView
+            android:id="@+id/ivResendOTP"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="2dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/again"
+            android:padding="4dp"
+            android:src="@drawable/ic_refresh"
+            android:visibility="gone"
+            app:tint="@color/gray" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
