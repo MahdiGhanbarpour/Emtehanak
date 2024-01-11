@@ -45,9 +45,8 @@ class LoginMainFragment : Fragment() {
             // Change the Input Layouts hint based on the user's selected role
             when (id) {
                 R.id.radioBtStudent -> {
-                    (requireActivity() as LoginActivity).selectedRole = STUDENT
-
                     setSelectedRoleColor(
+                        STUDENT,
                         "شماره تلفن همراه دانش آموز",
                         R.color.blue,
                         R.color.blue,
@@ -58,9 +57,8 @@ class LoginMainFragment : Fragment() {
                 }
 
                 R.id.radioBtTeacher -> {
-                    (requireActivity() as LoginActivity).selectedRole = TEACHER
-
                     setSelectedRoleColor(
+                        TEACHER,
                         "شماره تلفن همراه دبیر",
                         R.color.teacher_color,
                         R.color.white,
@@ -71,9 +69,8 @@ class LoginMainFragment : Fragment() {
                 }
 
                 else -> {
-                    (requireActivity() as LoginActivity).selectedRole = STUDENT
-
                     setSelectedRoleColor(
+                        STUDENT,
                         "شماره تلفن همراه دانش آموز",
                         R.color.blue,
                         R.color.blue,
@@ -110,6 +107,7 @@ class LoginMainFragment : Fragment() {
     }
 
     private fun setSelectedRoleColor(
+        selectedRole: String,
         hintText: String,
         mainColor: Int,
         btTeacherColor: Int,
@@ -153,6 +151,6 @@ class LoginMainFragment : Fragment() {
             )
         )
 
-        (requireActivity() as LoginActivity).changeAppColor(mainColor)
+        (requireActivity() as LoginActivity).changeAppColor(selectedRole)
     }
 }

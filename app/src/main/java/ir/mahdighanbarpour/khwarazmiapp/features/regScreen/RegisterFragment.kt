@@ -93,7 +93,7 @@ class RegisterFragment : Fragment() {
             when (id) {
                 R.id.radioBtStudent -> {
                     mainColor = R.color.blue
-                    (requireActivity() as LoginActivity).selectedRole = STUDENT
+                    selectedRole = STUDENT
 
                     setSelectedRoleColor(
                         "نام و نام خانوادگی دانش آموز",
@@ -106,7 +106,7 @@ class RegisterFragment : Fragment() {
 
                 R.id.radioBtTeacher -> {
                     mainColor = R.color.teacher_color
-                    (requireActivity() as LoginActivity).selectedRole = TEACHER
+                    selectedRole = TEACHER
 
                     setSelectedRoleColor(
                         "نام و نام خانوادگی دبیر",
@@ -119,7 +119,7 @@ class RegisterFragment : Fragment() {
 
                 else -> {
                     mainColor = R.color.blue
-                    (requireActivity() as LoginActivity).selectedRole = STUDENT
+                    selectedRole = STUDENT
 
                     setSelectedRoleColor(
                         "نام و نام خانوادگی دانش آموز",
@@ -292,6 +292,6 @@ class RegisterFragment : Fragment() {
         binding.etLayoutYearReg.defaultHintTextColor = colorStateList
         binding.etLayoutFullNameReg.defaultHintTextColor = colorStateList
 
-        (requireActivity() as LoginActivity).changeAppColor(mainColor)
+        (requireActivity() as LoginActivity).changeAppColor(selectedRole)
     }
 }

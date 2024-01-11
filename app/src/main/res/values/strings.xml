@@ -11,7 +11,7 @@
     <string name="continue_to">ادامه</string>
     <string name="help">راهنمایی</string>
     <string name="cancel">انصراف</string>
-    <string name="contact_support">ارتباط با پشتیبانی</string>
+    <string name="online_contact_support">ارتباط برخط با پشتیبانی</string>
     <string name="frequently_questions">سوالات متداول</string>
     <string name="our_team_is_ready_to_help_you">تیم ما آماده کمک رسانی به شما است</string>
     <string name="what_is_the_problem">چه مشکلی پیش آمده ؟</string>
@@ -21,4 +21,6 @@
     <string name="year">سال</string>
     <string name="full_name">نام و نام خانوادگی</string>
     <string name="register_to_use_features">برای استفاده از امکانات اپلیکیشن ثبت نام کنید</string>
+    <string name="contact_support">تماس با پشتیبانی</string>
+    <string name="close">بستن</string>
 </resources>
