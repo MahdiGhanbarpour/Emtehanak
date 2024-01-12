@@ -8,7 +8,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
-import ir.mahdighanbarpour.khwarazmiapp.features.regScreen.RegisterFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.teacherRegScreen.TeacherSpecFragment
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
@@ -94,6 +95,13 @@ class LoginActivity : AppCompatActivity() {
                 val registerFragment =
                     navHostFragment.childFragmentManager.fragments.firstOrNull { it is RegisterFragment } as? RegisterFragment
                 registerFragment?.checkInputs()
+            }
+
+            "fragment_teacher_spec" -> {
+                // Accessing the checkInputs function inside the RegisterFragment
+                val teacherRegisterFragment =
+                    navHostFragment.childFragmentManager.fragments.firstOrNull { it is TeacherSpecFragment } as? TeacherSpecFragment
+                teacherRegisterFragment?.checkInputs()
             }
         }
     }

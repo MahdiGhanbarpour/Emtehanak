@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.regScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen
 
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.loginScreen.LoginActivity
@@ -20,6 +22,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
+    private lateinit var navController: NavController
     private lateinit var selectedRole: String
 
     private var mainColor: Int = 0
@@ -50,6 +53,8 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY)!!
+
+        navController = Navigation.findNavController(view)
 
         if (selectedRole == TEACHER) {
             mainColor = R.color.teacher_color
@@ -172,7 +177,11 @@ class RegisterFragment : Fragment() {
         }
 
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk) {
-            makeShortToast(requireContext(), "همه اطلاعات صحیح است")
+            if (selectedRole == TEACHER) {
+                navController.navigate(R.id.action_registerFragment_to_teacherSpecFragment)
+            } else {
+                makeShortToast(requireContext(), "همه اطلاعات صحیح است")
+            }
         }
     }
 

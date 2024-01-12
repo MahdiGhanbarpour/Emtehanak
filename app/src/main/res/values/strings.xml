@@ -16,9 +16,9 @@
     <string name="our_team_is_ready_to_help_you">تیم ما آماده کمک رسانی به شما است</string>
     <string name="what_is_the_problem">چه مشکلی پیش آمده ؟</string>
     <string name="activation_code_sent">کد فعالسازی 4 رقمی به شماره شما ارسال شد</string>
-    <string name="day">روز</string>
-    <string name="month">ماه</string>
-    <string name="year">سال</string>
+    <string name="day">روز تولد</string>
+    <string name="month">ماه تولد</string>
+    <string name="year">سال تولد</string>
     <string name="full_name">نام و نام خانوادگی</string>
     <string name="register_to_use_features">برای استفاده از امکانات اپلیکیشن ثبت نام کنید</string>
     <string name="contact_support">تماس با پشتیبانی</string>
