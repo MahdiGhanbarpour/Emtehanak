@@ -16,7 +16,6 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_OTP
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
-import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FrequentlyQuestionsActivity : AppCompatActivity() {
@@ -100,7 +99,6 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
         )
 
         if (isInternetAvailable(this)) {
-            makeShortToast(this, "گرفتن سوالات متداول از اینترنت")
             loadOfflineData()
             //TODO
         } else {

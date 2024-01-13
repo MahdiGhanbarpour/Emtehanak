@@ -23,12 +23,12 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:contentDescription="@string/back"
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/back"
                 android:padding="4dp"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +36,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|start"

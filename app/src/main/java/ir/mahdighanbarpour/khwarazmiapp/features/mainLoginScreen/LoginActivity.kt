@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.teacherRegScreen.TeacherSpecFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_MAIN
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_OTP
@@ -51,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.ivHelpLogin.setOnClickListener {
             showHelpBottomSheet()
+        }
+        binding.tvAcceptanceTerms.setOnClickListener {
+            val intent = Intent(this, TermsActivity::class.java)
+            startActivity(intent)
         }
     }
 

@@ -231,6 +231,56 @@ class RegisterFragment : Fragment() {
                 }
             }
 
+            "مهر" -> {
+                if (day.toInt() > 30) {
+                    binding.etLayoutDayReg.error = " "
+                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+                    false
+                } else {
+                    true
+                }
+            }
+
+            "آبان" -> {
+                if (day.toInt() > 30) {
+                    binding.etLayoutDayReg.error = " "
+                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+                    false
+                } else {
+                    true
+                }
+            }
+
+            "آذر" -> {
+                if (day.toInt() > 30) {
+                    binding.etLayoutDayReg.error = " "
+                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+                    false
+                } else {
+                    true
+                }
+            }
+
+            "دی" -> {
+                if (day.toInt() > 30) {
+                    binding.etLayoutDayReg.error = " "
+                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+                    false
+                } else {
+                    true
+                }
+            }
+
+            "بهمن" -> {
+                if (day.toInt() > 30) {
+                    binding.etLayoutDayReg.error = " "
+                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+                    false
+                } else {
+                    true
+                }
+            }
+
 
             else -> true
         }
