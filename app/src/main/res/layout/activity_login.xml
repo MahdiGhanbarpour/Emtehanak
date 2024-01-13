@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    tools:context=".features.loginScreen.LoginActivity">
+    tools:context=".features.mainLoginScreen.LoginActivity">
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -90,7 +90,7 @@
         android:layout_marginBottom="2dp"
         android:outlineProvider="none"
         android:text="@string/continue_to"
-        app:cornerRadius="9dp"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toTopOf="@id/linearLayoutAcceptanceTerms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen
 
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginMainBinding
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
@@ -103,14 +104,20 @@ class LoginMainFragment : Fragment() {
         } else if (!enteredNum.startsWith("09")) {
             binding.etLayoutNumLogin.error = "شماره تلفن همراه می‌بایست با 09 اغاز شود"
         } else {
-            val roleBundle = Bundle()
-            roleBundle.putString(
+            val bundle = Bundle()
+
+            bundle.putString(
                 SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY,
                 if (binding.radioGroupRoleLogin.radioBtStudent.isChecked) STUDENT else TEACHER
             )
 
+            bundle.putString(
+                SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY,
+                enteredNum
+            )
+
             navController.navigate(
-                R.id.action_loginMainFragment_to_loginOtpFragment, roleBundle
+                R.id.action_loginMainFragment_to_loginOtpFragment, bundle
             )
 
             binding.etLayoutNumLogin.error = null

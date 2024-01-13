@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +9,14 @@ import androidx.navigation.fragment.findNavController
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.teacherRegScreen.TeacherSpecFragment
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_OTP
+import ir.mahdighanbarpour.khwarazmiapp.utils.REGISTER_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.REGISTER_TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
@@ -44,14 +50,7 @@ class LoginActivity : AppCompatActivity() {
             onContinueButtonClicked()
         }
         binding.ivHelpLogin.setOnClickListener {
-            if (!helpBottomSheet.isVisible) {
-                val bundle = Bundle()
-                bundle.putString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY, selectedRole)
-
-                //Display Help Bottom Sheet
-                helpBottomSheet.show(supportFragmentManager, null)
-                helpBottomSheet.arguments = bundle
-            }
+            showHelpBottomSheet()
         }
     }
 
@@ -103,6 +102,28 @@ class LoginActivity : AppCompatActivity() {
                     navHostFragment.childFragmentManager.fragments.firstOrNull { it is TeacherSpecFragment } as? TeacherSpecFragment
                 teacherRegisterFragment?.checkInputs()
             }
+        }
+    }
+
+    private fun showHelpBottomSheet() {
+        if (!helpBottomSheet.isVisible) {
+            val bundle = Bundle()
+
+            bundle.putString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY, selectedRole)
+            bundle.putString(
+                SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY,
+                when (navController.currentDestination?.label) {
+                    "fragment_login_main" -> LOGIN_MAIN
+                    "fragment_login_otp" -> LOGIN_OTP
+                    "fragment_register" -> REGISTER_MAIN
+                    "fragment_teacher_spec" -> REGISTER_TEACHER
+                    else -> ""
+                }
+            )
+
+            //Display Help Bottom Sheet
+            helpBottomSheet.show(supportFragmentManager, null)
+            helpBottomSheet.arguments = bundle
         }
     }
 }

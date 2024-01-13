@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.loginScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen
 
 import android.annotation.SuppressLint
 import android.graphics.BlendMode
@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
@@ -52,21 +53,9 @@ class LoginOtpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        editTextsList = arrayListOf(
-            binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
-        )
-
-        selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY)!!
-
         navController = Navigation.findNavController(view)
 
-        binding.ivResendOTP.setColorFilter(
-            ContextCompat.getColor(
-                requireContext(),
-                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
-            ), android.graphics.PorterDuff.Mode.SRC_IN
-        )
-
+        initUi()
         setMainData()
         otpTimer()
         listener()
@@ -225,13 +214,33 @@ class LoginOtpFragment : Fragment() {
             }
         }
         binding.ivResendOTP.setOnClickListener {
-            binding.tvResendOTP.text = "$otpResendTime ثانیه تا ارسال دوباره"
+            binding.tvResendOTP.text = "$otpResendTime ثانیه تا ارسال مجدد"
             binding.tvResendOTP.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
 
             binding.ivResendOTP.visibility = View.GONE
 
             otpTimer()
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun initUi() {
+        editTextsList = arrayListOf(
+            binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
+        )
+
+        selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY)!!
+
+        val enteredNumber =
+            requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY)!!
+        binding.tvOTP.text = "کد فعالسازی 4 رقمی به $enteredNumber ارسال شد"
+
+        binding.ivResendOTP.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+            ), android.graphics.PorterDuff.Mode.SRC_IN
+        )
     }
 
     private fun setMainData() {
@@ -266,7 +275,7 @@ class LoginOtpFragment : Fragment() {
         binding.ivResendOTP.visibility = View.VISIBLE
 
 
-        binding.tvResendOTP.text = "ارسال دوباره"
+        binding.tvResendOTP.text = "ارسال مجدد کد"
         binding.tvResendOTP.setTextColor(
             ContextCompat.getColor(
                 requireContext(),

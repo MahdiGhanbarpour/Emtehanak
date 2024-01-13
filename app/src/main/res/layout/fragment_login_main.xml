@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".features.loginScreen.LoginMainFragment">
+    tools:context=".features.mainLoginScreen.LoginMainFragment">
 
     <TextView
         android:id="@+id/tvEnterNumForLogin"
@@ -38,10 +38,10 @@
         android:layout_marginHorizontal="36dp"
         android:layout_marginTop="12dp"
         android:hint="@string/student_phone_number"
-        app:boxCornerRadiusBottomEnd="9dp"
-        app:boxCornerRadiusBottomStart="9dp"
-        app:boxCornerRadiusTopEnd="9dp"
-        app:boxCornerRadiusTopStart="9dp"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeWidth="1.5dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"

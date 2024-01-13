@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.utils
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.BottomSheetHelpBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogContactSupportBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsActivity
 
 class HelpBottomSheet : BottomSheetDialogFragment() {
 
@@ -50,6 +52,20 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
         }
         binding.cardViewContactSupport.setOnClickListener {
             showContactSupportDialog()
+        }
+        binding.cardViewFrequentlyQuestions.setOnClickListener {
+            val intent = Intent(requireContext(), FrequentlyQuestionsActivity::class.java)
+            intent.putExtra(
+                SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY, requireArguments().getString(
+                    SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
+                )
+            )
+
+            startActivity(intent)
+        }
+        binding.cardViewSupport.setOnClickListener {
+            makeShortToast(requireContext(), "این بخش در حال توسعه است لطفا صبور باشید")
+            //TODO
         }
     }
 
