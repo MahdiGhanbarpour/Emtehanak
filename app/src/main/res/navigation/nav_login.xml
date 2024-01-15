@@ -35,18 +35,6 @@
         android:id="@+id/registerFragment"
         android:name="ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-
-        <action
-            android:id="@+id/action_registerFragment_to_teacherSpecFragment"
-            app:destination="@id/teacherSpecFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/teacherSpecFragment"
-        android:name="ir.mahdighanbarpour.khwarazmiapp.features.teacherRegScreen.TeacherSpecFragment"
-        android:label="fragment_teacher_spec"
-        tools:layout="@layout/fragment_teacher_spec" />
+        tools:layout="@layout/fragment_register" />
 
 </navigation>

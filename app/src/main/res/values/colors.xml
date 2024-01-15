@@ -15,9 +15,9 @@
     <color name="white_transparent_50_percent">#80FFFFFF</color>
     <color name="white_transparent_65_percent">#A6FFFFFF</color>
 
-    <color name="blue">#2d7de2</color>
+    <color name="student_color">#20A84D</color>
 
-    <color name="teacher_color">#20A84D</color>
+    <color name="teacher_color">#2d7de2</color>
 
     <color name="orange">#ec9d52</color>
 

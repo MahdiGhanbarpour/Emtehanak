@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColor
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.textfield.TextInputLayout
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.changeBoxStrokeColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 
 class RegisterFragment : Fragment() {
@@ -24,6 +25,7 @@ class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var navController: NavController
     private lateinit var selectedRole: String
+    private lateinit var textInputLayouts: ArrayList<TextInputLayout>
 
     private var mainColor: Int = 0
 
@@ -41,6 +43,18 @@ class RegisterFragment : Fragment() {
         "بهمن",
         "اسفند"
     )
+    private val expertiseItems = listOf(
+        "علوم تجربی",
+        "ریاضی",
+        "ادبیات فارسی",
+        "زبان انگلیسی",
+        "دینی",
+        "آمادگی دفاعی",
+        "زبان عربی",
+        "مطالعات اجتماعی",
+        "هنر",
+        "کار و فناوری"
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,85 +70,29 @@ class RegisterFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        textInputLayouts = arrayListOf(
+            binding.etLayoutFullNameReg,
+            binding.etLayoutDayReg,
+            binding.etLayoutMonthReg,
+            binding.etLayoutYearReg
+        )
+
         if (selectedRole == TEACHER) {
             mainColor = R.color.teacher_color
         } else if (selectedRole == STUDENT) {
-            mainColor = R.color.blue
+            mainColor = R.color.student_color
         }
 
         setMainData()
         setBirthdayMonthAdapter()
-        listener()
+        setExpertiseAdapter()
     }
 
     private fun setMainData() {
         if (selectedRole == STUDENT) {
-            binding.radioGroupRoleReg.radioBtStudent.isChecked = true
-
-            setSelectedRoleColor(
-                "نام و نام خانوادگی دانش آموز",
-                R.color.blue,
-                R.color.white,
-                R.drawable.shape_role_radio_button_background,
-                R.drawable.selector_role_radio_button_background
-            )
+            setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
         } else {
-            binding.radioGroupRoleReg.radioBtTeacher.isChecked = true
-
-            setSelectedRoleColor(
-                "نام و نام خانوادگی همراه دبیر",
-                R.color.white,
-                R.color.teacher_color,
-                R.drawable.shape_role_radio_button_background_teacher,
-                R.drawable.selector_role_radio_button_background_teacher
-            )
-        }
-    }
-
-    private fun listener() {
-        binding.radioGroupRoleReg.radioGroupRole.setOnCheckedChangeListener { _, id ->
-
-            // Change the Input Layouts hint based on the user's selected role
-            when (id) {
-                R.id.radioBtStudent -> {
-                    mainColor = R.color.blue
-                    selectedRole = STUDENT
-
-                    setSelectedRoleColor(
-                        "نام و نام خانوادگی دانش آموز",
-                        R.color.blue,
-                        R.color.white,
-                        R.drawable.shape_role_radio_button_background,
-                        R.drawable.selector_role_radio_button_background
-                    )
-                }
-
-                R.id.radioBtTeacher -> {
-                    mainColor = R.color.teacher_color
-                    selectedRole = TEACHER
-
-                    setSelectedRoleColor(
-                        "نام و نام خانوادگی دبیر",
-                        R.color.white,
-                        R.color.teacher_color,
-                        R.drawable.shape_role_radio_button_background_teacher,
-                        R.drawable.selector_role_radio_button_background_teacher
-                    )
-                }
-
-                else -> {
-                    mainColor = R.color.blue
-                    selectedRole = STUDENT
-
-                    setSelectedRoleColor(
-                        "نام و نام خانوادگی دانش آموز",
-                        R.color.blue,
-                        R.color.white,
-                        R.drawable.shape_role_radio_button_background,
-                        R.drawable.selector_role_radio_button_background
-                    )
-                }
-            }
+            setSelectedRoleColor("نام و نام خانوادگی همراه دبیر")
         }
     }
 
@@ -142,6 +100,12 @@ class RegisterFragment : Fragment() {
         val monthAdapter =
             ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, monthItems)
         binding.tvMonthReg.setAdapter(monthAdapter)
+    }
+
+    private fun setExpertiseAdapter() {
+        val expertiseAdapter =
+            ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, expertiseItems)
+        binding.tvTeacherExpertiseReg.setAdapter(expertiseAdapter)
     }
 
     fun checkInputs() {
@@ -154,6 +118,7 @@ class RegisterFragment : Fragment() {
         var isEnteredMonthOk = false
         var isEnteredYearOk = false
         var isEnteredNameOk = false
+        var isTeacherDataOk = selectedRole == STUDENT
 
         if (enteredName.isEmpty()) {
             binding.etLayoutFullNameReg.error = "نام و نام خانوادگی خود را وارد کنید"
@@ -176,13 +141,42 @@ class RegisterFragment : Fragment() {
             isEnteredYearOk = true
         }
 
-        if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk) {
-            if (selectedRole == TEACHER) {
-                navController.navigate(R.id.action_registerFragment_to_teacherSpecFragment)
-            } else {
-                makeShortToast(requireContext(), "همه اطلاعات صحیح است")
-            }
+        if (selectedRole == TEACHER) {
+            isTeacherDataOk = checkTeacherInputs()
         }
+
+        if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk) {
+            makeShortToast(requireContext(), "همه اطلاعات صحیح است")
+            // TODO
+        }
+    }
+
+    private fun checkTeacherInputs(): Boolean {
+        val enteredExpertise = binding.tvTeacherExpertiseReg.text.toString()
+        val enteredActivityYear = binding.etActivityYearReg.text.toString()
+
+        var isEnteredExpertiseOk = false
+        var isEnteredActivityYearOk = false
+
+        if (enteredExpertise.isEmpty()) {
+            binding.etLayoutTeacherExpertiseReg.error = "رشته مورد تدریس خود را وارد کنید"
+        } else if (enteredExpertise !in expertiseItems) {
+            binding.etLayoutTeacherExpertiseReg.error = "رشته مورد تدریس معتبر نمی باشد"
+        } else {
+            binding.etLayoutTeacherExpertiseReg.isErrorEnabled = false
+            isEnteredExpertiseOk = true
+        }
+
+        if (enteredActivityYear.isEmpty()) {
+            binding.etLayoutTeacherActivityYearReg.error = "سال شروع به فعالیت خود را وارد کنید"
+        } else if (enteredActivityYear.toInt() !in 1300..1402) {
+            binding.etLayoutTeacherActivityYearReg.error = "سال شروع به فعالیت معتبر نمی باشد"
+        } else {
+            binding.etLayoutTeacherActivityYearReg.isErrorEnabled = false
+            isEnteredActivityYearOk = true
+        }
+
+        return isEnteredExpertiseOk && isEnteredActivityYearOk
     }
 
     private fun checkEnteredDay(day: String): Boolean {
@@ -220,69 +214,16 @@ class RegisterFragment : Fragment() {
     }
 
     private fun checkEnteredDayByMonth(day: String, month: String): Boolean {
-        return when (month) {
-            "اسفند" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-            "مهر" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-            "آبان" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-            "آذر" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-            "دی" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-            "بهمن" -> {
-                if (day.toInt() > 30) {
-                    binding.etLayoutDayReg.error = " "
-                    makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
-                    false
-                } else {
-                    true
-                }
-            }
-
-
-            else -> true
+        return if (month in arrayListOf(
+                "بهمن", "دی", "آذر", "آبان", "مهر", "اسفند"
+            ) && day.toInt() > 30
+        ) {
+            binding.etLayoutDayReg.error = " "
+            makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+            false
+        } else {
+            binding.etLayoutDayReg.isErrorEnabled = false
+            true
         }
     }
 
@@ -304,41 +245,9 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setSelectedRoleColor(
-        hintText: String, btTeacherColor: Int, btStudentColor: Int, shapeBG: Int, selectorBG: Int
+        hintText: String
     ) {
-
         binding.etLayoutFullNameReg.hint = hintText
-
-        binding.etLayoutFullNameReg.boxStrokeColor = getColor(requireContext(), mainColor)
-
-        binding.etLayoutDayReg.boxStrokeColor = getColor(requireContext(), mainColor)
-
-        binding.etLayoutMonthReg.boxStrokeColor = getColor(requireContext(), mainColor)
-
-        binding.etLayoutYearReg.boxStrokeColor = getColor(requireContext(), mainColor)
-
-        binding.radioGroupRoleReg.radioGroupRole.background = ContextCompat.getDrawable(
-            requireContext(), shapeBG
-        )
-
-        binding.radioGroupRoleReg.radioBtTeacher.background = ContextCompat.getDrawable(
-            requireContext(), selectorBG
-        )
-        binding.radioGroupRoleReg.radioBtStudent.background = ContextCompat.getDrawable(
-            requireContext(), selectorBG
-        )
-
-
-        binding.radioGroupRoleReg.radioBtStudent.setTextColor(
-            getColor(
-                requireContext(), btStudentColor
-            )
-        )
-        binding.radioGroupRoleReg.radioBtTeacher.setTextColor(
-            getColor(
-                requireContext(), btTeacherColor
-            )
-        )
 
         val colorStateList = ColorStateList(
             arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf()), intArrayOf(
@@ -346,10 +255,15 @@ class RegisterFragment : Fragment() {
             )
         )
 
-        binding.etLayoutDayReg.defaultHintTextColor = colorStateList
-        binding.etLayoutMonthReg.defaultHintTextColor = colorStateList
-        binding.etLayoutYearReg.defaultHintTextColor = colorStateList
-        binding.etLayoutFullNameReg.defaultHintTextColor = colorStateList
+        for (textInputLayout in textInputLayouts) {
+            changeBoxStrokeColor(requireContext(), textInputLayout, mainColor)
+            textInputLayout.defaultHintTextColor = colorStateList
+        }
+
+        if (selectedRole == TEACHER) {
+            binding.etLayoutTeacherExpertiseReg.visibility = View.VISIBLE
+            binding.etLayoutTeacherActivityYearReg.visibility = View.VISIBLE
+        }
 
         (requireActivity() as LoginActivity).changeAppColor(selectedRole)
     }

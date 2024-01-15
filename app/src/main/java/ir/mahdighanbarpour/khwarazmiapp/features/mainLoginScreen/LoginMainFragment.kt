@@ -40,35 +40,35 @@ class LoginMainFragment : Fragment() {
         setSelectedRoleColor(
             STUDENT,
             "شماره تلفن همراه دانش آموز",
-            R.color.blue,
-            R.color.blue,
+            R.color.student_color,
+            R.color.student_color,
             R.color.white,
             R.drawable.shape_role_radio_button_background,
             R.drawable.selector_role_radio_button_background
         )
-        binding.radioGroupRoleLogin.radioGroupRole.check(R.id.radioBtStudent)
+        binding.radioGroupRoleLogin.check(R.id.radioBtStudentLogin)
 
         listener()
     }
 
     private fun listener() {
-        binding.radioGroupRoleLogin.radioGroupRole.setOnCheckedChangeListener { _, id ->
+        binding.radioGroupRoleLogin.setOnCheckedChangeListener { _, id ->
 
             // Change the Input Layouts hint based on the user's selected role
             when (id) {
-                R.id.radioBtStudent -> {
+                R.id.radioBtStudentLogin -> {
                     setSelectedRoleColor(
                         STUDENT,
                         "شماره تلفن همراه دانش آموز",
-                        R.color.blue,
-                        R.color.blue,
+                        R.color.student_color,
+                        R.color.student_color,
                         R.color.white,
                         R.drawable.shape_role_radio_button_background,
                         R.drawable.selector_role_radio_button_background
                     )
                 }
 
-                R.id.radioBtTeacher -> {
+                R.id.radioBtTeacherLogin -> {
                     setSelectedRoleColor(
                         TEACHER,
                         "شماره تلفن همراه دبیر",
@@ -84,8 +84,8 @@ class LoginMainFragment : Fragment() {
                     setSelectedRoleColor(
                         STUDENT,
                         "شماره تلفن همراه دانش آموز",
-                        R.color.blue,
-                        R.color.blue,
+                        R.color.student_color,
+                        R.color.student_color,
                         R.color.white,
                         R.drawable.shape_role_radio_button_background,
                         R.drawable.selector_role_radio_button_background
@@ -108,12 +108,11 @@ class LoginMainFragment : Fragment() {
 
             bundle.putString(
                 SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY,
-                if (binding.radioGroupRoleLogin.radioBtStudent.isChecked) STUDENT else TEACHER
+                if (binding.radioBtStudentLogin.isChecked) STUDENT else TEACHER
             )
 
             bundle.putString(
-                SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY,
-                enteredNum
+                SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY, enteredNum
             )
 
             navController.navigate(
@@ -147,23 +146,23 @@ class LoginMainFragment : Fragment() {
         }
 
 
-        binding.radioGroupRoleLogin.radioGroupRole.background = ContextCompat.getDrawable(
+        binding.radioGroupRoleLogin.background = ContextCompat.getDrawable(
             requireContext(), shapeBG
         )
-        binding.radioGroupRoleLogin.radioBtTeacher.background = ContextCompat.getDrawable(
+        binding.radioBtTeacherLogin.background = ContextCompat.getDrawable(
             requireContext(), selectorBG
         )
-        binding.radioGroupRoleLogin.radioBtStudent.background = ContextCompat.getDrawable(
+        binding.radioBtStudentLogin.background = ContextCompat.getDrawable(
             requireContext(), selectorBG
         )
 
 
-        binding.radioGroupRoleLogin.radioBtStudent.setTextColor(
+        binding.radioBtStudentLogin.setTextColor(
             ContextCompat.getColor(
                 requireContext(), btStudentColor
             )
         )
-        binding.radioGroupRoleLogin.radioBtTeacher.setTextColor(
+        binding.radioBtTeacherLogin.setTextColor(
             ContextCompat.getColor(
                 requireContext(), btTeacherColor
             )

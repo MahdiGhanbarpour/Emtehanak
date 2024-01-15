@@ -11,7 +11,6 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
-import ir.mahdighanbarpour.khwarazmiapp.features.teacherRegScreen.TeacherSpecFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_MAIN
@@ -61,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun changeAppColor(role: String) {
-        val color = if (role == TEACHER) R.color.teacher_color else R.color.blue
+        val color = if (role == TEACHER) R.color.teacher_color else R.color.student_color
         selectedRole = role
 
         binding.btContinueLogin.setBackgroundColor(
@@ -100,13 +99,6 @@ class LoginActivity : AppCompatActivity() {
                 val registerFragment =
                     navHostFragment.childFragmentManager.fragments.firstOrNull { it is RegisterFragment } as? RegisterFragment
                 registerFragment?.checkInputs()
-            }
-
-            "fragment_teacher_spec" -> {
-                // Accessing the checkInputs function inside the RegisterFragment
-                val teacherRegisterFragment =
-                    navHostFragment.childFragmentManager.fragments.firstOrNull { it is TeacherSpecFragment } as? TeacherSpecFragment
-                teacherRegisterFragment?.checkInputs()
             }
         }
     }

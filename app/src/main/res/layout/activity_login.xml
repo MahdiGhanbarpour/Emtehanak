@@ -11,10 +11,11 @@
         android:id="@+id/ivLogo"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/app_logo"
         android:src="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +32,7 @@
         android:src="@drawable/ic_help"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue" />
+        app:tint="@color/student_color" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
@@ -70,7 +71,7 @@
             android:focusable="true"
             android:paddingHorizontal="2dp"
             android:text="@string/terms_and_conditions"
-            android:textColor="@color/blue"
+            android:textColor="@color/student_color"
             android:textSize="13sp" />
 
         <TextView

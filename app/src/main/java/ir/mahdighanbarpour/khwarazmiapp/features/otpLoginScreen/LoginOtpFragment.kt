@@ -238,14 +238,14 @@ class LoginOtpFragment : Fragment() {
         binding.ivResendOTP.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
-                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.student_color
             ), android.graphics.PorterDuff.Mode.SRC_IN
         )
     }
 
     private fun setMainData() {
         if (selectedRole == STUDENT) {
-            changeEditTextsColor(R.color.blue)
+            changeEditTextsColor(R.color.student_color)
         } else {
             changeEditTextsColor(R.color.teacher_color)
         }
@@ -279,7 +279,7 @@ class LoginOtpFragment : Fragment() {
         binding.tvResendOTP.setTextColor(
             ContextCompat.getColor(
                 requireContext(),
-                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.student_color
             )
         )
     }
@@ -292,7 +292,7 @@ class LoginOtpFragment : Fragment() {
             changeEditTextsColor(R.color.red)
             makeShortToast(requireContext(), "کد وارد شده معتبر نیست")
         } else {
-            changeEditTextsColor(if (selectedRole == STUDENT) R.color.blue else R.color.teacher_color)
+            changeEditTextsColor(if (selectedRole == STUDENT) R.color.student_color else R.color.teacher_color)
 
             val roleBundle = Bundle()
             roleBundle.putString(

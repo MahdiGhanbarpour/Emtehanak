@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -22,7 +24,11 @@ inline fun <reified T : Parcelable> Intent.getParcelable(key: String): T = when 
     else -> getParcelableExtra(key)!!
 }
 
-fun makeCall(context: Context,number:String) {
+fun changeBoxStrokeColor(context: Context, textInputLayout: TextInputLayout, color: Int) {
+    textInputLayout.boxStrokeColor = ContextCompat.getColor(context, color)
+}
+
+fun makeCall(context: Context, number: String) {
     // Dial the number
     val intent = Intent(Intent.ACTION_DIAL)
     intent.data = Uri.parse("tel:$number")

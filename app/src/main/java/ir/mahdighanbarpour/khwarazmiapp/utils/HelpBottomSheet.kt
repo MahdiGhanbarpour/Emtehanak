@@ -34,7 +34,7 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
 
         if (selectedRole == STUDENT) {
             binding.btCancelHelp.setBackgroundColor(
-                ContextCompat.getColor(requireContext(), R.color.blue)
+                ContextCompat.getColor(requireContext(), R.color.student_color)
             )
         } else {
             binding.btCancelHelp.setBackgroundColor(
@@ -79,7 +79,7 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
         dialogBinding.btCloseContactSupport.setBackgroundColor(
             ContextCompat.getColor(
                 requireContext(),
-                if (selectedRole == TEACHER) R.color.teacher_color else R.color.blue
+                if (selectedRole == TEACHER) R.color.teacher_color else R.color.student_color
             )
         )
 
