@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.google.android.material.textfield.TextInputLayout
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
@@ -146,8 +148,14 @@ class RegisterFragment : Fragment() {
         }
 
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk) {
-            makeShortToast(requireContext(), "همه اطلاعات صحیح است")
-            // TODO
+            if (selectedRole == TEACHER) {
+                makeShortToast(requireContext(), "همه اطلاعات صحیح است")
+                // TODO
+            } else {
+                val intent = Intent(requireContext(), StudentMainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
         }
     }
 

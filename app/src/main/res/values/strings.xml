@@ -25,4 +25,14 @@
     <string name="close">بستن</string>
     <string name="again">دوباره</string>
     <string name="back">بازگشت</string>
+    <string name="home">خانه</string>
+    <string name="teachers">اساتید</string>
+    <string name="profile">پروفایل</string>
+    <string name="exams">آزمون ها</string>
+    <string name="setting">تنظیمات</string>
+    <string name="logout">خروج از حساب کاربری</string>
+    <string name="about_us">درباره ما</string>
+    <string name="logout_sure">آیا میخواهید از حساب کاربری خود خارج شوید ؟</string>
+    <string name="no_cancel">خیر، لغو</string>
+    <string name="yes_logout">بله، خروج</string>
 </resources>
