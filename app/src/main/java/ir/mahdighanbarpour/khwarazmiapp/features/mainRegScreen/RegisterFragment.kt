@@ -208,8 +208,17 @@ class RegisterFragment : Fragment() {
 
             false
         } else {
-            binding.etLayoutMonthReg.isErrorEnabled = false
-            checkEnteredDayByMonth(day, month)
+            if (day.isNotEmpty()) {
+                binding.etLayoutMonthReg.isErrorEnabled = false
+                checkEnteredDayByMonth(day, month)
+            } else {
+                binding.etLayoutMonthReg.isErrorEnabled = false
+
+                binding.etLayoutDayReg.error = " "
+                makeShortToast(requireContext(), "روز تولد خود را وارد کنید")
+
+                false
+            }
         }
     }
 
