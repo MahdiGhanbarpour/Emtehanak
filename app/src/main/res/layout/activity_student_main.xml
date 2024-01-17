@@ -5,8 +5,7 @@
     android:id="@+id/drawerLayStudentMain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layoutDirection="rtl"
-    tools:openDrawer="start">
+    android:layoutDirection="rtl">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -40,6 +39,7 @@
         android:paddingHorizontal="8dp"
         android:theme="@style/NavigationTheme"
         app:headerLayout="@layout/layout_drawer_header"
+        app:itemIconTint="@color/student_color"
         app:itemRippleColor="?android:colorControlHighlight"
         app:menu="@menu/menu_nav_drawer" />
 

@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:backgroundTint="@color/student_color"
+            android:imeOptions="actionDone"
             android:inputType="number"
             android:layoutDirection="ltr"
             android:maxLength="1"

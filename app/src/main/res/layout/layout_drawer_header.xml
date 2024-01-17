@@ -6,22 +6,21 @@
     android:layoutDirection="rtl">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView_profile_image"
+        android:id="@+id/cardViewProfileImageDrawerHeader"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginEnd="16dp"
-        app:cardCornerRadius="50dp"
+        android:backgroundTint="@color/student_color"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/linear_user_info"
+        app:layout_constraintEnd_toStartOf="@+id/linearUserInfoDrawerHeader"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_profile_image"
+            android:id="@+id/ivProfileImageDrawerHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/student_color"
             android:padding="12dp"
             android:src="@drawable/ic_logo"
             app:tint="@color/white" />
@@ -29,17 +28,17 @@
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
-        android:id="@+id/linear_user_info"
+        android:id="@+id/linearUserInfoDrawerHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardView_profile_image"
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfileImageDrawerHeader"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_username"
+            android:id="@+id/tvUsernameDrawerHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -59,7 +58,7 @@
             app:cardCornerRadius="6dp">
 
             <TextView
-                android:id="@+id/tv_user_premium"
+                android:id="@+id/tvUserDetailDrawerHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"

@@ -42,6 +42,7 @@ class StudentMainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_support -> {
+                    binding.drawerLayStudentMain.closeDrawers()
                     showHelpBottomSheet()
                 }
             }
