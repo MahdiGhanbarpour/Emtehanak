@@ -18,12 +18,7 @@
         <item
             android:id="@+id/menu_teachers"
             android:icon="@drawable/ic_teacher_selected"
-            android:title="@string/teachers" />
-
-        <item
-            android:id="@+id/menu_support"
-            android:icon="@drawable/ic_support"
-            android:title="@string/contact_support" />
+            android:title="@string/my_teachers" />
 
         <item
             android:id="@+id/menu_setting"
@@ -50,6 +45,11 @@
             android:id="@+id/menu_terms"
             android:icon="@drawable/ic_terms_conditions"
             android:title="@string/terms_and_conditions_drawer" />
+
+        <item
+            android:id="@+id/menu_support"
+            android:icon="@drawable/ic_support"
+            android:title="@string/contact_support" />
 
     </group>
 

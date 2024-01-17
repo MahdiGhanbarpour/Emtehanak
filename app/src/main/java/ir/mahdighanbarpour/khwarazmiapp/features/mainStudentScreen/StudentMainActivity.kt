@@ -7,6 +7,7 @@ import androidx.appcompat.app.AlertDialog
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityStudentMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogLogoutBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.aboutUsScreen.AboutUsActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
@@ -14,6 +15,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUEST
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 
 class StudentMainActivity : AppCompatActivity() {
 
@@ -32,12 +34,35 @@ class StudentMainActivity : AppCompatActivity() {
     private fun listener() {
         binding.navViewStudentMain.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.menu_home -> {
+                    // TODO
+                }
+
+                R.id.menu_exams -> {
+                    makeShortToast(this, "بخش آزمون ها در حال توسعه است. با تشکر از شکیبایی شما")
+                    // TODO
+                }
+
+                R.id.menu_teachers -> {
+                    // TODO
+                }
+
+                R.id.menu_setting -> {
+                    makeShortToast(this, "تنظیمات در حال توسعه است. با تشکر از شکیبایی شما")
+                    // TODO
+                }
+
                 R.id.menu_logout -> {
                     showLogOutDialog()
                 }
 
                 R.id.menu_terms -> {
                     val intent = Intent(this, TermsActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.menu_about_us -> {
+                    val intent = Intent(this, AboutUsActivity::class.java)
                     startActivity(intent)
                 }
 

@@ -149,7 +149,9 @@ class RegisterFragment : Fragment() {
 
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk) {
             if (selectedRole == TEACHER) {
-                makeShortToast(requireContext(), "همه اطلاعات صحیح است")
+                makeShortToast(
+                    requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
+                )
                 // TODO
             } else {
                 val intent = Intent(requireContext(), StudentMainActivity::class.java)

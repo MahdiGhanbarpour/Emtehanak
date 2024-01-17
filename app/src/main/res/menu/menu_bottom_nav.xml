@@ -9,7 +9,7 @@
     <item
         android:id="@+id/projectsStudentFragment"
         android:icon="@drawable/selector_btm_nav_teachers"
-        android:title="@string/teachers" />
+        android:title="@string/my_teachers" />
 
     <item
         android:id="@+id/profileStudentFragment"

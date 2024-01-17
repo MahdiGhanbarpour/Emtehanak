@@ -64,7 +64,7 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
             startActivity(intent)
         }
         binding.cardViewSupport.setOnClickListener {
-            makeShortToast(requireContext(), "این بخش در حال توسعه است لطفا صبور باشید")
+            makeShortToast(requireContext(), "بخش ارتباط برخط با پشتیبانی در حال توسعه است. با تشکر از شکیبایی شما")
             //TODO
         }
     }

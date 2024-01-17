@@ -10,7 +10,7 @@
     <color name="gray_dark">#6E6E6E</color>
 
     <color name="white">#FFFFFFFF</color>
-    <color name="white_dark">#F8F8F8</color>
+    <color name="white_dark">#F0F0F0</color>
     <color name="white_very_dark">#F0F0F0</color>
     <color name="white_transparent_50_percent">#80FFFFFF</color>
     <color name="white_transparent_65_percent">#A6FFFFFF</color>
@@ -35,5 +35,5 @@
     <color name="transparent_color_15_percent">#26000000</color>
     <color name="transparent_color_30_percent">#4D000000</color>
 
-    <color name="ic_launcher_background">#2477e1</color>
+    <color name="ic_launcher_background">#20A84D</color>
 </resources>
