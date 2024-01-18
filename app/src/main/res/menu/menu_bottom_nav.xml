@@ -7,7 +7,7 @@
         android:title="@string/home" />
 
     <item
-        android:id="@+id/projectsStudentFragment"
+        android:id="@+id/teachersStudentFragment"
         android:icon="@drawable/selector_btm_nav_teachers"
         android:title="@string/my_teachers" />
 

@@ -68,4 +68,14 @@ dependencies {
     // Koin
     implementation("io.insert-koin:koin-android:3.4.3")
     implementation("io.insert-koin:koin-androidx-navigation:3.4.3")
+
+    // Image Slider
+    implementation("com.github.denzcoskun:ImageSlideshow:0.1.2")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    // Lottie
+    implementation("com.airbnb.android:lottie:6.0.1")
 }

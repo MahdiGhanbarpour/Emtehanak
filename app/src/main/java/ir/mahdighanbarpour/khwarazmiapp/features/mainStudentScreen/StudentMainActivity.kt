@@ -4,11 +4,15 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityStudentMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogLogoutBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.aboutUsScreen.AboutUsActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.profileStudentScreen.StudentProfileFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.teachersStudentScreen.StudentTeachersFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
 import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
@@ -23,15 +27,66 @@ class StudentMainActivity : AppCompatActivity() {
 
     private val helpBottomSheet = HelpBottomSheet()
 
+    private val firstFragment = StudentHomeFragment()
+    private val secondFragment = StudentTeachersFragment()
+    private val thirdFragment = StudentProfileFragment()
+
+    private var active: Fragment = firstFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initBottomNav()
         listener()
     }
 
     private fun listener() {
+        binding.bottomNavStudentMain.setOnItemReselectedListener { }
+
+        binding.bottomNavStudentMain.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.homeStudentFragment -> {
+                    supportFragmentManager.beginTransaction().hide(active).show(firstFragment)
+                        .commitNow()
+                    active = firstFragment
+
+//                    Handler(Looper.getMainLooper()).post {
+//                        firstFragment.onFragmentShowed()
+//                    }
+
+                    true
+                }
+
+                R.id.teachersStudentFragment -> {
+                    supportFragmentManager.beginTransaction().hide(active).show(secondFragment)
+                        .commitNow()
+                    active = secondFragment
+
+//                    Handler(Looper.getMainLooper()).post {
+//                        secondFragment.onFragmentShowed()
+//                    }
+
+                    true
+                }
+
+                R.id.profileStudentFragment -> {
+                    supportFragmentManager.beginTransaction().hide(active).show(thirdFragment)
+                        .commitNow()
+                    active = thirdFragment
+
+//                    Handler(Looper.getMainLooper()).post {
+//                        thirdFragment.onFragmentShowed()
+//                    }
+
+                    true
+                }
+
+                else -> false
+            }
+        }
+
         binding.navViewStudentMain.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
@@ -74,6 +129,15 @@ class StudentMainActivity : AppCompatActivity() {
 
             true
         }
+    }
+
+    private fun initBottomNav() {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.nav_host_fragment_student, thirdFragment, "3").hide(thirdFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.nav_host_fragment_student, secondFragment, "2").hide(secondFragment).commit()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.nav_host_fragment_student, firstFragment, "1").commit()
     }
 
     private fun showLogOutDialog() {

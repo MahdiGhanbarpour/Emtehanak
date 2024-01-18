@@ -36,4 +36,14 @@
     <string name="logout_sure">آیا میخواهید از حساب کاربری خود خارج شوید ؟</string>
     <string name="no_cancel">خیر، لغو</string>
     <string name="yes_logout">بله، خروج</string>
+    <string name="error_communicating_server">خطا در برقراری ارتباط با سرور</string>
+    <string name="teachers">اساتید</string>
+    <string name="main_courses">دروس اصلی</string>
+    <string name="add_question">افزودن سوال</string>
+    <string name="see_more">دیدن بقیه</string>
+    <string name="course_image">تصویر درس</string>
+    <string name="popular_exams">پرطرفدار ترین آزمون ها</string>
+    <string name="exam_image">تصویر آزمون</string>
+    <string name="experienced_teachers">مجرب ترین اساتید</string>
+    <string name="teacher_image">تصویر استاد</string>
 </resources>
