@@ -1,6 +1,8 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.content.SharedPreferences.Editor
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -15,16 +17,21 @@ import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.profileStudentScreen.StudentProfileFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.teachersStudentScreen.StudentTeachersFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
-import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.features.shared.HelpBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import org.koin.android.ext.android.inject
 
 class StudentMainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStudentMainBinding
+    private lateinit var editor: Editor
 
     private val helpBottomSheet = HelpBottomSheet()
 
@@ -32,12 +39,16 @@ class StudentMainActivity : AppCompatActivity() {
     private val secondFragment = StudentTeachersFragment()
     private val thirdFragment = StudentProfileFragment()
 
+    private val sharedPreferences: SharedPreferences by inject()
+
     private var active: Fragment = firstFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityStudentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        editor = sharedPreferences.edit()
 
         initBottomNav()
         listener()
@@ -157,6 +168,11 @@ class StudentMainActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         dialogBinding.btYesLogout.setOnClickListener {
+            editor.putBoolean(IS_USER_LOGGED_IN, false)
+            editor.putString(USER_PHONE_NUM, null)
+            editor.putString(USER_ROLE, null)
+            editor.commit()
+
             val intent = Intent(this, LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

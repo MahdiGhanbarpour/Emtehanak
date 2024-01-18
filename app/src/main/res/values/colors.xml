@@ -40,5 +40,5 @@
     <color name="transparent_color_15_percent">#26000000</color>
     <color name="transparent_color_30_percent">#4D000000</color>
 
-    <color name="ic_launcher_background">#20A84D</color>
+    <color name="ic_launcher_background">#FFF</color>
 </resources>

@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.utils
+package ir.mahdighanbarpour.khwarazmiapp.features.shared
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,12 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.BottomSheetHelpBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogContactSupportBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsActivity
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
+import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.makeCall
+import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 
 class HelpBottomSheet : BottomSheetDialogFragment() {
 

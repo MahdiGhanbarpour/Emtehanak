@@ -12,7 +12,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
-import ir.mahdighanbarpour.khwarazmiapp.utils.HelpBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.features.shared.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_MAIN
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_OTP
 import ir.mahdighanbarpour.khwarazmiapp.utils.REGISTER_MAIN

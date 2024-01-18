@@ -20,6 +20,7 @@ import androidx.navigation.Navigation
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
@@ -33,6 +34,7 @@ class LoginOtpFragment : Fragment() {
     private lateinit var binding: FragmentLoginOtpBinding
     private lateinit var navController: NavController
     private lateinit var selectedRole: String
+    private lateinit var enteredNumber: String
 
     private var timer: Timer? = null
 
@@ -231,8 +233,7 @@ class LoginOtpFragment : Fragment() {
 
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY)!!
 
-        val enteredNumber =
-            requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY)!!
+        enteredNumber = requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY)!!
         binding.tvOTP.text = "کد فعالسازی 4 رقمی به $enteredNumber ارسال شد"
 
         binding.ivResendOTP.setColorFilter(
@@ -298,6 +299,8 @@ class LoginOtpFragment : Fragment() {
             roleBundle.putString(
                 SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
             )
+
+            roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
 
             navController.navigate(
                 R.id.action_loginOtpFragment_to_registerFragment, roleBundle

@@ -1,6 +1,7 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,18 +17,25 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeBoxStrokeColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import org.koin.android.ext.android.inject
 
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var navController: NavController
     private lateinit var selectedRole: String
+    private lateinit var enteredPhoneNum: String
     private lateinit var textInputLayouts: ArrayList<TextInputLayout>
+    private lateinit var editor: SharedPreferences.Editor
 
     private var mainColor: Int = 0
 
@@ -72,6 +80,8 @@ class RegisterFragment : Fragment() {
         "دوازدهم"
     )
 
+    private val sharedPreferences: SharedPreferences by inject()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -82,9 +92,17 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY)!!
+        initUi()
+        setGradeAdapter()
+        setBirthdayMonthAdapter()
+        setExpertiseAdapter()
+    }
 
-        navController = Navigation.findNavController(view)
+    private fun initUi() {
+        selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY)!!
+        enteredPhoneNum = requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY)!!
+
+        navController = Navigation.findNavController(requireView())
 
         textInputLayouts = arrayListOf(
             binding.etLayoutFullNameReg,
@@ -99,13 +117,8 @@ class RegisterFragment : Fragment() {
             mainColor = R.color.student_color
         }
 
-        setMainData()
-        setGradeAdapter()
-        setBirthdayMonthAdapter()
-        setExpertiseAdapter()
-    }
+        editor = sharedPreferences.edit()
 
-    private fun setMainData() {
         if (selectedRole == STUDENT) {
             setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
         } else {
@@ -181,6 +194,11 @@ class RegisterFragment : Fragment() {
                 )
                 // TODO
             } else {
+                editor.putBoolean(IS_USER_LOGGED_IN, true)
+                editor.putString(USER_PHONE_NUM, enteredPhoneNum)
+                editor.putString(USER_ROLE, selectedRole)
+                editor.commit()
+
                 val intent = Intent(requireContext(), StudentMainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
