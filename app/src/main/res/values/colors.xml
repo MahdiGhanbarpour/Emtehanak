@@ -11,12 +11,14 @@
     <color name="gray_dark">#6E6E6E</color>
 
     <color name="white">#FFFFFFFF</color>
-    <color name="white_dark">#F2F2F2</color>
+    <color name="white_dark">#F6F6F6</color>
     <color name="white_very_dark">#F0F0F0</color>
     <color name="white_transparent_50_percent">#80FFFFFF</color>
     <color name="white_transparent_65_percent">#A6FFFFFF</color>
 
     <color name="student_color">#20A84D</color>
+    <color name="student_color_light">#2ad561</color>
+    <color name="student_color_transparent_15_percent">#262AD561</color>
 
     <color name="teacher_color">#2d7de2</color>
 

@@ -46,4 +46,8 @@
     <string name="exam_image">تصویر آزمون</string>
     <string name="experienced_teachers">مجرب ترین اساتید</string>
     <string name="teacher_image">تصویر استاد</string>
+    <string name="open_menu">باز کردن منو</string>
+    <string name="grade">پایه تحصیلی</string>
+    <string name="activity_year">سال شروع به فعالیت</string>
+    <string name="teacher_expertise">رشته های مورد تدریس</string>
 </resources>

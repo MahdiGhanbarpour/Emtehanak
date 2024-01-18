@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityStudentMainBinding
@@ -90,6 +91,7 @@ class StudentMainActivity : AppCompatActivity() {
         binding.navViewStudentMain.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_home -> {
+                    makeShortToast(this, "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
                     // TODO
                 }
 
@@ -99,6 +101,7 @@ class StudentMainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_teachers -> {
+                    makeShortToast(this, "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
                     // TODO
                 }
 
@@ -112,11 +115,13 @@ class StudentMainActivity : AppCompatActivity() {
                 }
 
                 R.id.menu_terms -> {
+                    binding.drawerLayStudentMain.closeDrawers()
                     val intent = Intent(this, TermsActivity::class.java)
                     startActivity(intent)
                 }
 
                 R.id.menu_about_us -> {
+                    binding.drawerLayStudentMain.closeDrawers()
                     val intent = Intent(this, AboutUsActivity::class.java)
                     startActivity(intent)
                 }
@@ -168,6 +173,22 @@ class StudentMainActivity : AppCompatActivity() {
             //Display Help Bottom Sheet
             helpBottomSheet.show(supportFragmentManager, null)
             helpBottomSheet.arguments = bundle
+        }
+    }
+
+    fun openDrawer() {
+        binding.drawerLayStudentMain.openDrawer(GravityCompat.START)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+
+        // When the user presses the back button, if the drawer was open, it will be closed
+        // and if it was closed, the user will be returned to the previous page
+        if (binding.root.isDrawerOpen(GravityCompat.START)) {
+            binding.root.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
         }
     }
 }

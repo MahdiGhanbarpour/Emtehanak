@@ -57,6 +57,20 @@ class RegisterFragment : Fragment() {
         "هنر",
         "کار و فناوری"
     )
+    private val gradeItems = listOf(
+        "اول",
+        "دوم",
+        "سوم",
+        "چهارم",
+        "پنجم",
+        "ششم",
+        "هفتم",
+        "هشتم",
+        "نهم",
+        "دهم",
+        "یازدهم",
+        "دوازدهم"
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -86,6 +100,7 @@ class RegisterFragment : Fragment() {
         }
 
         setMainData()
+        setGradeAdapter()
         setBirthdayMonthAdapter()
         setExpertiseAdapter()
     }
@@ -104,6 +119,12 @@ class RegisterFragment : Fragment() {
         binding.tvMonthReg.setAdapter(monthAdapter)
     }
 
+    private fun setGradeAdapter() {
+        val gradeAdapter =
+            ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, gradeItems)
+        binding.tvStudentGradeReg.setAdapter(gradeAdapter)
+    }
+
     private fun setExpertiseAdapter() {
         val expertiseAdapter =
             ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, expertiseItems)
@@ -115,12 +136,15 @@ class RegisterFragment : Fragment() {
         val enteredDay = binding.etDayReg.text.toString()
         val enteredMonth = binding.tvMonthReg.text.toString()
         val enteredYear = binding.etYearReg.text.toString()
+        val enteredGrade = binding.tvStudentGradeReg.text.toString()
 
         var isEnteredDayOk = false
         var isEnteredMonthOk = false
         var isEnteredYearOk = false
         var isEnteredNameOk = false
         var isTeacherDataOk = selectedRole == STUDENT
+
+        val isGradeOk: Boolean
 
         if (enteredName.isEmpty()) {
             binding.etLayoutFullNameReg.error = "نام و نام خانوادگی خود را وارد کنید"
@@ -144,10 +168,13 @@ class RegisterFragment : Fragment() {
         }
 
         if (selectedRole == TEACHER) {
+            isGradeOk = true
             isTeacherDataOk = checkTeacherInputs()
+        } else {
+            isGradeOk = checkEnteredGrade(enteredGrade)
         }
 
-        if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk) {
+        if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk && isGradeOk) {
             if (selectedRole == TEACHER) {
                 makeShortToast(
                     requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
@@ -234,11 +261,20 @@ class RegisterFragment : Fragment() {
 
     private fun checkEnteredDayByMonth(day: String, month: String): Boolean {
         return if (month in arrayListOf(
+                "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور"
+            ) && day.toInt() > 31
+        ) {
+            binding.etLayoutDayReg.error = " "
+            makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+
+            false
+        } else if (month in arrayListOf(
                 "بهمن", "دی", "آذر", "آبان", "مهر", "اسفند"
             ) && day.toInt() > 30
         ) {
             binding.etLayoutDayReg.error = " "
             makeShortToast(requireContext(), "روز تولد وارد شده معتبر نیست")
+
             false
         } else {
             binding.etLayoutDayReg.isErrorEnabled = false
@@ -263,6 +299,22 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    private fun checkEnteredGrade(grade: String): Boolean {
+        return if (grade.isEmpty()) {
+            binding.etLayoutStudentGradeReg.error = "پایه تحصیلی خود را وارد کنید"
+
+            false
+        } else if (grade !in gradeItems) {
+            binding.etLayoutStudentGradeReg.error = "پایه تحصیلی معتبر نمی باشد"
+
+            false
+        } else {
+            binding.etLayoutStudentGradeReg.isErrorEnabled = false
+
+            true
+        }
+    }
+
     private fun setSelectedRoleColor(
         hintText: String
     ) {
@@ -280,6 +332,8 @@ class RegisterFragment : Fragment() {
         }
 
         if (selectedRole == TEACHER) {
+            binding.etLayoutStudentGradeReg.visibility = View.GONE
+
             binding.etLayoutTeacherExpertiseReg.visibility = View.VISIBLE
             binding.etLayoutTeacherActivityYearReg.visibility = View.VISIBLE
         }
