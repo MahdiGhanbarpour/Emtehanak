@@ -36,8 +36,10 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Getting the sent role
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY)!!
 
+        // It changes the color of the app based on the role sent
         if (selectedRole == STUDENT) {
             binding.btCancelHelp.setBackgroundColor(
                 ContextCompat.getColor(requireContext(), R.color.student_color)
@@ -53,13 +55,15 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
 
     private fun listener() {
         binding.btCancelHelp.setOnClickListener {
-            //Close Help Bottom Sheet
+            // Close Help Bottom Sheet
             dismiss()
         }
         binding.cardViewContactSupport.setOnClickListener {
+            // Showing support contact dialog
             showContactSupportDialog()
         }
         binding.cardViewFrequentlyQuestions.setOnClickListener {
+            // Submitting the submitted page and open the FAQ page
             val intent = Intent(requireContext(), FrequentlyQuestionsActivity::class.java)
             intent.putExtra(
                 SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY, requireArguments().getString(
@@ -76,6 +80,7 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
     }
 
     private fun showContactSupportDialog() {
+        // Showing support contact dialog
         val dialog = AlertDialog.Builder(requireContext()).create()
 
         val dialogBinding = DialogContactSupportBinding.inflate(layoutInflater)
@@ -92,18 +97,22 @@ class HelpBottomSheet : BottomSheetDialogFragment() {
         dialog.show()
 
         dialogBinding.btCloseContactSupport.setOnClickListener {
+            // If the cancel button is pressed, the dialog will be closed
             dialog.dismiss()
         }
 
         dialogBinding.tvSupportNum1.setOnClickListener {
+            // Opening the phone app and dialing the selected number
             makeCall(requireContext(), dialogBinding.tvSupportNum1.text.toString())
         }
 
         dialogBinding.tvSupportNum2.setOnClickListener {
+            // Opening the phone app and dialing the selected number
             makeCall(requireContext(), dialogBinding.tvSupportNum2.text.toString())
         }
 
         dialogBinding.tvSupportNum3.setOnClickListener {
+            // Opening the phone app and dialing the selected number
             makeCall(requireContext(), dialogBinding.tvSupportNum3.text.toString())
         }
     }

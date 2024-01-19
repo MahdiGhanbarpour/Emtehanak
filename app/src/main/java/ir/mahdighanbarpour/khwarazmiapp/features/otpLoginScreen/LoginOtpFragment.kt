@@ -71,6 +71,7 @@ class LoginOtpFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun listener() {
+        // Codes related to OTP inputs {
         binding.etFirstOtp.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
                 if (s.length == 1) {
@@ -215,7 +216,10 @@ class LoginOtpFragment : Fragment() {
                 return@setOnKeyListener false
             }
         }
+        // }
+
         binding.ivResendOTP.setOnClickListener {
+            // Resend the code
             binding.tvResendOTP.text = "$otpResendTime ثانیه تا ارسال مجدد"
             binding.tvResendOTP.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
 
@@ -227,14 +231,18 @@ class LoginOtpFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
+        // // Creating a list of inputs on the page
         editTextsList = arrayListOf(
             binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
         )
 
+        // Getting the phone number and the selected role
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY)!!
-
         enteredNumber = requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY)!!
+
         binding.tvOTP.text = "کد فعالسازی 4 رقمی به $enteredNumber ارسال شد"
+
+        // It changes the resend OTP color of the app based on the role sent
 
         binding.ivResendOTP.setColorFilter(
             ContextCompat.getColor(
@@ -245,6 +253,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun setMainData() {
+        // Checking what role the user has selected
         if (selectedRole == STUDENT) {
             changeEditTextsColor(R.color.student_color)
         } else {
@@ -253,6 +262,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun otpTimer() {
+        // Creating code resend countdown timer
         timer = Timer()
         timer!!.schedule(object : TimerTask() {
             @SuppressLint("SetTextI18n")
@@ -270,6 +280,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun resendOTP() {
+        // Resend the code
         timer!!.cancel()
         otpResendTime = 60
 
@@ -286,6 +297,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     fun checkOtpCode() {
+        // Checking the OTP entered by the user
         val enteredOtpCode =
             binding.etFirstOtp.text.toString() + binding.etSecondOtp.text.toString() + binding.etThirdOtp.text.toString() + binding.etFourthOtp.text.toString()
 
@@ -309,6 +321,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun changeEditTextsColor(color: Int) {
+        // It changes the app color of the app based on the role sent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             for (editTexts in editTextsList) {
                 editTexts.background.colorFilter = BlendModeColorFilter(

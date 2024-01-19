@@ -8,10 +8,12 @@ import ir.mahdighanbarpour.khwarazmiapp.model.repositories.FrequentlyQuestionsRe
 class FrequentlyQuestionsViewModel(private val frequentlyQuestionsRepository: FrequentlyQuestionsRepository) :
     ViewModel() {
 
+    // Getting the data of the frequently asked questions of the posted page from the local database
     fun getFrequentlyQuestions(page: String): Single<FrequentlyQuestions> {
         return frequentlyQuestionsRepository.getFrequentlyQuestions(page)
     }
 
+    // Inserting the data of frequently asked questions of the posted page in the local database
     fun insertAllFrequentlyQuestions(frequentlyQuestions: FrequentlyQuestions) {
         frequentlyQuestionsRepository.insertAllFrequentlyQuestions(frequentlyQuestions)
     }

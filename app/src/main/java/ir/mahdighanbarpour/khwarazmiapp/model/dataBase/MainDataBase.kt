@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestions
 
+// Database creation
 @Database(version = 1, exportSchema = false, entities = [FrequentlyQuestions::class])
 @TypeConverters(MainConverters::class)
 abstract class MainDataBase : RoomDatabase() {

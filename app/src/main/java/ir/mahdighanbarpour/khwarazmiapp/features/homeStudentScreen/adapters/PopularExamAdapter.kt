@@ -21,11 +21,14 @@ class PopularExamAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Pair<String, String>) {
+            // Placing the sent data in the relevant views
             binding.tvPopularExamNameItem.text = data.first
 
+            // Load image
             Glide.with(binding.root.context).load(data.second).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivPopularExamImageItem)
 
+            // One of the items has been clicked
             itemView.setOnClickListener {
                 popularExamEvents.onPopularExamClicked(data)
             }

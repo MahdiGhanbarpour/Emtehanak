@@ -29,7 +29,9 @@ class SplashScreenActivity : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Checking whether the user has already logged in or not and determining the next page
         if (sharedPreferences.getBoolean(IS_USER_LOGGED_IN, false)) {
+            // Checking the role of the user and determining the next page based on it
             if (sharedPreferences.getString(USER_ROLE, null) == STUDENT) {
                 nextPage = StudentMainActivity()
             } else {
@@ -39,6 +41,7 @@ class SplashScreenActivity : AppCompatActivity() {
             nextPage = LoginActivity()
         }
 
+        // Creating a 3-second delay and then opening the specified page
         Timer().schedule(timerTask {
             val intent = Intent(this@SplashScreenActivity, nextPage::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

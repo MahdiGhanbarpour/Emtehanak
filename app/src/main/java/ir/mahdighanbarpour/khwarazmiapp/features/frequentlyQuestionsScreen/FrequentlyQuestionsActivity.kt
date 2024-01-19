@@ -39,19 +39,25 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // If the page is closed, it empties the compositeDisposable, which holds values of the Disposable type
         compositeDisposable.clear()
     }
 
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
+            // If the back button is pressed, the page will be closed
             finish()
         }
     }
 
     private fun initUi() {
+        // Getting the submitted page name
         sentPage = intent.getStringExtra(SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY)!!
 
+        // Adding frequently asked questions of the login page to the database
+        // TODO Note that this work will be done after the completion of the project in a more principled style
         frequentlyQuestionsViewModel.insertAllFrequentlyQuestions(
             FrequentlyQuestions(
                 LOGIN_MAIN, listOf(
@@ -79,6 +85,8 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
             )
         )
 
+        // Adding frequently asked questions of the OTP page to the database
+        // TODO Note that this work will be done after the completion of the project in a more principled style
         frequentlyQuestionsViewModel.insertAllFrequentlyQuestions(
             FrequentlyQuestions(
                 LOGIN_OTP, listOf(
@@ -98,18 +106,24 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
             )
         )
 
+        // Checking if the user has internet or not
         if (isInternetAvailable(this)) {
+            // Getting data from the server
+            // TODO Due to incomplete backend, we currently get data from local database
             loadOfflineData()
-            //TODO
         } else {
+            // Getting data from the local database
             loadOfflineData()
         }
     }
 
     private fun loadOfflineData() {
+        // Checking that the name of the page is correct and not null
         if (sentPage.isNullOrEmpty()) {
+            // The name of the page is broken
             sentPageIsNotOk()
         } else {
+            // Getting data from the local database with the help of RxJava
             frequentlyQuestionsViewModel.getFrequentlyQuestions(sentPage!!).asyncRequest()
                 .subscribe(object : SingleObserver<FrequentlyQuestions> {
                     override fun onSubscribe(d: Disposable) {
@@ -117,6 +131,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                     }
 
                     override fun onError(e: Throwable) {
+                        // Error report to user
                         Snackbar.make(
                             binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
                         ).setAction(
@@ -125,6 +140,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                     }
 
                     override fun onSuccess(t: FrequentlyQuestions) {
+                        // Starting RecyclerView with sent data
                         initRecycler(t)
                     }
                 })
@@ -132,6 +148,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
     }
 
     private fun initRecycler(data: FrequentlyQuestions) {
+        // Making the adapter and making the necessary settings
         frequentlyQuestionsAdapter = FrequentlyQuestionsAdapter(data.frequentlyQuestionsArray)
         binding.recyclerFrequentlyQuestions.adapter = frequentlyQuestionsAdapter
 
@@ -140,6 +157,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
     }
 
     private fun sentPageIsNotOk() {
-
+        // The name of the page is broken
+        // TODO
     }
 }

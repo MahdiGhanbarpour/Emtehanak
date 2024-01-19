@@ -99,11 +99,13 @@ class RegisterFragment : Fragment() {
     }
 
     private fun initUi() {
+        // Getting the phone number and the selected role
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY)!!
         enteredPhoneNum = requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY)!!
 
         navController = Navigation.findNavController(requireView())
 
+        // Creating a list of inputs on the page
         textInputLayouts = arrayListOf(
             binding.etLayoutFullNameReg,
             binding.etLayoutDayReg,
@@ -111,6 +113,7 @@ class RegisterFragment : Fragment() {
             binding.etLayoutYearReg
         )
 
+        // Checking what role the user has selected
         if (selectedRole == TEACHER) {
             mainColor = R.color.teacher_color
         } else if (selectedRole == STUDENT) {
@@ -119,6 +122,7 @@ class RegisterFragment : Fragment() {
 
         editor = sharedPreferences.edit()
 
+
         if (selectedRole == STUDENT) {
             setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
         } else {
@@ -126,24 +130,28 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Setting the dropdown data of the birth month
     private fun setBirthdayMonthAdapter() {
         val monthAdapter =
             ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, monthItems)
         binding.tvMonthReg.setAdapter(monthAdapter)
     }
 
+    // Setting the dropdown data of the grade
     private fun setGradeAdapter() {
         val gradeAdapter =
             ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, gradeItems)
         binding.tvStudentGradeReg.setAdapter(gradeAdapter)
     }
 
+    // Setting the dropdown data of the expertise
     private fun setExpertiseAdapter() {
         val expertiseAdapter =
             ArrayAdapter(requireContext(), R.layout.layout_drop_down_items, expertiseItems)
         binding.tvTeacherExpertiseReg.setAdapter(expertiseAdapter)
     }
 
+    // Checking the information entered by the user
     fun checkInputs() {
         val enteredName = binding.etFullNameReg.text.toString()
         val enteredDay = binding.etDayReg.text.toString()
@@ -159,6 +167,7 @@ class RegisterFragment : Fragment() {
 
         val isGradeOk: Boolean
 
+        // Is the entered name correct ?
         if (enteredName.isEmpty()) {
             binding.etLayoutFullNameReg.error = "نام و نام خانوادگی خود را وارد کنید"
         } else if (enteredName.length <= 5) {
@@ -168,18 +177,22 @@ class RegisterFragment : Fragment() {
             isEnteredNameOk = true
         }
 
+        // Is the date of birth correct ?
         if (checkEnteredDay(enteredDay)) {
             isEnteredDayOk = true
         }
 
+        // Is the date of birth correct ?
         if (checkEnteredMonth(enteredDay, enteredMonth)) {
             isEnteredMonthOk = true
         }
 
+        // Is the date of birth correct ?
         if (checkEnteredYear(enteredYear)) {
             isEnteredYearOk = true
         }
 
+        // If the user is a student, it checks his grade; otherwise, it checks the teacher data
         if (selectedRole == TEACHER) {
             isGradeOk = true
             isTeacherDataOk = checkTeacherInputs()
@@ -187,13 +200,16 @@ class RegisterFragment : Fragment() {
             isGradeOk = checkEnteredGrade(enteredGrade)
         }
 
+        // Is all the information correct ?
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk && isGradeOk) {
+            // Checking the user role and opening the corresponding home page
             if (selectedRole == TEACHER) {
                 makeShortToast(
                     requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
                 )
                 // TODO
             } else {
+                // Saves the student's login and then opens the student's home page
                 editor.putBoolean(IS_USER_LOGGED_IN, true)
                 editor.putString(USER_PHONE_NUM, enteredPhoneNum)
                 editor.putString(USER_ROLE, selectedRole)
@@ -206,6 +222,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Checking the information entered by the teacher
     private fun checkTeacherInputs(): Boolean {
         val enteredExpertise = binding.tvTeacherExpertiseReg.text.toString()
         val enteredActivityYear = binding.etActivityYearReg.text.toString()
@@ -213,6 +230,7 @@ class RegisterFragment : Fragment() {
         var isEnteredExpertiseOk = false
         var isEnteredActivityYearOk = false
 
+        // Is the entered expertise correct ?
         if (enteredExpertise.isEmpty()) {
             binding.etLayoutTeacherExpertiseReg.error = "رشته مورد تدریس خود را وارد کنید"
         } else if (enteredExpertise !in expertiseItems) {
@@ -222,6 +240,7 @@ class RegisterFragment : Fragment() {
             isEnteredExpertiseOk = true
         }
 
+        // Is the entered year of activity correct?
         if (enteredActivityYear.isEmpty()) {
             binding.etLayoutTeacherActivityYearReg.error = "سال شروع به فعالیت خود را وارد کنید"
         } else if (enteredActivityYear.toInt() !in 1300..1402) {
@@ -231,9 +250,11 @@ class RegisterFragment : Fragment() {
             isEnteredActivityYearOk = true
         }
 
+        // Are both correct ?
         return isEnteredExpertiseOk && isEnteredActivityYearOk
     }
 
+    // Is the date of birth correct ?
     private fun checkEnteredDay(day: String): Boolean {
         return if (day.isEmpty()) {
             binding.etLayoutDayReg.error = " "
@@ -251,6 +272,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Is the date of birth correct ?
     private fun checkEnteredMonth(day: String, month: String): Boolean {
         return if (month.isEmpty()) {
             binding.etLayoutMonthReg.error = " "
@@ -277,6 +299,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Does the entered birth date match the entered birth month?
     private fun checkEnteredDayByMonth(day: String, month: String): Boolean {
         return if (month in arrayListOf(
                 "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور"
@@ -300,6 +323,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Is the date of birth correct ?
     private fun checkEnteredYear(year: String): Boolean {
         return if (year.isEmpty()) {
             binding.etLayoutYearReg.error = " "
@@ -317,6 +341,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // Is the entered grade correct?
     private fun checkEnteredGrade(grade: String): Boolean {
         return if (grade.isEmpty()) {
             binding.etLayoutStudentGradeReg.error = "پایه تحصیلی خود را وارد کنید"
@@ -333,6 +358,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
+    // It changes the color of the app based on the role sent
     private fun setSelectedRoleColor(
         hintText: String
     ) {
@@ -349,6 +375,7 @@ class RegisterFragment : Fragment() {
             textInputLayout.defaultHintTextColor = colorStateList
         }
 
+        // Based on the role of the user, it shows the relevant inputs
         if (selectedRole == TEACHER) {
             binding.etLayoutStudentGradeReg.visibility = View.GONE
 

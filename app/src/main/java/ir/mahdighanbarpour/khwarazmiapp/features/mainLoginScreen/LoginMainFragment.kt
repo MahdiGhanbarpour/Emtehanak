@@ -55,7 +55,7 @@ class LoginMainFragment : Fragment() {
     private fun listener() {
         binding.radioGroupRoleLogin.setOnCheckedChangeListener { _, id ->
 
-            // Change the Input Layouts hint based on the user's selected role
+            // Based on the selected role, it makes changes in the color and other features of the page
             when (id) {
                 R.id.radioBtStudentLogin -> {
                     setSelectedRoleColor(
@@ -118,6 +118,7 @@ class LoginMainFragment : Fragment() {
                 SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY, enteredNum
             )
 
+            // Opening the OTP page and send the role and phone number to it
             navController.navigate(
                 R.id.action_loginMainFragment_to_loginOtpFragment, bundle
             )
@@ -126,6 +127,7 @@ class LoginMainFragment : Fragment() {
         }
     }
 
+    // Based on the selected role, it makes changes in the color and other features of the page
     private fun setSelectedRoleColor(
         selectedRole: String,
         hintText: String,
@@ -140,6 +142,7 @@ class LoginMainFragment : Fragment() {
         binding.etLayoutNumLogin.boxStrokeColor =
             ContextCompat.getColor(requireContext(), mainColor)
 
+        // Checking the user's Android version
         if (Build.VERSION.SDK_INT >= 23) {
             binding.etLayoutNumLogin.defaultHintTextColor =
                 resources.getColorStateList(mainColor, requireActivity().theme)
@@ -171,6 +174,7 @@ class LoginMainFragment : Fragment() {
             )
         )
 
+        // Notifying the parent activity
         (requireActivity() as LoginActivity).changeAppColor(selectedRole)
     }
 }

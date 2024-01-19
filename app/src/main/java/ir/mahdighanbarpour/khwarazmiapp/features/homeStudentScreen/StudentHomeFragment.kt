@@ -44,12 +44,13 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
     private fun listener() {
         binding.cardViewOpenDrawerStudentMain.setOnClickListener {
+            // If the button is pressed, it will open the NavigationDrawer
             (requireActivity() as StudentMainActivity).openDrawer()
         }
     }
 
     private fun initSlider() {
-        // Set up data and launch slider
+        // Setting up data and launch slider
         val imageList = arrayListOf(
             SlideModel(
                 "https://www.tasvirezendegi.com/wp-content/uploads/2023/03/Sampad.jpg",
@@ -72,7 +73,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun initCourseRecycler() {
-        // Set up data and launch recycler
+        // Making the adapter and making the necessary settings
         val data = arrayListOf(
             Pair(
                 "علوم تجربی",
@@ -104,7 +105,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun initPopularExamRecycler() {
-        // Set up data and launch recycler
+        // Making the adapter and making the necessary settings
         val data = arrayListOf(
             Pair(
                 "آزمون ورودی نهم سمپاد 1400",
@@ -133,7 +134,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun initExperiencedTeachersRecycler() {
-        // Set up data and launch recycler
+        // Making the adapter and making the necessary settings
         val data = arrayListOf(
             Triple(
                 "علی زمردیان", "کار و فناوری", null
@@ -159,14 +160,20 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     override fun onCourseClicked(data: Pair<String, String>) {
+        // One of the courses has been clicked
+        // TODO
         makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
     }
 
     override fun onPopularExamClicked(data: Pair<String, String>) {
+        // One of the exams has been clicked
+        // TODO
         makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
     }
 
     override fun onExperiencedTeachersClicked(data: Triple<String, String, String?>) {
+        // One of the teachers has been clicked
+        // TODO
         makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
     }
 }

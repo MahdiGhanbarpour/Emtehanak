@@ -22,18 +22,22 @@ class ExperiencedTeachersAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Triple<String, String, String?>) {
+            // Placing the sent data in the relevant views
             binding.tvExperiencedTeacherNameItem.text = data.first
             binding.tvExperiencedTeacherCourseItem.text = data.second
 
+            // If the teacher has a picture, it will show the picture
             if (data.third != null) {
                 binding.ivExperiencedTeachersProfileImageItem.visibility = View.VISIBLE
                 binding.ivExperiencedTeachersDefaultProfileImageItem.visibility = View.GONE
 
+                // Load image
                 Glide.with(binding.root.context).load(data.third).error(R.drawable.img_error)
                     .apply(RequestOptions().centerCrop())
                     .into(binding.ivExperiencedTeachersProfileImageItem)
             }
 
+            // One of the items has been clicked
             itemView.setOnClickListener {
                 experiencedTeachersEvents.onExperiencedTeachersClicked(data)
             }

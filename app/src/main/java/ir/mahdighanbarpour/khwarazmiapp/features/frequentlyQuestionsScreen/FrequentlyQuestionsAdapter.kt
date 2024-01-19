@@ -18,6 +18,7 @@ class FrequentlyQuestionsAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: FrequentlyQuestionsArray) {
+            // Placing the sent data in the relevant views
             binding.tvFrequentlyQuestions.text = data.question
             binding.tvFrequentlyQuestionsAnswer.text = data.answer
         }

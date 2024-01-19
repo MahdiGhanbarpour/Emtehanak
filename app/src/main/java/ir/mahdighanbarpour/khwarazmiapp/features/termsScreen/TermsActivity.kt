@@ -18,6 +18,7 @@ class TermsActivity : AppCompatActivity() {
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
+            // If the back button is pressed, the page will be closed
             finish()
         }
     }

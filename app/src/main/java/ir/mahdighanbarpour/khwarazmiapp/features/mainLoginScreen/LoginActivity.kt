@@ -48,18 +48,22 @@ class LoginActivity : AppCompatActivity() {
 
     private fun listener() {
         binding.btContinueLogin.setOnClickListener {
+            // The continue button is pressed
             onContinueButtonClicked()
         }
         binding.ivHelpLogin.setOnClickListener {
+            // The help button is pressed
             showHelpBottomSheet()
         }
         binding.tvAcceptanceTerms.setOnClickListener {
+            // If the AcceptanceTerms text is pressed, the Terms page will open
             val intent = Intent(this, TermsActivity::class.java)
             startActivity(intent)
         }
     }
 
     fun changeAppColor(role: String) {
+        // It changes the color of the app based on the role sent
         val color = if (role == TEACHER) R.color.teacher_color else R.color.student_color
         selectedRole = role
 
@@ -104,7 +108,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showHelpBottomSheet() {
+        // Checking if the Help Bottom Sheet is currently displayed or not
         if (!helpBottomSheet.isVisible) {
+            // If it is not showing, it will show it
             val bundle = Bundle()
 
             bundle.putString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY, selectedRole)
