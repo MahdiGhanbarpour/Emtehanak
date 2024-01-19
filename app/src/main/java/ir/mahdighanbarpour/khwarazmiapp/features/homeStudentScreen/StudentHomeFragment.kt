@@ -141,7 +141,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             Triple(
                 "کاظم نیری",
                 "علوم تجربی",
-                "https://gama.ir/uploads/user/avatars/teacherAvatar_82a89cc2afc8d08097ef56b62c668f99.jpg"
+                "https://cdn.pana.ir/Media/Image/1402/01/11/638158359306262261.jpg"
             ),
             Triple(
                 "سجاد غانمی زاده", "کار و فناوری - هنر", null

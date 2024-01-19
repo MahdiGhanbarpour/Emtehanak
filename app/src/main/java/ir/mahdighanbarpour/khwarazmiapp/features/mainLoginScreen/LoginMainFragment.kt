@@ -2,6 +2,7 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen
 
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -103,6 +104,8 @@ class LoginMainFragment : Fragment() {
             binding.etLayoutNumLogin.error = "شماره تلفن همراه معتبر نیست"
         } else if (!enteredNum.startsWith("09")) {
             binding.etLayoutNumLogin.error = "شماره تلفن همراه می‌بایست با 09 اغاز شود"
+        } else if (!TextUtils.isDigitsOnly(enteredNum)) {
+            binding.etLayoutNumLogin.error = "شماره تلفن همراه معتبر نیست"
         } else {
             val bundle = Bundle()
 
