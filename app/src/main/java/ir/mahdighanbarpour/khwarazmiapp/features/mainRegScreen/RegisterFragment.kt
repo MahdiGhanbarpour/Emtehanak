@@ -12,11 +12,16 @@ import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat.getColor
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.model.data.MainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
@@ -24,9 +29,11 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
+import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeBoxStrokeColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterFragment : Fragment() {
 
@@ -80,6 +87,9 @@ class RegisterFragment : Fragment() {
         "دوازدهم"
     )
 
+    private val registerViewModel: RegisterViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
+
     private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreateView(
@@ -97,6 +107,14 @@ class RegisterFragment : Fragment() {
         setBirthdayMonthAdapter()
         setExpertiseAdapter()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Clear the values in Composite Disposable
+        compositeDisposable.clear()
+    }
+
 
     private fun initUi() {
         // Getting the phone number and the selected role
@@ -209,15 +227,12 @@ class RegisterFragment : Fragment() {
                 )
                 // TODO
             } else {
-                // Saves the student's login and then opens the student's home page
-                editor.putBoolean(IS_USER_LOGGED_IN, true)
-                editor.putString(USER_PHONE_NUM, enteredPhoneNum)
-                editor.putString(USER_ROLE, selectedRole)
-                editor.commit()
-
-                val intent = Intent(requireContext(), StudentMainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
+                registerStudent(
+                    enteredName,
+                    enteredPhoneNum,
+                    "$enteredYear/$enteredMonth/$enteredDay",
+                    enteredGrade
+                )
             }
         }
     }
@@ -356,6 +371,42 @@ class RegisterFragment : Fragment() {
 
             true
         }
+    }
+
+    private fun registerStudent(
+        name: String, phoneNumber: String, birthday: String, grade: String
+    ) {
+        // receiving information
+        registerViewModel.registerStudent(name, phoneNumber, birthday, grade).asyncRequest()
+            .subscribe(object : SingleObserver<MainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    Snackbar.make(
+                        binding.root, e.toString(), Snackbar.LENGTH_INDEFINITE
+                    ).setAction("تلاش مجدد") { registerViewModel }.show()
+                }
+
+                override fun onSuccess(t: MainResult) {
+                    if (t.status == 200) {
+                        openStudentHomePage()
+                    }
+                }
+            })
+    }
+
+    private fun openStudentHomePage() {
+        // Saves the student's login and then opens the student's home page
+        editor.putBoolean(IS_USER_LOGGED_IN, true)
+        editor.putString(USER_PHONE_NUM, enteredPhoneNum)
+        editor.putString(USER_ROLE, selectedRole)
+        editor.commit()
+
+        val intent = Intent(requireContext(), StudentMainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     // It changes the color of the app based on the role sent

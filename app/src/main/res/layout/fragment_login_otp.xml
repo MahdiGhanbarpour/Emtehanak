@@ -51,6 +51,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutOtpEditTexts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -104,5 +105,20 @@
             android:textAlignment="center" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvOtpError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/entered_code_is_not_correct"
+        android:textAlignment="center"
+        android:textColor="@color/red"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayoutOtpEditTexts" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

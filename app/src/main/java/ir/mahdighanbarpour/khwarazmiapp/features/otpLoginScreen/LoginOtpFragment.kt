@@ -1,6 +1,8 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
@@ -17,15 +19,26 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.model.data.MainResult
+import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
-import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
+import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
 import java.util.TimerTask
 
@@ -35,6 +48,7 @@ class LoginOtpFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var selectedRole: String
     private lateinit var enteredNumber: String
+    private lateinit var editor: SharedPreferences.Editor
 
     private var timer: Timer? = null
 
@@ -44,6 +58,11 @@ class LoginOtpFragment : Fragment() {
     private var thirdEtIsDelClicked = false
     private var fourthEtIsDelClicked = false
     private var otpResendTime = 60
+
+    private val loginOtpViewModel: LoginOtpViewModel by viewModel()
+    private val compositeDisposable = CompositeDisposable()
+
+    private val sharedPreferences: SharedPreferences by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -65,7 +84,11 @@ class LoginOtpFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+
         timer?.cancel()
+
+        // Clear the values in Composite Disposable
+        compositeDisposable.clear()
     }
 
 
@@ -242,8 +265,9 @@ class LoginOtpFragment : Fragment() {
 
         binding.tvOTP.text = "کد فعالسازی 4 رقمی به $enteredNumber ارسال شد"
 
-        // It changes the resend OTP color of the app based on the role sent
+        editor = sharedPreferences.edit()
 
+        // It changes the resend OTP color of the app based on the role sent
         binding.ivResendOTP.setColorFilter(
             ContextCompat.getColor(
                 requireContext(),
@@ -303,7 +327,58 @@ class LoginOtpFragment : Fragment() {
 
         if (enteredOtpCode != "1234") {
             changeEditTextsColor(R.color.red)
-            makeShortToast(requireContext(), "کد وارد شده معتبر نیست")
+            binding.tvOtpError.visibility = View.VISIBLE
+        } else {
+            if (selectedRole == STUDENT) {
+                getUserInformation()
+            } else {
+                changeEditTextsColor(R.color.teacher_color)
+
+                val roleBundle = Bundle()
+                roleBundle.putString(
+                    SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
+                )
+
+                roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
+
+                navController.navigate(
+                    R.id.action_loginOtpFragment_to_registerFragment, roleBundle
+                )
+            }
+        }
+    }
+
+    private fun getUserInformation() {
+        // receiving information
+        loginOtpViewModel.loginStudent(enteredNumber).asyncRequest()
+            .subscribe(object : SingleObserver<MainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    Snackbar.make(
+                        binding.root, e.toString(), Snackbar.LENGTH_INDEFINITE
+                    ).setAction("تلاش مجدد") { getUserInformation() }.show()
+                }
+
+                override fun onSuccess(t: MainResult) {
+                    checkUserInformation(t)
+                }
+            })
+    }
+
+    private fun checkUserInformation(result: MainResult) {
+        if (result.status == 200) {
+            // Saves the student's login and then opens the student's home page
+            editor.putBoolean(IS_USER_LOGGED_IN, true)
+            editor.putString(USER_PHONE_NUM, enteredNumber)
+            editor.putString(USER_ROLE, selectedRole)
+            editor.commit()
+
+            val intent = Intent(requireContext(), StudentMainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         } else {
             changeEditTextsColor(if (selectedRole == STUDENT) R.color.student_color else R.color.teacher_color)
 

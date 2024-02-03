@@ -50,4 +50,5 @@
     <string name="grade">پایه تحصیلی</string>
     <string name="activity_year">سال شروع به فعالیت</string>
     <string name="teacher_expertise">رشته های مورد تدریس</string>
+    <string name="entered_code_is_not_correct">کد وارد شده صحیح نیست</string>
 </resources>

@@ -2,8 +2,12 @@ package ir.mahdighanbarpour.khwarazmiapp.di
 
 import android.content.Context
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsViewModel
+import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterViewModel
+import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpViewModel
 import ir.mahdighanbarpour.khwarazmiapp.model.dataBase.MainDataBase
+import ir.mahdighanbarpour.khwarazmiapp.model.net.apiServiceBuilder
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.FrequentlyQuestionsRepository
+import ir.mahdighanbarpour.khwarazmiapp.model.repositories.StudentRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -16,6 +20,11 @@ val myModules = module {
     single { get<MainDataBase>().mainDao }
 
     single { FrequentlyQuestionsRepository(get()) }
+    single { StudentRepository(get()) }
+
+    single { apiServiceBuilder() }
 
     viewModel { FrequentlyQuestionsViewModel(get()) }
+    viewModel { LoginOtpViewModel(get()) }
+    viewModel { RegisterViewModel(get()) }
 }
