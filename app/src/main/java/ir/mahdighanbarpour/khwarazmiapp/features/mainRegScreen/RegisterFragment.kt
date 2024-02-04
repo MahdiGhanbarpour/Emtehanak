@@ -27,10 +27,13 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_P
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeBoxStrokeColor
+import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,6 +46,7 @@ class RegisterFragment : Fragment() {
     private lateinit var enteredPhoneNum: String
     private lateinit var textInputLayouts: ArrayList<TextInputLayout>
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var parentActivity: LoginActivity
 
     private var mainColor: Int = 0
 
@@ -117,6 +121,8 @@ class RegisterFragment : Fragment() {
 
 
     private fun initUi() {
+        parentActivity = requireActivity() as LoginActivity
+
         // Getting the phone number and the selected role
         selectedRole = requireArguments().getString(SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY)!!
         enteredPhoneNum = requireArguments().getString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY)!!
@@ -227,12 +233,20 @@ class RegisterFragment : Fragment() {
                 )
                 // TODO
             } else {
-                registerStudent(
-                    enteredName,
-                    enteredPhoneNum,
-                    "$enteredYear/$enteredMonth/$enteredDay",
-                    enteredGrade
-                )
+                if (isInternetAvailable(requireContext())) {
+                    playLoadingAnim()
+
+                    registerStudent(
+                        enteredName,
+                        enteredPhoneNum,
+                        "$enteredYear/${monthItems.indexOf(enteredMonth)}/$enteredDay",
+                        enteredGrade
+                    )
+                } else {
+                    Snackbar.make(
+                        binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
+                    ).setAction("تلاش مجدد") { checkInputs() }.show()
+                }
             }
         }
     }
@@ -385,22 +399,32 @@ class RegisterFragment : Fragment() {
 
                 override fun onError(e: Throwable) {
                     Snackbar.make(
-                        binding.root, e.toString(), Snackbar.LENGTH_INDEFINITE
-                    ).setAction("تلاش مجدد") { registerViewModel }.show()
+                        binding.root, "خطا، لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
+                    ).setAction("تلاش مجدد") { checkInputs() }.show()
                 }
 
                 override fun onSuccess(t: MainResult) {
                     if (t.status == 200) {
-                        openStudentHomePage()
+                        openStudentHomePage(name, grade)
                     }
                 }
             })
     }
 
-    private fun openStudentHomePage() {
+    private fun playLoadingAnim() {
+        compositeDisposable.add(registerViewModel.isDataLoading.subscribe {
+            requireActivity().runOnUiThread {
+                parentActivity.playPauseLoadingAnim(it)
+            }
+        })
+    }
+
+    private fun openStudentHomePage(name: String, grade: String) {
         // Saves the student's login and then opens the student's home page
         editor.putBoolean(IS_USER_LOGGED_IN, true)
+        editor.putString(USER_FULL_NAME, name)
         editor.putString(USER_PHONE_NUM, enteredPhoneNum)
+        editor.putString(USER_GRADE, grade)
         editor.putString(USER_ROLE, selectedRole)
         editor.commit()
 

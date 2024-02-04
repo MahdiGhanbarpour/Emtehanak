@@ -18,7 +18,9 @@ const val REGISTER_TEACHER = "register_teacher"
 const val STUDENT_MAIN = "student_main"
 
 const val IS_USER_LOGGED_IN = "is_user_logged_in"
+const val USER_FULL_NAME = "user_full_name"
 const val USER_PHONE_NUM = "user_phone_num"
+const val USER_GRADE = "user_grade"
 const val USER_ROLE = "user_role"
 
 const val BASE_URL = "https://persiadev.net/khwarizmi/"

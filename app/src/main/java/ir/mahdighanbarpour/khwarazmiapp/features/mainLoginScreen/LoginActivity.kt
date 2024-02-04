@@ -2,6 +2,7 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -12,7 +13,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.shared.HelpBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_MAIN
 import ir.mahdighanbarpour.khwarazmiapp.utils.LOGIN_OTP
 import ir.mahdighanbarpour.khwarazmiapp.utils.REGISTER_MAIN
@@ -79,6 +80,18 @@ class LoginActivity : AppCompatActivity() {
         )
 
         binding.tvAcceptanceTerms.setTextColor(ContextCompat.getColor(this, color))
+    }
+
+    fun playPauseLoadingAnim(isLoading: Boolean) {
+        if (isLoading) {
+            binding.animationViewLoginReg.visibility = View.VISIBLE
+            binding.btContinueLogin.text = null
+            binding.animationViewLoginReg.playAnimation()
+        } else {
+            binding.animationViewLoginReg.visibility = View.GONE
+            binding.btContinueLogin.text = "ادامه"
+            binding.animationViewLoginReg.pauseAnimation()
+        }
     }
 
     private fun onContinueButtonClicked() {

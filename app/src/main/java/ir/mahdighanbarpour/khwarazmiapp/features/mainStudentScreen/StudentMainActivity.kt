@@ -1,11 +1,14 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import ir.mahdighanbarpour.khwarazmiapp.R
@@ -15,18 +18,21 @@ import ir.mahdighanbarpour.khwarazmiapp.features.aboutUsScreen.AboutUsActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.profileStudentScreen.StudentProfileFragment
+import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.features.teachersStudentScreen.StudentTeachersFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.shared.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
+
 
 class StudentMainActivity : AppCompatActivity() {
 
@@ -51,6 +57,7 @@ class StudentMainActivity : AppCompatActivity() {
         editor = sharedPreferences.edit()
 
         initBottomNav()
+        setDrawerData()
         listener()
     }
 
@@ -162,6 +169,18 @@ class StudentMainActivity : AppCompatActivity() {
             .add(R.id.nav_host_fragment_student, firstFragment, "1").commit()
     }
 
+    @SuppressLint("SetTextI18n")
+    private fun setDrawerData() {
+        val navigationView = binding.navViewStudentMain
+        val headerView = navigationView.getHeaderView(0)
+
+        val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeader) as TextView
+        val tvGrade = headerView.findViewById<View>(R.id.tvUserDetailDrawerHeader) as TextView
+
+        tvUsername.text = sharedPreferences.getString(USER_FULL_NAME, "خطا")
+        tvGrade.text = "پایه " + sharedPreferences.getString(USER_GRADE, "خطا")
+    }
+
     private fun showLogOutDialog() {
         // Displaying the logout dialog
         val dialog = AlertDialog.Builder(this).create()
@@ -178,7 +197,9 @@ class StudentMainActivity : AppCompatActivity() {
         dialogBinding.btYesLogout.setOnClickListener {
             // If the exit button is pressed, the user's login data will be deleted and it will go to the login page
             editor.putBoolean(IS_USER_LOGGED_IN, false)
+            editor.putString(USER_FULL_NAME, null)
             editor.putString(USER_PHONE_NUM, null)
+            editor.putString(USER_GRADE, null)
             editor.putString(USER_ROLE, null)
             editor.commit()
 

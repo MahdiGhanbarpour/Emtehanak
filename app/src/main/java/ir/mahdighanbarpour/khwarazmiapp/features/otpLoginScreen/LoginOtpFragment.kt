@@ -25,6 +25,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.MainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
@@ -34,9 +35,12 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FR
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
+import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
@@ -49,6 +53,7 @@ class LoginOtpFragment : Fragment() {
     private lateinit var selectedRole: String
     private lateinit var enteredNumber: String
     private lateinit var editor: SharedPreferences.Editor
+    private lateinit var parentActivity: LoginActivity
 
     private var timer: Timer? = null
 
@@ -254,6 +259,8 @@ class LoginOtpFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun initUi() {
+        parentActivity = requireActivity() as LoginActivity
+
         // // Creating a list of inputs on the page
         editTextsList = arrayListOf(
             binding.etFirstOtp, binding.etSecondOtp, binding.etThirdOtp, binding.etFourthOtp
@@ -321,34 +328,52 @@ class LoginOtpFragment : Fragment() {
     }
 
     fun checkOtpCode() {
-        // Checking the OTP entered by the user
-        val enteredOtpCode =
-            binding.etFirstOtp.text.toString() + binding.etSecondOtp.text.toString() + binding.etThirdOtp.text.toString() + binding.etFourthOtp.text.toString()
+        if (isInternetAvailable(requireContext())) {
+            // Checking the OTP entered by the user
+            val enteredOtpCode =
+                binding.etFirstOtp.text.toString() + binding.etSecondOtp.text.toString() + binding.etThirdOtp.text.toString() + binding.etFourthOtp.text.toString()
 
-        if (enteredOtpCode != "1234") {
-            changeEditTextsColor(R.color.red)
-            binding.tvOtpError.visibility = View.VISIBLE
-        } else {
-            if (selectedRole == STUDENT) {
-                getUserInformation()
+            if (enteredOtpCode != "1234") {
+                changeEditTextsColor(R.color.red)
+                binding.tvOtpError.visibility = View.VISIBLE
+
             } else {
-                changeEditTextsColor(R.color.teacher_color)
+                if (selectedRole == STUDENT) {
+                    playLoadingAnim()
+                    getStudentInformation()
 
-                val roleBundle = Bundle()
-                roleBundle.putString(
-                    SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
-                )
+                } else {
+                    changeEditTextsColor(R.color.teacher_color)
 
-                roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
+                    val roleBundle = Bundle()
+                    roleBundle.putString(
+                        SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
+                    )
 
-                navController.navigate(
-                    R.id.action_loginOtpFragment_to_registerFragment, roleBundle
-                )
+                    roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
+
+                    navController.navigate(
+                        R.id.action_loginOtpFragment_to_registerFragment, roleBundle
+                    )
+
+                }
             }
+        } else {
+            Snackbar.make(
+                binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
+            ).setAction("تلاش مجدد") { checkOtpCode() }.show()
         }
     }
 
-    private fun getUserInformation() {
+    private fun playLoadingAnim() {
+        compositeDisposable.add(loginOtpViewModel.isDataLoading.subscribe {
+            requireActivity().runOnUiThread {
+                parentActivity.playPauseLoadingAnim(it)
+            }
+        })
+    }
+
+    private fun getStudentInformation() {
         // receiving information
         loginOtpViewModel.loginStudent(enteredNumber).asyncRequest()
             .subscribe(object : SingleObserver<MainResult> {
@@ -358,21 +383,23 @@ class LoginOtpFragment : Fragment() {
 
                 override fun onError(e: Throwable) {
                     Snackbar.make(
-                        binding.root, e.toString(), Snackbar.LENGTH_INDEFINITE
-                    ).setAction("تلاش مجدد") { getUserInformation() }.show()
+                        binding.root, "خطا، لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
+                    ).setAction("تلاش مجدد") { checkOtpCode() }.show()
                 }
 
                 override fun onSuccess(t: MainResult) {
-                    checkUserInformation(t)
+                    checkStudentInformation(t)
                 }
             })
     }
 
-    private fun checkUserInformation(result: MainResult) {
+    private fun checkStudentInformation(result: MainResult) {
         if (result.status == 200) {
             // Saves the student's login and then opens the student's home page
             editor.putBoolean(IS_USER_LOGGED_IN, true)
+            editor.putString(USER_FULL_NAME, result.result.student.fullName)
             editor.putString(USER_PHONE_NUM, enteredNumber)
+            editor.putString(USER_GRADE, result.result.student.grade)
             editor.putString(USER_ROLE, selectedRole)
             editor.commit()
 
@@ -380,7 +407,7 @@ class LoginOtpFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else {
-            changeEditTextsColor(if (selectedRole == STUDENT) R.color.student_color else R.color.teacher_color)
+            changeEditTextsColor(R.color.student_color)
 
             val roleBundle = Bundle()
             roleBundle.putString(

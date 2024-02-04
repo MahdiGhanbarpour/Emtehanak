@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.shared
+package ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses
 
 import android.content.Intent
 import android.os.Bundle
