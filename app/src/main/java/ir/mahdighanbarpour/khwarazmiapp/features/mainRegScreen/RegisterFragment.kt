@@ -399,7 +399,7 @@ class RegisterFragment : Fragment() {
 
                 override fun onError(e: Throwable) {
                     Snackbar.make(
-                        binding.root, "خطا، لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
+                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
                     ).setAction("تلاش مجدد") { checkInputs() }.show()
                 }
 

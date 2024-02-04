@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.CoursesAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.PopularExamAdapter
@@ -168,7 +170,8 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     override fun onPopularExamClicked(data: Pair<String, String>) {
         // One of the exams has been clicked
         // TODO
-        makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
+        val intent = Intent(requireActivity(),ExamDetailActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onExperiencedTeachersClicked(data: Triple<String, String, String?>) {

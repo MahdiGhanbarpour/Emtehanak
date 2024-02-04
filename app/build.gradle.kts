@@ -83,4 +83,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.github.akarnokd:rxjava3-retrofit-adapter:3.0.0")
+
+    // Spark Button
+    implementation("com.github.varunest:sparkbutton:1.0.6")
 }

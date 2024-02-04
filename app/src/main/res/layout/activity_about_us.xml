@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/iv_back"
+                android:id="@+id/ivBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -44,9 +44,9 @@
                 android:text="@string/about_us"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_back"
-                app:layout_constraintStart_toEndOf="@+id/iv_back"
-                app:layout_constraintTop_toTopOf="@+id/iv_back" />
+                app:layout_constraintBottom_toBottomOf="@+id/ivBack"
+                app:layout_constraintStart_toEndOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="@+id/ivBack" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

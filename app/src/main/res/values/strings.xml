@@ -51,4 +51,7 @@
     <string name="activity_year">سال شروع به فعالیت</string>
     <string name="teacher_expertise">رشته های مورد تدریس</string>
     <string name="entered_code_is_not_correct">کد وارد شده صحیح نیست</string>
+    <string name="add_remove_bookmark">افزودن یا برداشتن نشانک</string>
+    <string name="description">توضیحات</string>
+    <string name="feature_image">تصویر ویژگی</string>
 </resources>

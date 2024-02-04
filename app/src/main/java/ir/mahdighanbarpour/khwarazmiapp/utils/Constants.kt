@@ -16,6 +16,7 @@ const val LOGIN_OTP = "login_otp"
 const val REGISTER_MAIN = "register_main"
 const val REGISTER_TEACHER = "register_teacher"
 const val STUDENT_MAIN = "student_main"
+const val EXAM_DETAIL = "exam_detail"
 
 const val IS_USER_LOGGED_IN = "is_user_logged_in"
 const val USER_FULL_NAME = "user_full_name"
