@@ -2,13 +2,19 @@ package ir.mahdighanbarpour.khwarazmiapp.utils
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
+import android.view.Window
+import android.view.WindowManager
+import android.view.animation.AlphaAnimation
+import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -68,4 +74,29 @@ fun isInternetAvailable(context: Context): Boolean {
 
 fun <T : Any> Single<T>.asyncRequest(): Single<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+fun changeStatusBarColor(
+    window: Window, statusBarColor: String, isAppearanceLightStatusBars: Boolean
+) {
+    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+    window.statusBarColor = Color.parseColor(statusBarColor)
+    WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars =
+        isAppearanceLightStatusBars
+}
+
+fun translateAnimation(
+    fromX: Float, toX: Float, fromY: Float, toY: Float, duration: Long
+): TranslateAnimation {
+    val anim = TranslateAnimation(fromX, toX, fromY, toY)
+    anim.duration = duration
+
+    return anim
+}
+
+fun alphaAnimation(fromAlpha: Float, toAlpha: Float, duration: Long): AlphaAnimation {
+    val anim = AlphaAnimation(fromAlpha, toAlpha)
+    anim.duration = duration
+
+    return anim
 }

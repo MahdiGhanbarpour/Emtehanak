@@ -10,11 +10,11 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamDetailBinding
 
 class ExamDetailAdapter(private val data: ArrayList<Triple<String, String, Int>>) :
-    RecyclerView.Adapter<ExamDetailAdapter.ExamDetailAdapter>() {
+    RecyclerView.Adapter<ExamDetailAdapter.ExamDetailAdapterViewHolder>() {
 
     private lateinit var binding: ItemExamDetailBinding
 
-    inner class ExamDetailAdapter(binding: ItemExamDetailBinding) :
+    inner class ExamDetailAdapterViewHolder(binding: ItemExamDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -29,16 +29,16 @@ class ExamDetailAdapter(private val data: ArrayList<Triple<String, String, Int>>
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamDetailAdapter {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExamDetailAdapterViewHolder {
         binding = ItemExamDetailBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ExamDetailAdapter(binding)
+        return ExamDetailAdapterViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    override fun onBindViewHolder(holder: ExamDetailAdapter, position: Int) {
+    override fun onBindViewHolder(holder: ExamDetailAdapterViewHolder, position: Int) {
         holder.bindData(data[position])
     }
 }

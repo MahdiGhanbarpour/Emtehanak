@@ -104,7 +104,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:strokeColor="@color/black_transparent_15"
+                app:strokeColor="@color/black_transparent_15_percent"
                 app:strokeWidth="0.2dp">
 
                 <com.denzcoskun.imageslider.ImageSlider
@@ -174,7 +174,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/black_transparent_15"
+                            app:strokeColor="@color/black_transparent_15_percent"
                             app:strokeWidth="1dp">
 
                             <LinearLayout
@@ -219,7 +219,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/black_transparent_15"
+                            app:strokeColor="@color/black_transparent_15_percent"
                             app:strokeWidth="1dp">
 
                             <LinearLayout
@@ -277,7 +277,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/black_transparent_15"
+                            app:strokeColor="@color/black_transparent_15_percent"
                             app:strokeWidth="1dp">
 
                             <LinearLayout
@@ -322,7 +322,7 @@
                             android:focusable="true"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
-                            app:strokeColor="@color/black_transparent_15"
+                            app:strokeColor="@color/black_transparent_15_percent"
                             app:strokeWidth="1dp">
 
                             <LinearLayout

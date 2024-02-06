@@ -1,6 +1,8 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen
 
+import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamDetailBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.ExamMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.utils.EXAM_DETAIL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
-
 
 class ExamDetailActivity : AppCompatActivity() {
 
@@ -27,8 +29,12 @@ class ExamDetailActivity : AppCompatActivity() {
         binding = ActivityExamDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        window.decorView.systemUiVisibility =
-            (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            window.decorView.systemUiVisibility =
+                (View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+        }
         window.statusBarColor = Color.TRANSPARENT
 
         initDetailRecycler()
@@ -44,6 +50,10 @@ class ExamDetailActivity : AppCompatActivity() {
             // The help button is pressed
             showHelpBottomSheet()
         }
+        binding.btStartExamDetail.setOnClickListener {
+            val intent = Intent(this, ExamMainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initDetailRecycler() {
@@ -53,7 +63,7 @@ class ExamDetailActivity : AppCompatActivity() {
                 "طراح", "آموزش و پرورش", R.drawable.ic_logo
             ),
             Triple(
-                "وضعیت", "تایید شده", R.drawable.ic_like_selected
+                "وضعیت", "معتبر", R.drawable.ic_like_selected
             ),
             Triple(
                 "قیمت", "رایگان", R.drawable.ic_add

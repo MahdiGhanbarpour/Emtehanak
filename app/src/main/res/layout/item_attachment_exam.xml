@@ -2,25 +2,25 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="140dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="24dp"
+    android:layout_marginBottom="16dp"
     android:backgroundTint="#0000"
-    android:clickable="true"
-    android:focusable="true"
     android:layoutDirection="rtl"
     app:cardCornerRadius="8dp"
     app:cardElevation="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardViewPopularExamImageItem"
-            android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:id="@+id/cardViewAttachmentImageItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:backgroundTint="@color/error_bg_color"
+            android:clickable="true"
+            android:focusable="true"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,35 +28,26 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/ivPopularExamImageItem"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:contentDescription="@string/exam_image" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black_transparent_15_percent" />
+                android:id="@+id/ivAttachmentImageItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/course_image"
+                android:src="@drawable/img_test" />
 
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
-            android:id="@+id/tvPopularExamNameItem"
-            android:layout_width="match_parent"
+            android:id="@+id/tvAttachmentDetailItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:textAlignment="viewStart"
-            android:textColor="@color/black"
-            app:autoSizeMaxTextSize="15sp"
-            app:autoSizeMinTextSize="11sp"
-            app:autoSizeTextType="uniform"
+            android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamImageItem"
-            tools:text="امتحان نهایی 1401" />
+            app:layout_constraintTop_toBottomOf="@+id/cardViewAttachmentImageItem"
+            tools:text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
