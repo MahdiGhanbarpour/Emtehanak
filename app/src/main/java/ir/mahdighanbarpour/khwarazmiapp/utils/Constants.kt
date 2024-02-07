@@ -7,6 +7,7 @@ const val SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY =
     "send_page_name_to_frequently_questions_page"
 const val SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY = "send_entered_phone_number_to_otp_page"
 const val SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY = "send_entered_phone_number_to_reg_page"
+const val SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY = "send_selected_exam_to_exam_page"
 
 const val TEACHER = "teacher"
 const val STUDENT = "student"

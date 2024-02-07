@@ -21,7 +21,7 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentRegisterBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
-import ir.mahdighanbarpour.khwarazmiapp.model.data.MainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
@@ -392,7 +392,7 @@ class RegisterFragment : Fragment() {
     ) {
         // receiving information
         registerViewModel.registerStudent(name, phoneNumber, birthday, grade).asyncRequest()
-            .subscribe(object : SingleObserver<MainResult> {
+            .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)
                 }
@@ -403,7 +403,7 @@ class RegisterFragment : Fragment() {
                     ).setAction("تلاش مجدد") { checkInputs() }.show()
                 }
 
-                override fun onSuccess(t: MainResult) {
+                override fun onSuccess(t: StudentMainResult) {
                     if (t.status == 200) {
                         openStudentHomePage(name, grade)
                     }

@@ -3,16 +3,16 @@ package ir.mahdighanbarpour.khwarazmiapp.model.data
 
 import com.google.gson.annotations.SerializedName
 
-data class MainResult(
+data class StudentMainResult(
     @SerializedName("massage")
     val massage: String,
     @SerializedName("result")
-    val result: Result,
+    val result: StudentResult,
     @SerializedName("status")
     val status: Int
 )
 
-data class Result(
+data class StudentResult(
     @SerializedName("student")
     val student: Student
 )

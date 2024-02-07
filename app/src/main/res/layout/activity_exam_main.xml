@@ -143,7 +143,7 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/next"
             android:outlineProvider="none"
-            android:visibility="visible"
+            android:visibility="gone"
             app:cornerRadius="6dp"
             app:icon="@drawable/ic_arrow"
             app:iconGravity="textEnd"

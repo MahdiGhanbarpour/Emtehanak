@@ -27,7 +27,7 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
-import ir.mahdighanbarpour.khwarazmiapp.model.data.MainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
@@ -376,7 +376,7 @@ class LoginOtpFragment : Fragment() {
     private fun getStudentInformation() {
         // receiving information
         loginOtpViewModel.loginStudent(enteredNumber).asyncRequest()
-            .subscribe(object : SingleObserver<MainResult> {
+            .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)
                 }
@@ -387,13 +387,13 @@ class LoginOtpFragment : Fragment() {
                     ).setAction("تلاش مجدد") { checkOtpCode() }.show()
                 }
 
-                override fun onSuccess(t: MainResult) {
+                override fun onSuccess(t: StudentMainResult) {
                     checkStudentInformation(t)
                 }
             })
     }
 
-    private fun checkStudentInformation(result: MainResult) {
+    private fun checkStudentInformation(result: StudentMainResult) {
         if (result.status == 200) {
             // Saves the student's login and then opens the student's home page
             editor.putBoolean(IS_USER_LOGGED_IN, true)

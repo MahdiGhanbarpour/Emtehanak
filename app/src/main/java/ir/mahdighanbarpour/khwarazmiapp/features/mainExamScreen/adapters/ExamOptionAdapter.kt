@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -21,7 +21,7 @@ class ExamOptionAdapter(
     inner class ExamOptionAdapterViewHolder(binding: ItemExamOptionBinding) :
         ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
+        @SuppressLint("SetTextI18n")
         fun bindData(data: QuestionOptions) {
             binding.tvOptionNumber.text = (adapterPosition + 1).toString()
             binding.tvOption.text = data.option

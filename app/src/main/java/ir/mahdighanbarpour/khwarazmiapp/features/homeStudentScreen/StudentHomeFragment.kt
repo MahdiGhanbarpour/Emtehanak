@@ -1,6 +1,7 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,13 +11,25 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.CoursesAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.PopularExamAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
+import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
+import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import org.koin.android.ext.android.inject
 
 class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     PopularExamAdapter.PopularExamEvents, ExperiencedTeachersAdapter.ExperiencedTeachersEvents {
@@ -25,6 +38,11 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     private lateinit var coursesAdapter: CoursesAdapter
     private lateinit var experiencedTeachersAdapter: ExperiencedTeachersAdapter
     private lateinit var popularExamAdapter: PopularExamAdapter
+
+    private val examViewModel: ExamViewModel by inject()
+    private val sharedPreferences: SharedPreferences by inject()
+
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,17 +56,61 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
         initSlider()
         initCourseRecycler()
-        initPopularExamRecycler()
         initExperiencedTeachersRecycler()
+
+        initData()
 
         listener()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
+
 
     private fun listener() {
         binding.cardViewOpenDrawerStudentMain.setOnClickListener {
             // If the button is pressed, it will open the NavigationDrawer
             (requireActivity() as StudentMainActivity).openDrawer()
         }
+    }
+
+    private fun initData() {
+        if (isInternetAvailable(requireContext())) {
+            getPopularExams()
+        } else {
+            Snackbar.make(
+                requireActivity().findViewById(android.R.id.content),
+                "عدم دسترسی به اینترنت",
+                Snackbar.LENGTH_INDEFINITE
+            ).setAction("تلاش مجدد") { initData() }.show()
+        }
+    }
+
+    private fun getPopularExams() {
+        examViewModel.getPopularExams(sharedPreferences.getString(USER_GRADE, null)!!)
+            .asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    // Error report to user
+                    Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        "خطا در دریافت اطلاعات",
+                        Snackbar.LENGTH_LONG
+                    ).setAction(
+                        "تلاش دوباره"
+                    ) { initData() }.show()
+                }
+
+                override fun onSuccess(t: ExamsMainResult) {
+                    // Starting RecyclerView with sent data
+                    initPopularExamRecycler(t.result)
+                }
+            })
     }
 
     private fun initSlider() {
@@ -106,29 +168,9 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
     }
 
-    private fun initPopularExamRecycler() {
+    private fun initPopularExamRecycler(data: ExamsResult) {
         // Making the adapter and making the necessary settings
-        val data = arrayListOf(
-            Pair(
-                "آزمون ورودی نهم سمپاد 1400",
-                "https://media.farsnews.ir/Uploaded/Files/Images/1399/12/21/13991221000563_Test_PhotoA.jpg"
-            ),
-            Pair(
-                "آزمون ورودی نهم سمپاد 1398",
-                "https://media.farsnews.ir/Uploaded/Files/Images/1399/12/21/13991221000563_Test_PhotoA.jpg"
-            ),
-            Pair(
-                "آزمون نهایی نهم 1401", "https://ivnanews.ir/storage//photos/20/62c511b3f3bdf.jpg"
-            ),
-            Pair(
-                "آزمون نهایی نهم 1398", "https://ivnanews.ir/storage//photos/20/62c511b3f3bdf.jpg"
-            ),
-            Pair(
-                "آزمون نهایی نهم 1400", "https://ivnanews.ir/storage//photos/20/62c511b3f3bdf.jpg"
-            ),
-        )
-
-        popularExamAdapter = PopularExamAdapter(data, this)
+        popularExamAdapter = PopularExamAdapter(data.exams, this)
         binding.recyclerPopularExamsStudentMain.adapter = popularExamAdapter
 
         binding.recyclerPopularExamsStudentMain.layoutManager =
@@ -167,10 +209,11 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
     }
 
-    override fun onPopularExamClicked(data: Pair<String, String>) {
+    override fun onPopularExamClicked(data: Exam) {
         // One of the exams has been clicked
         // TODO
-        val intent = Intent(requireActivity(),ExamDetailActivity::class.java)
+        val intent = Intent(requireActivity(), ExamDetailActivity::class.java)
+        intent.putExtra(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY, data)
         startActivity(intent)
     }
 

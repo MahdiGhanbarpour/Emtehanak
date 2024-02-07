@@ -8,10 +8,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemPopularExamBinding
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 
 class PopularExamAdapter(
-    private val data: ArrayList<Pair<String, String>>,
-    private val popularExamEvents: PopularExamEvents
+    private val data: ArrayList<Exam>, private val popularExamEvents: PopularExamEvents
 ) : RecyclerView.Adapter<PopularExamAdapter.PopularExamAdapterViewHolder>() {
 
     private lateinit var binding: ItemPopularExamBinding
@@ -20,12 +20,12 @@ class PopularExamAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: Pair<String, String>) {
+        fun bindData(data: Exam) {
             // Placing the sent data in the relevant views
-            binding.tvPopularExamNameItem.text = data.first
+            binding.tvPopularExamNameItem.text = data.name
 
             // Load image
-            Glide.with(binding.root.context).load(data.second).error(R.drawable.img_error)
+            Glide.with(binding.root.context).load(data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivPopularExamImageItem)
 
             // One of the items has been clicked
@@ -51,6 +51,6 @@ class PopularExamAdapter(
     }
 
     interface PopularExamEvents {
-        fun onPopularExamClicked(data: Pair<String, String>)
+        fun onPopularExamClicked(data: Exam)
     }
 }

@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamMainBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamAttachmentAdapter
+import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamOptionAdapter
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Question
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionOptions
 import ir.mahdighanbarpour.khwarazmiapp.utils.alphaAnimation
@@ -22,6 +25,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
     private lateinit var binding: ActivityExamMainBinding
     private lateinit var examOptionAdapter: ExamOptionAdapter
+    private lateinit var examAttachmentAdapter: ExamAttachmentAdapter
     private lateinit var questions: MutableList<Question>
 
     private var questionPosition = 0
@@ -36,119 +40,91 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         questions = mutableListOf(
             Question(
                 1,
-                "خروجی کد زیر چیست ؟\n" + "\n" + "spam = 7\n" + "if spam > 5:\n" + "   print(\"five\")\n" + "if spam > 8:\n" + "   print(\"eight\")",
+                "مجموعه اعداد صحيح زوج سه رقمی كه مضرب ۳ می باشند، دارای چند عضو است؟",
                 mutableListOf(
                     QuestionOptions(
-                        "خروجی ای ندارد", false
+                        "300", true
                     ),
                     QuestionOptions(
-                        "five", true
+                        "166", false
                     ),
                     QuestionOptions(
-                        "eight", false
+                        "150", false
                     ),
+                ),
+                arrayListOf()
+            ),
+            Question(
+                2, "روی محور زير، نقطه A نمايش دهنده چه عددی است؟", mutableListOf(
+                    QuestionOptions(
+                        "√5", false
+                    ),
+                    QuestionOptions(
+                        "1-√5", false
+                    ),
+                    QuestionOptions(
+                        "-2+√5", true
+                    ),
+                    QuestionOptions(
+                        "2−√5", false
+                    ),
+                ), arrayListOf(
+                    Attachment(
+                        "",
+                        "https://gama.ir/uploads/azmoonImages/pic_775e74864db2fa0f01646549848c9bf1.png"
+                    )
                 )
             ),
             Question(
-                2,
-                "خروجی کد زیر چیست ؟\n" + "\n" + "if (1 == 1) and (2 + 2 > 3):\n" + "   print(\"true\")\n" + "else:\n" + "   print(\"false\")",
-                mutableListOf(
+                3, "قسمت رنگی شکل رو به رو، تصویر وِن کدام مجموعه است؟", mutableListOf(
                     QuestionOptions(
-                        "false", false
+                        "A∩(B∪C)", false
                     ),
                     QuestionOptions(
-                        "true", true
-                    ),
-                )
-            ),
-            Question(
-                3,
-                "خروجی کد زیر چیست ؟\n" + "\n" + "if 1 + 1 == 2:\n" + "   if 2 * 2 == 8:\n" + "       print(\"if\")\n" + "   else:\n" + "       print(\"else\")",
-                mutableListOf(
-                    QuestionOptions(
-                        "if", false
+                        "(A∩B)∪C", false
                     ),
                     QuestionOptions(
-                        "خروجی ای ندارد", false
+                        "A∪(B∩C)", false
                     ),
                     QuestionOptions(
-                        "else", true
+                        "(A∪B)∩C", true
                     ),
-                    QuestionOptions(
-                        "ارور", false
-                    ),
+                ), arrayListOf(
+                    Attachment(
+                        "",
+                        "https://gama.ir/uploads/azmoonImages/pic_f8d7d236b8eb578d6c3e078e8a7c0140.png"
+                    )
                 )
             ),
             Question(
                 4,
-                "خروجی کد زیر چیست ؟\n" + "\n" + "if 1 + 1 * 3 == 6:\n" + "   print(\"Yes\")\n" + "else:\n" + "   print(\"No\")",
+                "می دانیم چهار ضعلی ABCD مستطیل و AC و BD قطرهای آن هستند. کدام گزینه نادرست است؟",
                 mutableListOf(
                     QuestionOptions(
-                        "No", true
+                        "AB=DC", false
                     ),
                     QuestionOptions(
-                        "Yes", false
-                    ),
-                )
-            ),
-            Question(
-                5,
-                "خروجی کد پایتون زیر چه خواهد بود؟\n\ni = 1\nwhile True:\n  if i%3 == 0:\n        break\n   print(i)\n\n    i + = 1",
-                mutableListOf(
-                    QuestionOptions(
-                        "1 2 3", false
+                        "BC||AD", false
                     ),
                     QuestionOptions(
-                        "ارور", true
+                        "ABM=ACD", false
                     ),
                     QuestionOptions(
-                        "1 2", false
+                        "BAM=DAC", true
                     ),
-                    QuestionOptions(
-                        "هیچ یک از موارد ذکر شده", false
-                    ),
-                )
-            ),
-            Question(
-                6,
-                "خروجی قطعه کد پایتون زیر چه خواهد بود؟\n\nfor i in [1, 2, 3, 4][::-1]:\n    print (i)",
-                mutableListOf(
-                    QuestionOptions(
-                        "4 3 2 1", true
-                    ),
-                    QuestionOptions(
-                        "ارور", false
-                    ),
-                    QuestionOptions(
-                        "1 2 3 4", false
-                    ),
-                    QuestionOptions(
-                        "هیچ یک از موارد ذکر شده", false
-                    ),
-                )
-            ),
-            Question(
-                7,
-                "خروجی کد پایتون زیر چه خواهد بود؟\n\nx = 'abcd'\nfor i in range(len(x)):\n    print(i)",
-                mutableListOf(
-                    QuestionOptions(
-                        "error", false
-                    ),
-                    QuestionOptions(
-                        "1 2 3 4", false
-                    ),
-                    QuestionOptions(
-                        "a b c d", false
-                    ),
-                    QuestionOptions(
-                        "0 1 2 3", true
-                    ),
+                ),
+                arrayListOf(
+                    Attachment(
+                        "",
+                        "https://gama.ir/uploads/azmoonImages/pic_aea48db29e35e694eab761e72bbeafdc.png"
+                    )
                 )
             ),
         )
 
         changeStatusBarColor(window, "#20A84D", false)
-        initRecycler()
+        initOptionsRecycler()
+        initAttachmentRecycler()
         setQuestionData()
         listener()
     }
@@ -169,13 +145,23 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         }
     }
 
-    private fun initRecycler() {
+    private fun initOptionsRecycler() {
         val data = mutableListOf<QuestionOptions>()
 
         examOptionAdapter = ExamOptionAdapter(data, this)
         binding.recyclerOptionsExamMain.adapter = examOptionAdapter
 
         binding.recyclerOptionsExamMain.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+    }
+
+    private fun initAttachmentRecycler() {
+        val data = arrayListOf<Attachment>()
+
+        examAttachmentAdapter = ExamAttachmentAdapter(data)
+        binding.recyclerAttachmentExamMain.adapter = examAttachmentAdapter
+
+        binding.recyclerAttachmentExamMain.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
@@ -200,6 +186,8 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         examOptionAdapter = ExamOptionAdapter(data, this)
         binding.recyclerOptionsExamMain.adapter = examOptionAdapter
+
+        examAttachmentAdapter.setData(questions[questionPosition].attachments)
     }
 
     private fun startQuestionAnim() {
