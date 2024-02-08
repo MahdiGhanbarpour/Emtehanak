@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamOptionBinding
-import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionOptions
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 
 class ExamOptionAdapter(
-    private val data: MutableList<QuestionOptions>, private val examOptionEvents: ExamOptionEvents
+    private val data: MutableList<Option>, private val examOptionEvents: ExamOptionEvents
 ) : RecyclerView.Adapter<ExamOptionAdapter.ExamOptionAdapterViewHolder>() {
 
     private lateinit var binding: ItemExamOptionBinding
@@ -22,7 +22,7 @@ class ExamOptionAdapter(
         ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: QuestionOptions) {
+        fun bindData(data: Option) {
             binding.tvOptionNumber.text = (adapterPosition + 1).toString()
             binding.tvOption.text = data.option
 

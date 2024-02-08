@@ -1,8 +1,9 @@
 package ir.mahdighanbarpour.khwarazmiapp.di
 
 import android.content.Context
+import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsViewModel
-import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.ExamViewModel
+import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpViewModel
 import ir.mahdighanbarpour.khwarazmiapp.model.dataBase.MainDataBase
@@ -30,5 +31,6 @@ val myModules = module {
     viewModel { FrequentlyQuestionsViewModel(get()) }
     viewModel { LoginOtpViewModel(get()) }
     viewModel { RegisterViewModel(get()) }
+    viewModel { StudentHomeViewModel(get()) }
     viewModel { ExamViewModel(get()) }
 }

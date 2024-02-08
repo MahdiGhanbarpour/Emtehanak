@@ -48,6 +48,7 @@ class RegisterFragment : Fragment() {
     private lateinit var editor: SharedPreferences.Editor
     private lateinit var parentActivity: LoginActivity
 
+    private var isLoading = false
     private var mainColor: Int = 0
 
     private val monthItems = listOf(
@@ -227,26 +228,27 @@ class RegisterFragment : Fragment() {
         // Is all the information correct ?
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk && isGradeOk) {
             // Checking the user role and opening the corresponding home page
-            if (selectedRole == TEACHER) {
-                makeShortToast(
-                    requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
-                )
-                // TODO
-            } else {
-                if (isInternetAvailable(requireContext())) {
-                    playLoadingAnim()
+            if (isInternetAvailable(requireContext()) && !isLoading) {
 
+                if (selectedRole == TEACHER) {
+                    makeShortToast(
+                        requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
+                    )
+                    // TODO
+
+                } else {
+                    playLoadingAnim()
                     registerStudent(
                         enteredName,
                         enteredPhoneNum,
                         "$enteredYear/${monthItems.indexOf(enteredMonth)}/$enteredDay",
                         enteredGrade
                     )
-                } else {
-                    Snackbar.make(
-                        binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
-                    ).setAction("تلاش مجدد") { checkInputs() }.show()
                 }
+            } else {
+                Snackbar.make(
+                    binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
+                ).setAction("تلاش مجدد") { checkInputs() }.show()
             }
         }
     }
@@ -399,7 +401,7 @@ class RegisterFragment : Fragment() {
 
                 override fun onError(e: Throwable) {
                     Snackbar.make(
-                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
+                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
                     ).setAction("تلاش مجدد") { checkInputs() }.show()
                 }
 
@@ -415,6 +417,7 @@ class RegisterFragment : Fragment() {
         compositeDisposable.add(registerViewModel.isDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 parentActivity.playPauseLoadingAnim(it)
+                isLoading = it
             }
         })
     }

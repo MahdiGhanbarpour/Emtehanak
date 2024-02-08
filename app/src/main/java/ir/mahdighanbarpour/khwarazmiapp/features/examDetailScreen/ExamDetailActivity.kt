@@ -11,17 +11,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamDetailBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.ExamMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
+import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.EXAM_DETAIL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
+import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelable
+import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
+import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import org.koin.android.ext.android.inject
 
 class ExamDetailActivity : AppCompatActivity() {
 
@@ -29,7 +39,10 @@ class ExamDetailActivity : AppCompatActivity() {
     private lateinit var examDetailAdapter: ExamDetailAdapter
     private lateinit var data: Exam
 
+    private val examViewModel: ExamViewModel by inject()
+
     private val helpBottomSheet = HelpBottomSheet()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +55,12 @@ class ExamDetailActivity : AppCompatActivity() {
         listener()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.clear()
+    }
+
+
     private fun listener() {
         binding.ivBack.setOnClickListener {
             // The continue button is pressed
@@ -52,8 +71,7 @@ class ExamDetailActivity : AppCompatActivity() {
             showHelpBottomSheet()
         }
         binding.btStartExamDetail.setOnClickListener {
-            val intent = Intent(this, ExamMainActivity::class.java)
-            startActivity(intent)
+            onStartClicked()
         }
     }
 
@@ -117,6 +135,51 @@ class ExamDetailActivity : AppCompatActivity() {
 
         binding.recyclerDetailExamDetail.layoutManager =
             LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+    }
+
+    private fun onStartClicked() {
+        if (data.price == 0) {
+            if (isInternetAvailable(this)) {
+                getExamsQuestion()
+            } else {
+                Snackbar.make(
+                    binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
+                ).setAction("تلاش مجدد") { onStartClicked() }.show()
+            }
+        } else {
+            makeShortToast(this, "با تشکر از همراهی شما! بخش پرداخت بزودی فعال خواهد شد.")
+        }
+    }
+
+    private fun getExamsQuestion() {
+        examViewModel.getExamsQuestion(data.id).asyncRequest()
+            .subscribe(object : SingleObserver<QuestionMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    // Error report to user
+                    Snackbar.make(
+                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
+                    ).setAction(
+                        "تلاش دوباره"
+                    ) { onStartClicked() }.show()
+                }
+
+                override fun onSuccess(t: QuestionMainResult) {
+                    if (t.result.questions.isNotEmpty()) {
+                        val intent = Intent(this@ExamDetailActivity, ExamMainActivity::class.java)
+                        intent.putExtra(
+                            SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY,
+                            t.result.questions.toTypedArray()
+                        )
+                        startActivity(intent)
+                    } else {
+                        makeShortToast(this@ExamDetailActivity, "سوالی برای این آزمون یافت نشد!")
+                    }
+                }
+            })
     }
 
     private fun showHelpBottomSheet() {

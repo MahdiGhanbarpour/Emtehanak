@@ -11,7 +11,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemAttachmentExamBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
 
 class ExamAttachmentAdapter(
-    private var data: ArrayList<Attachment>
+    private var data: List<Attachment>
 ) : RecyclerView.Adapter<ExamAttachmentAdapter.ExamAttachmentAdapterViewHolder>() {
 
     private lateinit var binding: ItemAttachmentExamBinding
@@ -46,7 +46,7 @@ class ExamAttachmentAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: ArrayList<Attachment>) {
+    fun setData(data: List<Attachment>) {
         this.data = data
         notifyDataSetChanged()
     }

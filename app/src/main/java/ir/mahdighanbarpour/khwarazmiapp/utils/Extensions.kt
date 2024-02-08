@@ -30,6 +30,16 @@ inline fun <reified T : Parcelable> Intent.getParcelable(key: String): T = when 
     else -> getParcelableExtra(key)!!
 }
 
+inline fun <reified T : Parcelable> Intent.getParcelableArray(key: String): Array<T>? {
+    return when {
+        Build.VERSION.SDK_INT >= 33 -> getParcelableArrayExtra(
+            key, T::class.java
+        )?.mapNotNull { it }?.toTypedArray()
+
+        else -> getParcelableArrayExtra(key)?.mapNotNull { it as? T }?.toTypedArray()
+    }
+}
+
 fun changeBoxStrokeColor(context: Context, textInputLayout: TextInputLayout, color: Int) {
     textInputLayout.boxStrokeColor = ContextCompat.getColor(context, color)
 }

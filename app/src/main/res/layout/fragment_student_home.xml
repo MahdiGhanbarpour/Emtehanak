@@ -423,8 +423,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationViewCoursesStudentMain"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:elevation="16dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/cardViewPopularExamsStudentMain"
@@ -432,13 +432,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesStudentMain"
                 app:lottie_autoPlay="false"
+                app:lottie_colorFilter="@color/student_color"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/loading" />
 
             <ImageView
                 android:id="@+id/ivErrorCoursesStudentMain"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:contentDescription="@string/error_communicating_server"
                 android:elevation="16dp"
                 android:src="@drawable/ic_internet_error"
@@ -446,7 +447,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/cardViewPopularExamsStudentMain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesStudentMain" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesStudentMain"
+                app:tint="@color/student_color" />
 
 
             <com.google.android.material.card.MaterialCardView
@@ -510,8 +512,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationViewPopularExamsStudentMain"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:elevation="16dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/cardViewExperiencedTeachersStudentMain"
@@ -519,13 +521,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsStudentMain"
                 app:lottie_autoPlay="false"
+                app:lottie_colorFilter="@color/student_color"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/loading" />
 
             <ImageView
                 android:id="@+id/ivErrorPopularExamsStudentMain"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:contentDescription="@string/error_communicating_server"
                 android:elevation="16dp"
                 android:src="@drawable/ic_internet_error"
@@ -533,7 +536,8 @@
                 app:layout_constraintBottom_toTopOf="@id/cardViewExperiencedTeachersStudentMain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsStudentMain" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsStudentMain"
+                app:tint="@color/student_color" />
 
 
             <com.google.android.material.card.MaterialCardView
@@ -597,8 +601,8 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/animationViewExperiencedTeachersStudentMain"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:elevation="16dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -606,13 +610,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersStudentMain"
                 app:lottie_autoPlay="false"
+                app:lottie_colorFilter="@color/student_color"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/loading" />
 
             <ImageView
                 android:id="@+id/ivErrorExperiencedTeachersStudentMain"
-                android:layout_width="75dp"
-                android:layout_height="75dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:contentDescription="@string/error_communicating_server"
                 android:elevation="16dp"
                 android:src="@drawable/ic_internet_error"
@@ -620,7 +625,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersStudentMain" />
+                app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersStudentMain"
+                app:tint="@color/student_color" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

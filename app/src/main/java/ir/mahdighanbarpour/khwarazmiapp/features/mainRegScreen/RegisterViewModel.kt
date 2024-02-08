@@ -12,6 +12,8 @@ class RegisterViewModel(private val studentRepository: StudentRepository) : View
     fun registerStudent(
         name: String, phoneNumber: String, birthday: String, grade: String
     ): Single<StudentMainResult> {
+        isDataLoading.onNext(true)
+
         return studentRepository.registerStudent(name, phoneNumber, birthday, grade).doFinally {
             isDataLoading.onNext(false)
         }

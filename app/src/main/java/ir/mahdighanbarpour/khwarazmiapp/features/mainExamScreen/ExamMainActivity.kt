@@ -15,10 +15,12 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamAttachmentAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamOptionAdapter
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Question
-import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionOptions
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.alphaAnimation
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
+import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelableArray
 import ir.mahdighanbarpour.khwarazmiapp.utils.translateAnimation
 
 class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents {
@@ -26,7 +28,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     private lateinit var binding: ActivityExamMainBinding
     private lateinit var examOptionAdapter: ExamOptionAdapter
     private lateinit var examAttachmentAdapter: ExamAttachmentAdapter
-    private lateinit var questions: MutableList<Question>
+    private lateinit var questions: Array<Question>
 
     private var questionPosition = 0
     private var correctAnswersCount = 0
@@ -37,90 +39,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         binding = ActivityExamMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        questions = mutableListOf(
-            Question(
-                1,
-                "مجموعه اعداد صحيح زوج سه رقمی كه مضرب ۳ می باشند، دارای چند عضو است؟",
-                mutableListOf(
-                    QuestionOptions(
-                        "300", true
-                    ),
-                    QuestionOptions(
-                        "166", false
-                    ),
-                    QuestionOptions(
-                        "150", false
-                    ),
-                ),
-                arrayListOf()
-            ),
-            Question(
-                2, "روی محور زير، نقطه A نمايش دهنده چه عددی است؟", mutableListOf(
-                    QuestionOptions(
-                        "√5", false
-                    ),
-                    QuestionOptions(
-                        "1-√5", false
-                    ),
-                    QuestionOptions(
-                        "-2+√5", true
-                    ),
-                    QuestionOptions(
-                        "2−√5", false
-                    ),
-                ), arrayListOf(
-                    Attachment(
-                        "",
-                        "https://gama.ir/uploads/azmoonImages/pic_775e74864db2fa0f01646549848c9bf1.png"
-                    )
-                )
-            ),
-            Question(
-                3, "قسمت رنگی شکل رو به رو، تصویر وِن کدام مجموعه است؟", mutableListOf(
-                    QuestionOptions(
-                        "A∩(B∪C)", false
-                    ),
-                    QuestionOptions(
-                        "(A∩B)∪C", false
-                    ),
-                    QuestionOptions(
-                        "A∪(B∩C)", false
-                    ),
-                    QuestionOptions(
-                        "(A∪B)∩C", true
-                    ),
-                ), arrayListOf(
-                    Attachment(
-                        "",
-                        "https://gama.ir/uploads/azmoonImages/pic_f8d7d236b8eb578d6c3e078e8a7c0140.png"
-                    )
-                )
-            ),
-            Question(
-                4,
-                "می دانیم چهار ضعلی ABCD مستطیل و AC و BD قطرهای آن هستند. کدام گزینه نادرست است؟",
-                mutableListOf(
-                    QuestionOptions(
-                        "AB=DC", false
-                    ),
-                    QuestionOptions(
-                        "BC||AD", false
-                    ),
-                    QuestionOptions(
-                        "ABM=ACD", false
-                    ),
-                    QuestionOptions(
-                        "BAM=DAC", true
-                    ),
-                ),
-                arrayListOf(
-                    Attachment(
-                        "",
-                        "https://gama.ir/uploads/azmoonImages/pic_aea48db29e35e694eab761e72bbeafdc.png"
-                    )
-                )
-            ),
-        )
+        questions = intent.getParcelableArray(SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY)!!
 
         changeStatusBarColor(window, "#20A84D", false)
         initOptionsRecycler()
@@ -146,7 +65,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     }
 
     private fun initOptionsRecycler() {
-        val data = mutableListOf<QuestionOptions>()
+        val data = mutableListOf<Option>()
 
         examOptionAdapter = ExamOptionAdapter(data, this)
         binding.recyclerOptionsExamMain.adapter = examOptionAdapter
@@ -184,7 +103,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         val data = questions[questionPosition].options
 
-        examOptionAdapter = ExamOptionAdapter(data, this)
+        examOptionAdapter = ExamOptionAdapter(data.toMutableList(), this)
         binding.recyclerOptionsExamMain.adapter = examOptionAdapter
 
         examAttachmentAdapter.setData(questions[questionPosition].attachments)

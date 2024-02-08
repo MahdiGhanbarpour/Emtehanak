@@ -62,6 +62,7 @@ class LoginOtpFragment : Fragment() {
     private var secondEtIsDelClicked = false
     private var thirdEtIsDelClicked = false
     private var fourthEtIsDelClicked = false
+    private var isLoading = false
     private var otpResendTime = 60
 
     private val loginOtpViewModel: LoginOtpViewModel by viewModel()
@@ -338,24 +339,27 @@ class LoginOtpFragment : Fragment() {
                 binding.tvOtpError.visibility = View.VISIBLE
 
             } else {
-                if (selectedRole == STUDENT) {
-                    playLoadingAnim()
-                    getStudentInformation()
+                if (!isLoading) {
+                    if (selectedRole == STUDENT) {
+                        playLoadingAnim()
+                        getStudentInformation()
 
-                } else {
-                    changeEditTextsColor(R.color.teacher_color)
+                    } else {
+                        changeEditTextsColor(R.color.teacher_color)
 
-                    val roleBundle = Bundle()
-                    roleBundle.putString(
-                        SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
-                    )
+                        val roleBundle = Bundle()
+                        roleBundle.putString(
+                            SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
+                        )
 
-                    roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
+                        roleBundle.putString(
+                            SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber
+                        )
 
-                    navController.navigate(
-                        R.id.action_loginOtpFragment_to_registerFragment, roleBundle
-                    )
-
+                        navController.navigate(
+                            R.id.action_loginOtpFragment_to_registerFragment, roleBundle
+                        )
+                    }
                 }
             }
         } else {
@@ -369,6 +373,7 @@ class LoginOtpFragment : Fragment() {
         compositeDisposable.add(loginOtpViewModel.isDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 parentActivity.playPauseLoadingAnim(it)
+                isLoading = it
             }
         })
     }
@@ -383,7 +388,7 @@ class LoginOtpFragment : Fragment() {
 
                 override fun onError(e: Throwable) {
                     Snackbar.make(
-                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_INDEFINITE
+                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
                     ).setAction("تلاش مجدد") { checkOtpCode() }.show()
                 }
 

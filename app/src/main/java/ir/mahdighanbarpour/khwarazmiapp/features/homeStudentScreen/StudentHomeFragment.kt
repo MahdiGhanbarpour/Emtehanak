@@ -39,7 +39,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     private lateinit var experiencedTeachersAdapter: ExperiencedTeachersAdapter
     private lateinit var popularExamAdapter: PopularExamAdapter
 
-    private val examViewModel: ExamViewModel by inject()
+    private val studentHomeViewModel: StudentHomeViewModel by inject()
     private val sharedPreferences: SharedPreferences by inject()
 
     private val compositeDisposable = CompositeDisposable()
@@ -78,8 +78,13 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
     private fun initData() {
         if (isInternetAvailable(requireContext())) {
+            binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+
+            playLoadingAnim()
             getPopularExams()
         } else {
+            binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
+
             Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
                 "عدم دسترسی به اینترنت",
@@ -89,7 +94,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun getPopularExams() {
-        examViewModel.getPopularExams(sharedPreferences.getString(USER_GRADE, null)!!)
+        studentHomeViewModel.getPopularExams(sharedPreferences.getString(USER_GRADE, null)!!)
             .asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)
@@ -97,20 +102,43 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
                 override fun onError(e: Throwable) {
                     // Error report to user
+                    binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
+
                     Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         "خطا در دریافت اطلاعات",
                         Snackbar.LENGTH_LONG
                     ).setAction(
                         "تلاش دوباره"
-                    ) { initData() }.show()
+                    ) { getPopularExams() }.show()
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {
                     // Starting RecyclerView with sent data
-                    initPopularExamRecycler(t.result)
+                    if (t.result.exams.isEmpty()) {
+                        binding.cardViewPopularExamsStudentMain.visibility = View.GONE
+                        binding.recyclerPopularExamsStudentMain.visibility = View.GONE
+                    } else {
+                        initPopularExamRecycler(t.result)
+                    }
                 }
             })
+    }
+
+    private fun playLoadingAnim() {
+        compositeDisposable.add(studentHomeViewModel.isPopularExamsDataLoading.subscribe {
+            requireActivity().runOnUiThread {
+                if (it) {
+                    binding.animationViewPopularExamsStudentMain.visibility = View.VISIBLE
+
+                    binding.animationViewPopularExamsStudentMain.playAnimation()
+                }else {
+                    binding.animationViewPopularExamsStudentMain.visibility = View.GONE
+
+                    binding.animationViewPopularExamsStudentMain.pauseAnimation()
+                }
+            }
+        })
     }
 
     private fun initSlider() {
