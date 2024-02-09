@@ -73,6 +73,24 @@ class ExamDetailActivity : AppCompatActivity() {
         binding.btStartExamDetail.setOnClickListener {
             onStartClicked()
         }
+        binding.ivLikeExamDetail.setOnClickListener {
+            if (binding.ivLikeExamDetail.isChecked) {
+                binding.ivLikeExamDetail.isChecked = false
+            } else {
+                binding.ivLikeExamDetail.playAnimation()
+                binding.ivLikeExamDetail.isChecked = true
+                binding.ivDislikeExamDetail.isChecked = false
+            }
+        }
+        binding.ivDislikeExamDetail.setOnClickListener {
+            if (binding.ivDislikeExamDetail.isChecked) {
+                binding.ivDislikeExamDetail.isChecked = false
+            } else {
+                binding.ivDislikeExamDetail.playAnimation()
+                binding.ivDislikeExamDetail.isChecked = true
+                binding.ivLikeExamDetail.isChecked = false
+            }
+        }
     }
 
     private fun initUi() {
@@ -85,6 +103,22 @@ class ExamDetailActivity : AppCompatActivity() {
         window.statusBarColor = Color.TRANSPARENT
 
         data = intent.getParcelable(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY)
+    }
+
+    private fun playLoadingAnim() {
+        compositeDisposable.add(examViewModel.isDataLoading.subscribe {
+            runOnUiThread {
+                if (it) {
+                    binding.animationViewStartExamDetail.visibility = View.VISIBLE
+                    binding.btStartExamDetail.text = null
+                    binding.animationViewStartExamDetail.playAnimation()
+                } else {
+                    binding.animationViewStartExamDetail.visibility = View.GONE
+                    binding.btStartExamDetail.text = "شروع آزمون"
+                    binding.animationViewStartExamDetail.pauseAnimation()
+                }
+            }
+        })
     }
 
     @SuppressLint("SetTextI18n")
@@ -140,6 +174,7 @@ class ExamDetailActivity : AppCompatActivity() {
     private fun onStartClicked() {
         if (data.price == 0) {
             if (isInternetAvailable(this)) {
+                playLoadingAnim()
                 getExamsQuestion()
             } else {
                 Snackbar.make(

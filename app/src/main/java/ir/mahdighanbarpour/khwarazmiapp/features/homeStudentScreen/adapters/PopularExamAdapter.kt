@@ -11,7 +11,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemPopularExamBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 
 class PopularExamAdapter(
-    private val data: ArrayList<Exam>, private val popularExamEvents: PopularExamEvents
+    private var data: ArrayList<Exam>, private val popularExamEvents: PopularExamEvents
 ) : RecyclerView.Adapter<PopularExamAdapter.PopularExamAdapterViewHolder>() {
 
     private lateinit var binding: ItemPopularExamBinding
@@ -48,6 +48,12 @@ class PopularExamAdapter(
 
     override fun onBindViewHolder(holder: PopularExamAdapterViewHolder, position: Int) {
         holder.bindData(data[position])
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(data: ArrayList<Exam>) {
+        this.data = data
+        notifyDataSetChanged()
     }
 
     interface PopularExamEvents {

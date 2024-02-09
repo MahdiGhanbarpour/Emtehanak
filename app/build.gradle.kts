@@ -87,4 +87,7 @@ dependencies {
 
     // Spark Button
     implementation("com.github.varunest:sparkbutton:1.0.6")
+
+    // Swipe Refresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

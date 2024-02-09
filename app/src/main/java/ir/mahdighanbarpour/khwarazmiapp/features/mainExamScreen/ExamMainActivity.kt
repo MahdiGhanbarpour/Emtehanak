@@ -14,6 +14,7 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamAttachmentAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamOptionAdapter
+import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExitBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Question
@@ -21,6 +22,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXA
 import ir.mahdighanbarpour.khwarazmiapp.utils.alphaAnimation
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelableArray
+import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import ir.mahdighanbarpour.khwarazmiapp.utils.translateAnimation
 
 class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents {
@@ -30,9 +32,13 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     private lateinit var examAttachmentAdapter: ExamAttachmentAdapter
     private lateinit var questions: Array<Question>
 
+    private var isQuestionAnswered = false
     private var questionPosition = 0
     private var correctAnswersCount = 0
     private var incorrectAnswersCount = 0
+    private var unansweredCount = 0
+
+    private val exitBottomSheet = ExitBottomSheet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +56,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
-            finish()
+            exitBottomSheet.show(supportFragmentManager, null)
         }
         binding.btNextExamMain.setOnClickListener {
             if (questionPosition == questions.size - 1) {
@@ -61,6 +67,29 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
                 startQuestionAnim()
             }
+        }
+        binding.cardViewDontKnowExamMain.setOnClickListener {
+            if (!isQuestionAnswered) {
+
+                isQuestionAnswered = true
+                unansweredCount++
+
+                examOptionAdapter.unanswered()
+                binding.btNextExamMain.visibility = View.VISIBLE
+
+                if (questionPosition == questions.size - 1) {
+                    binding.btNextExamMain.text = "دیدن نتایج"
+                    binding.btNextExamMain.icon = null
+                    binding.btNextExamMain.setBackgroundColor(
+                        ContextCompat.getColor(
+                            this, R.color.teacher_color
+                        )
+                    )
+                }
+            }
+        }
+        binding.cardViewReportQuestionExamMain.setOnClickListener {
+            makeShortToast(this, "گزارش شما ثبت شد")
         }
     }
 
@@ -101,6 +130,8 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         animator.start()
 
+        isQuestionAnswered = false
+
         val data = questions[questionPosition].options
 
         examOptionAdapter = ExamOptionAdapter(data.toMutableList(), this)
@@ -116,6 +147,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         binding.cardViewQuestionExamMain.startAnimation(firstAnim)
         binding.recyclerOptionsExamMain.startAnimation(firstAnim)
+        binding.cardViewDontKnowExamMain.startAnimation(firstAnim)
 
         firstAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
@@ -131,19 +163,20 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
                 binding.cardViewQuestionExamMain.startAnimation(secondAnim)
                 binding.recyclerOptionsExamMain.startAnimation(secondAnim)
+                binding.cardViewDontKnowExamMain.startAnimation(secondAnim)
             }
         })
     }
 
-    override fun onOptionClicked(isSelectedOptionCorrect: Boolean?) {
+    override fun onOptionClicked(isSelectedOptionCorrect: Boolean) {
+        isQuestionAnswered = true
+
         binding.btNextExamMain.visibility = View.VISIBLE
 
-        if (isSelectedOptionCorrect != null) {
-            if (isSelectedOptionCorrect) {
-                correctAnswersCount++
-            } else {
-                incorrectAnswersCount++
-            }
+        if (isSelectedOptionCorrect) {
+            correctAnswersCount++
+        } else {
+            incorrectAnswersCount++
         }
 
         if (questionPosition == questions.size - 1) {
@@ -155,5 +188,10 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
                 )
             )
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        exitBottomSheet.show(supportFragmentManager, null)
     }
 }

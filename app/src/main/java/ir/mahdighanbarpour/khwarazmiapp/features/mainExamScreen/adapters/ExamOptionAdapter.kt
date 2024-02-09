@@ -36,8 +36,6 @@ class ExamOptionAdapter(
                 if (isOptionsCorrect.indexOf(true) == -1) {
                     checkOptions(adapterPosition)
                     examOptionEvents.onOptionClicked(this@ExamOptionAdapter.data[adapterPosition].isCorrect)
-                } else {
-                    examOptionEvents.onOptionClicked(null)
                 }
             }
         }
@@ -105,7 +103,16 @@ class ExamOptionAdapter(
         notifyItemChanged(selectedItemPosition)
     }
 
+    fun unanswered() {
+        val correctOptionIndex = data.mapIndexedNotNull { index, questionOptions ->
+            index.takeIf { questionOptions.isCorrect }
+        }[0]
+
+        isOptionsCorrect[correctOptionIndex] = true
+        notifyItemChanged(correctOptionIndex)
+    }
+
     interface ExamOptionEvents {
-        fun onOptionClicked(isSelectedOptionCorrect: Boolean?)
+        fun onOptionClicked(isSelectedOptionCorrect: Boolean)
     }
 }

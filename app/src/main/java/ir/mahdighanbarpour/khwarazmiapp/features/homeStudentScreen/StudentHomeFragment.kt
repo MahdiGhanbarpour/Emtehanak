@@ -3,6 +3,8 @@ package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +40,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     private lateinit var coursesAdapter: CoursesAdapter
     private lateinit var experiencedTeachersAdapter: ExperiencedTeachersAdapter
     private lateinit var popularExamAdapter: PopularExamAdapter
+    private lateinit var snackbar: Snackbar
 
     private val studentHomeViewModel: StudentHomeViewModel by inject()
     private val sharedPreferences: SharedPreferences by inject()
@@ -57,6 +60,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         initSlider()
         initCourseRecycler()
         initExperiencedTeachersRecycler()
+        initPopularExamRecycler()
 
         initData()
 
@@ -66,6 +70,11 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.clear()
+
+        // If the snack bar is displayed, it will be hidden
+        if (this::snackbar.isInitialized) {
+            snackbar.dismiss()
+        }
     }
 
 
@@ -74,22 +83,36 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             // If the button is pressed, it will open the NavigationDrawer
             (requireActivity() as StudentMainActivity).openDrawer()
         }
+        binding.swipeRefreshStudentMain.setOnRefreshListener {
+            initData()
+
+            Handler(Looper.myLooper()!!).postDelayed({
+                binding.swipeRefreshStudentMain.isRefreshing = false
+            }, 1500)
+        }
     }
 
     private fun initData() {
         if (isInternetAvailable(requireContext())) {
             binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
 
+            if (this::snackbar.isInitialized) {
+                snackbar.dismiss()
+            }
+
             playLoadingAnim()
             getPopularExams()
         } else {
             binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
 
-            Snackbar.make(
+            popularExamAdapter.setData(arrayListOf())
+
+            snackbar = Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
                 "عدم دسترسی به اینترنت",
                 Snackbar.LENGTH_INDEFINITE
-            ).setAction("تلاش مجدد") { initData() }.show()
+            ).setAction("تلاش مجدد") { initData() }
+            snackbar.show()
         }
     }
 
@@ -104,13 +127,17 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
                     // Error report to user
                     binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
 
-                    Snackbar.make(
+                    snackbar = Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         "خطا در دریافت اطلاعات",
                         Snackbar.LENGTH_LONG
                     ).setAction(
                         "تلاش دوباره"
-                    ) { getPopularExams() }.show()
+                    ) {
+                        binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+                        getPopularExams()
+                    }
+                    snackbar.show()
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {
@@ -119,7 +146,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
                         binding.cardViewPopularExamsStudentMain.visibility = View.GONE
                         binding.recyclerPopularExamsStudentMain.visibility = View.GONE
                     } else {
-                        initPopularExamRecycler(t.result)
+                        setPopularExamRecyclerData(t.result)
                     }
                 }
             })
@@ -132,7 +159,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
                     binding.animationViewPopularExamsStudentMain.visibility = View.VISIBLE
 
                     binding.animationViewPopularExamsStudentMain.playAnimation()
-                }else {
+                } else {
                     binding.animationViewPopularExamsStudentMain.visibility = View.GONE
 
                     binding.animationViewPopularExamsStudentMain.pauseAnimation()
@@ -196,9 +223,9 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
     }
 
-    private fun initPopularExamRecycler(data: ExamsResult) {
+    private fun initPopularExamRecycler() {
         // Making the adapter and making the necessary settings
-        popularExamAdapter = PopularExamAdapter(data.exams, this)
+        popularExamAdapter = PopularExamAdapter(arrayListOf(), this)
         binding.recyclerPopularExamsStudentMain.adapter = popularExamAdapter
 
         binding.recyclerPopularExamsStudentMain.layoutManager =
@@ -229,6 +256,10 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
         binding.recyclerExperiencedTeachersStudentMain.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+    }
+
+    private fun setPopularExamRecyclerData(data: ExamsResult) {
+        popularExamAdapter.setData(data.exams)
     }
 
     override fun onCourseClicked(data: Pair<String, String>) {
