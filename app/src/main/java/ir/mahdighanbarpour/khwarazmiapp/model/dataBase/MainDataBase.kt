@@ -4,12 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestions
+import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestion
 
 // Database creation
-@Database(version = 1, exportSchema = false, entities = [FrequentlyQuestions::class])
-@TypeConverters(MainConverters::class)
+@Database(version = 1, exportSchema = false, entities = [FrequentlyQuestion::class])
 abstract class MainDataBase : RoomDatabase() {
 
     abstract val mainDao: FrequentlyQuestionsDao

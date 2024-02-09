@@ -2,6 +2,7 @@ package ir.mahdighanbarpour.khwarazmiapp.model.net
 
 import io.reactivex.rxjava3.core.Single
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import retrofit2.http.*
@@ -33,4 +34,9 @@ interface ApiService {
     fun getExamsQuestion(
         @Query("exam") examId: Int
     ): Single<QuestionMainResult>
+
+    @GET("frequently-question")
+    fun getFrequentlyQuestions(
+        @Query("page") page: String
+    ): Single<FrequentlyQuestionsMainResult>
 }

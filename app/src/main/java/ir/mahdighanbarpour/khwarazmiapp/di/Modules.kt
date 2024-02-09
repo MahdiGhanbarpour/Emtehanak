@@ -22,7 +22,7 @@ val myModules = module {
     single { MainDataBase.getDataBase(get()) }
     single { get<MainDataBase>().mainDao }
 
-    single { FrequentlyQuestionsRepository(get()) }
+    single { FrequentlyQuestionsRepository(get(), get()) }
     single { StudentRepository(get()) }
     single { ExamRepository(get()) }
 

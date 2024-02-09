@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemFrequentlyQuestionsBinding
-import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsArray
+import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestion
 
 class FrequentlyQuestionsAdapter(
-    private val data: List<FrequentlyQuestionsArray>
+    private val data: List<FrequentlyQuestion>
 ) : RecyclerView.Adapter<FrequentlyQuestionsAdapter.FrequentlyQuestionsAdapterViewHolder>() {
 
     private lateinit var binding: ItemFrequentlyQuestionsBinding
@@ -17,7 +17,7 @@ class FrequentlyQuestionsAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: FrequentlyQuestionsArray) {
+        fun bindData(data: FrequentlyQuestion) {
             // Placing the sent data in the relevant views
             binding.tvFrequentlyQuestions.text = data.question
             binding.tvFrequentlyQuestionsAnswer.text = data.answer
