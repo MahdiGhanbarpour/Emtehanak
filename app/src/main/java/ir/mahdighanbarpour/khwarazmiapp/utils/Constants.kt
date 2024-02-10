@@ -10,6 +10,12 @@ const val SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY = "send_entered_phone_number
 const val SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY = "send_selected_exam_to_exam_page"
 const val SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY =
     "send_selected_exam_question_to_exam_main_page"
+const val SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
+    "send_correct_answers_count_to_exam_result_bottom_sheet"
+const val SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
+    "send_incorrect_answers_count_to_exam_result_bottom_sheet"
+const val SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
+    "send_unanswered_count_to_exam_result_bottom_sheet"
 
 const val TEACHER = "teacher"
 const val STUDENT = "student"
@@ -20,6 +26,7 @@ const val REGISTER_MAIN = "register_main"
 const val REGISTER_TEACHER = "register_teacher"
 const val STUDENT_MAIN = "student_main"
 const val EXAM_DETAIL = "exam_detail"
+const val EXAM_MAIN = "exam_main"
 
 const val IS_USER_LOGGED_IN = "is_user_logged_in"
 const val USER_FULL_NAME = "user_full_name"

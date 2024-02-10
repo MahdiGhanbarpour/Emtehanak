@@ -62,4 +62,10 @@
     <string name="report_question">گزارش خرابی سوال</string>
     <string name="i_dont_know">نمی دانم</string>
     <string name="start_exam">شروع آزمون</string>
+    <string name="correct_answer">پاسخ صحیح</string>
+    <string name="score_obtained">نمره کسب شده \n ( از 100 )</string>
+    <string name="incorrect_answer">پاسخ غلط</string>
+    <string name="unanswered">پاسخ نزده</string>
+    <string name="finish_exam">اتمام آزمون</string>
+    <string name="final_percentage">درصد نهایی :</string>
 </resources>

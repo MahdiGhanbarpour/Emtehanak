@@ -15,10 +15,18 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamAttachmentAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters.ExamOptionAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExitBottomSheet
+import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Question
+import ir.mahdighanbarpour.khwarazmiapp.utils.EXAM_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.alphaAnimation
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelableArray
@@ -38,7 +46,9 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     private var incorrectAnswersCount = 0
     private var unansweredCount = 0
 
+    private val helpBottomSheet = HelpBottomSheet()
     private val exitBottomSheet = ExitBottomSheet()
+    private val examResultBottomSheet = ExamResultBottomSheet()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +70,27 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         }
         binding.btNextExamMain.setOnClickListener {
             if (questionPosition == questions.size - 1) {
-                finish()
+                // Checking if the Exam Result Bottom Sheet is currently displayed or not
+                if (!examResultBottomSheet.isVisible) {
+                    val bundle = Bundle()
+
+                    bundle.putInt(
+                        SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY,
+                        correctAnswersCount
+                    )
+                    bundle.putInt(
+                        SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY,
+                        incorrectAnswersCount
+                    )
+                    bundle.putInt(
+                        SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY, unansweredCount
+                    )
+
+                    examResultBottomSheet.arguments = bundle
+
+                    //Display Exam Result Bottom Sheet
+                    examResultBottomSheet.show(supportFragmentManager, null)
+                }
             } else {
                 questionPosition++
                 binding.btNextExamMain.visibility = View.INVISIBLE
@@ -90,6 +120,10 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         }
         binding.cardViewReportQuestionExamMain.setOnClickListener {
             makeShortToast(this, "گزارش شما ثبت شد")
+        }
+        binding.ivHelpExamMain.setOnClickListener {
+            // The help button is pressed
+            showHelpBottomSheet()
         }
     }
 
@@ -187,6 +221,21 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
                     this, R.color.teacher_color
                 )
             )
+        }
+    }
+
+    private fun showHelpBottomSheet() {
+        // Checking if the Help Bottom Sheet is currently displayed or not
+        if (!helpBottomSheet.isVisible) {
+            // If it is not showing, it will show it
+            val bundle = Bundle()
+
+            bundle.putString(SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY, STUDENT)
+            bundle.putString(SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY, EXAM_MAIN)
+
+            //Display Help Bottom Sheet
+            helpBottomSheet.show(supportFragmentManager, null)
+            helpBottomSheet.arguments = bundle
         }
     }
 

@@ -1,0 +1,73 @@
+package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import ir.mahdighanbarpour.khwarazmiapp.databinding.BottomSheetExamResultBinding
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+import kotlin.math.roundToInt
+
+class ExamResultBottomSheet : BottomSheetDialogFragment() {
+
+    private lateinit var binding: BottomSheetExamResultBinding
+
+    private var correctAnswersCount = 0
+    private var incorrectAnswersCount = 0
+    private var unansweredCount = 0
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = BottomSheetExamResultBinding.inflate(layoutInflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        correctAnswersCount = requireArguments().getInt(
+            SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+        )
+
+        incorrectAnswersCount = requireArguments().getInt(
+            SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+        )
+
+        unansweredCount = requireArguments().getInt(
+            SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
+        )
+
+        setMainData()
+        listener()
+    }
+
+    private fun listener() {
+        binding.btFinishExamResult.setOnClickListener {
+            dismiss()
+            requireActivity().finish()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setMainData() {
+        binding.tvCorrectExamResult.text = correctAnswersCount.toString()
+        binding.tvIncorrectExamResult.text = incorrectAnswersCount.toString()
+        binding.tvUnansweredExamResult.text = unansweredCount.toString()
+
+        val percentage =
+            (((correctAnswersCount * 3) - incorrectAnswersCount).toDouble() / ((correctAnswersCount + incorrectAnswersCount + unansweredCount).toDouble() * 3)) * 100
+
+        val number3digits: Double = (percentage * 1000.0).roundToInt() / 1000.0
+        val number2digits: Double = (number3digits * 100.0).roundToInt() / 100.0
+        val finalPercentage: Double = (number2digits * 10.0).roundToInt() / 10.0
+
+        binding.tvTotalExamResult.text = finalPercentage.toString()
+        binding.tvPercentageExamResult.text = finalPercentage.toString()
+    }
+}
