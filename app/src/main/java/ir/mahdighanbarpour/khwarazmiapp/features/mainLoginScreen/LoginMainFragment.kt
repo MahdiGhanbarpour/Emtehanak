@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColorStateList
 import androidx.fragment.app.Fragment
@@ -48,6 +49,13 @@ class LoginMainFragment : Fragment() {
             R.drawable.selector_role_radio_button_background
         )
         binding.radioGroupRoleLogin.check(R.id.radioBtStudentLogin)
+
+        // TODO
+        Toast.makeText(
+            requireContext(),
+            "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است برای استفاده بهتر از نرم افزار ترجیحا دانش آموز را انتخاب کنید",
+            Toast.LENGTH_LONG
+        ).show()
 
         listener()
     }

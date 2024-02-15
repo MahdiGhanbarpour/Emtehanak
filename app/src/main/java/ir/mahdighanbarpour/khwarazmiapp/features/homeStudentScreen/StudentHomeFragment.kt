@@ -69,6 +69,8 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Clear the values in Composite Disposable
         compositeDisposable.clear()
 
         // If the snack bar is displayed, it will be hidden
@@ -84,8 +86,10 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             (requireActivity() as StudentMainActivity).openDrawer()
         }
         binding.swipeRefreshStudentMain.setOnRefreshListener {
+            // Refresh data
             initData()
 
+            // Stop rotating refresh view after 1500ms
             Handler(Looper.myLooper()!!).postDelayed({
                 binding.swipeRefreshStudentMain.isRefreshing = false
             }, 1500)
@@ -93,9 +97,11 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun initData() {
+        // Checking if the user has internet or not
         if (isInternetAvailable(requireContext())) {
             binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
 
+            // If the snack bar is displayed, it will be hidden
             if (this::snackbar.isInitialized) {
                 snackbar.dismiss()
             }
@@ -103,6 +109,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             playLoadingAnim()
             getPopularExams()
         } else {
+            // Display the error to the user
             binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
 
             popularExamAdapter.setData(arrayListOf())
@@ -117,6 +124,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun getPopularExams() {
+        // Getting the list of popular exams from the server based on the user's grade
         studentHomeViewModel.getPopularExams(sharedPreferences.getString(USER_GRADE, null)!!)
             .asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -141,11 +149,12 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {
-                    // Starting RecyclerView with sent data
+                    // Checking if exams have been found for the submitted grade
                     if (t.result.exams.isEmpty()) {
                         binding.cardViewPopularExamsStudentMain.visibility = View.GONE
                         binding.recyclerPopularExamsStudentMain.visibility = View.GONE
                     } else {
+                        // Starting RecyclerView with sent data
                         setPopularExamRecyclerData(t.result)
                     }
                 }
@@ -153,6 +162,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     }
 
     private fun playLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
         compositeDisposable.add(studentHomeViewModel.isPopularExamsDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 if (it) {
@@ -270,7 +280,6 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
     override fun onPopularExamClicked(data: Exam) {
         // One of the exams has been clicked
-        // TODO
         val intent = Intent(requireActivity(), ExamDetailActivity::class.java)
         intent.putExtra(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY, data)
         startActivity(intent)

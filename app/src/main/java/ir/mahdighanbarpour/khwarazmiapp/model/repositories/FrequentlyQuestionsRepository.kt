@@ -15,6 +15,7 @@ class FrequentlyQuestionsRepository(
         return frequentlyQuestionsDao.getFrequentlyQuestions(page)
     }
 
+    // Getting the data of the frequently asked questions of the posted page from server
     fun getFrequentlyQuestionsOnline(page: String): Single<FrequentlyQuestionsMainResult> {
         return apiService.getFrequentlyQuestions(page)
     }

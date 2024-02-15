@@ -171,6 +171,7 @@ class StudentMainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setDrawerData() {
+        // Placing student information in the drawer
         val navigationView = binding.navViewStudentMain
         val headerView = navigationView.getHeaderView(0)
 

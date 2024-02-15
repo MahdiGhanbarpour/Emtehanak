@@ -27,13 +27,16 @@ class ExitBottomSheet : BottomSheetDialogFragment() {
 
     private fun listener() {
         binding.btYes.setOnClickListener {
+            // Close this bottom sheet and close the parent activity
             dismiss()
             requireActivity().finish()
         }
         binding.btNo.setOnClickListener {
+            // Close this bottom sheet
             dismiss()
         }
         binding.ivCancel.setOnClickListener {
+            // Close this bottom sheet
             dismiss()
         }
     }

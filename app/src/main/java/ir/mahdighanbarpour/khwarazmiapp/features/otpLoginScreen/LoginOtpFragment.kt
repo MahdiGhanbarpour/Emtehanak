@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -82,6 +83,12 @@ class LoginOtpFragment : Fragment() {
 
         navController = Navigation.findNavController(view)
 
+        Toast.makeText(
+            requireContext(),
+            "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است کد 1234 را وارد کنید.",
+            Toast.LENGTH_SHORT
+        ).show()
+
         initUi()
         setMainData()
         otpTimer()
@@ -91,6 +98,7 @@ class LoginOtpFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
 
+        // Cancel the code resend timer
         timer?.cancel()
 
         // Clear the values in Composite Disposable
@@ -245,7 +253,6 @@ class LoginOtpFragment : Fragment() {
                 return@setOnKeyListener false
             }
         }
-        // }
 
         binding.ivResendOTP.setOnClickListener {
             // Resend the code
@@ -329,15 +336,17 @@ class LoginOtpFragment : Fragment() {
     }
 
     fun checkOtpCode() {
+        // Checking if the user has internet or not
         if (isInternetAvailable(requireContext())) {
             // Checking the OTP entered by the user
             val enteredOtpCode =
                 binding.etFirstOtp.text.toString() + binding.etSecondOtp.text.toString() + binding.etThirdOtp.text.toString() + binding.etFourthOtp.text.toString()
 
+            // TODO
+            // Check the correctness of the entered code
             if (enteredOtpCode != "1234") {
                 changeEditTextsColor(R.color.red)
                 binding.tvOtpError.visibility = View.VISIBLE
-
             } else {
                 if (!isLoading) {
                     if (selectedRole == STUDENT) {
@@ -370,6 +379,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun playLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
         compositeDisposable.add(loginOtpViewModel.isDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 parentActivity.playPauseLoadingAnim(it)
@@ -379,7 +389,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun getStudentInformation() {
-        // receiving information
+        // receiving student information
         loginOtpViewModel.loginStudent(enteredNumber).asyncRequest()
             .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -399,6 +409,7 @@ class LoginOtpFragment : Fragment() {
     }
 
     private fun checkStudentInformation(result: StudentMainResult) {
+        // Checking if there is a student with this phone number or not
         if (result.status == 200) {
             // Saves the student's login and then opens the student's home page
             editor.putBoolean(IS_USER_LOGGED_IN, true)
@@ -412,6 +423,7 @@ class LoginOtpFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         } else {
+            // Open the registration page
             changeEditTextsColor(R.color.student_color)
 
             val roleBundle = Bundle()

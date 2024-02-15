@@ -57,13 +57,15 @@ class ExamDetailActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Clear the values in Composite Disposable
         compositeDisposable.clear()
     }
 
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
-            // The continue button is pressed
+            // If the back button is pressed, the page will be closed
             finish()
         }
         binding.ivHelpExamDetail.setOnClickListener {
@@ -71,21 +73,28 @@ class ExamDetailActivity : AppCompatActivity() {
             showHelpBottomSheet()
         }
         binding.btStartExamDetail.setOnClickListener {
+            // The start exam button is pressed
             onStartClicked()
         }
         binding.ivLikeExamDetail.setOnClickListener {
+            // Checking if this exam has already been liked or not
             if (binding.ivLikeExamDetail.isChecked) {
+                // If liked, the like will be removed
                 binding.ivLikeExamDetail.isChecked = false
             } else {
+                // Otherwise, it will be liked and the dislike will be removed
                 binding.ivLikeExamDetail.playAnimation()
                 binding.ivLikeExamDetail.isChecked = true
                 binding.ivDislikeExamDetail.isChecked = false
             }
         }
         binding.ivDislikeExamDetail.setOnClickListener {
+            // Checking if this exam has already been disliked or not
             if (binding.ivDislikeExamDetail.isChecked) {
+                // If disliked, the dislike will be removed
                 binding.ivDislikeExamDetail.isChecked = false
             } else {
+                // Otherwise, it will be disliked and the like will be removed
                 binding.ivDislikeExamDetail.playAnimation()
                 binding.ivDislikeExamDetail.isChecked = true
                 binding.ivLikeExamDetail.isChecked = false
@@ -94,6 +103,7 @@ class ExamDetailActivity : AppCompatActivity() {
     }
 
     private fun initUi() {
+        // Dragging the edge of the views to the edge of the screen based on the user's Android
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             window.setDecorFitsSystemWindows(false)
         } else {
@@ -102,10 +112,12 @@ class ExamDetailActivity : AppCompatActivity() {
         }
         window.statusBarColor = Color.TRANSPARENT
 
+        // Get selected exam information
         data = intent.getParcelable(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY)
     }
 
     private fun playLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
         compositeDisposable.add(examViewModel.isDataLoading.subscribe {
             runOnUiThread {
                 if (it) {
@@ -123,9 +135,11 @@ class ExamDetailActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun setMainData() {
+        // Placing received data in views
         binding.tvNameExamDetail.text = data.name
         binding.tvDescriptionExamDetail.text = data.description
 
+        // If the exam is not free, its price will be displayed
         if (data.price != 0) {
             binding.btStartExamDetail.text = "خرید | ${data.price} تومان"
         }
@@ -172,21 +186,26 @@ class ExamDetailActivity : AppCompatActivity() {
     }
 
     private fun onStartClicked() {
+        // Check if the exam is free or not
         if (data.price == 0) {
+            // Checking the user's internet connection
             if (isInternetAvailable(this)) {
                 playLoadingAnim()
                 getExamsQuestion()
             } else {
+                // Display the error of not connecting to the Internet
                 Snackbar.make(
                     binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
                 ).setAction("تلاش مجدد") { onStartClicked() }.show()
             }
         } else {
+            // TODO
             makeShortToast(this, "با تشکر از همراهی شما! بخش پرداخت بزودی فعال خواهد شد.")
         }
     }
 
     private fun getExamsQuestion() {
+        // Getting selected exam questions from the server with the help of exam id
         examViewModel.getExamsQuestion(data.id).asyncRequest()
             .subscribe(object : SingleObserver<QuestionMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -203,7 +222,9 @@ class ExamDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(t: QuestionMainResult) {
+                    // Check if questions have been found for this exam or not
                     if (t.result.questions.isNotEmpty()) {
+                        // Send the received questions to the main page of the exam and open that page
                         val intent = Intent(this@ExamDetailActivity, ExamMainActivity::class.java)
                         intent.putExtra(
                             SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY,

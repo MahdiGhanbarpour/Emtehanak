@@ -7,8 +7,11 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.StudentRepository
 
 class RegisterViewModel(private val studentRepository: StudentRepository) : ViewModel() {
+
+    // Determines whether something is being received from the server or not
     val isDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
+    // Student registration
     fun registerStudent(
         name: String, phoneNumber: String, birthday: String, grade: String
     ): Single<StudentMainResult> {

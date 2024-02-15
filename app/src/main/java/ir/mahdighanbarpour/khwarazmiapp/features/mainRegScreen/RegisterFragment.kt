@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -107,6 +108,12 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Toast.makeText(
+            requireContext(),
+            "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است برای استفاده بهتر از نرم افزار ترجیحا پایه نهم را انتخاب کنید",
+            Toast.LENGTH_LONG
+        ).show()
+
         initUi()
         setGradeAdapter()
         setBirthdayMonthAdapter()
@@ -141,18 +148,13 @@ class RegisterFragment : Fragment() {
         // Checking what role the user has selected
         if (selectedRole == TEACHER) {
             mainColor = R.color.teacher_color
+            setSelectedRoleColor("نام و نام خانوادگی همراه دبیر")
         } else if (selectedRole == STUDENT) {
             mainColor = R.color.student_color
+            setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
         }
 
         editor = sharedPreferences.edit()
-
-
-        if (selectedRole == STUDENT) {
-            setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
-        } else {
-            setSelectedRoleColor("نام و نام خانوادگی همراه دبیر")
-        }
     }
 
     // Setting the dropdown data of the birth month
@@ -227,9 +229,10 @@ class RegisterFragment : Fragment() {
 
         // Is all the information correct ?
         if (isEnteredDayOk && isEnteredMonthOk && isEnteredYearOk && isEnteredNameOk && isTeacherDataOk && isGradeOk) {
-            // Checking the user role and opening the corresponding home page
+            // Checking if the user has internet or not
             if (isInternetAvailable(requireContext()) && !isLoading) {
 
+                // Checking the user role and opening the corresponding home page
                 if (selectedRole == TEACHER) {
                     makeShortToast(
                         requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
@@ -392,7 +395,7 @@ class RegisterFragment : Fragment() {
     private fun registerStudent(
         name: String, phoneNumber: String, birthday: String, grade: String
     ) {
-        // receiving information
+        // Student registration
         registerViewModel.registerStudent(name, phoneNumber, birthday, grade).asyncRequest()
             .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -406,6 +409,7 @@ class RegisterFragment : Fragment() {
                 }
 
                 override fun onSuccess(t: StudentMainResult) {
+                    // Checking whether the registration was successful or not
                     if (t.status == 200) {
                         openStudentHomePage(name, grade)
                     }
@@ -414,6 +418,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun playLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
         compositeDisposable.add(registerViewModel.isDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 parentActivity.playPauseLoadingAnim(it)

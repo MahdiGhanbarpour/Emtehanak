@@ -68,6 +68,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
     }
 
     private fun loadOnlineData() {
+        // Getting a list of frequently asked questions from the server
         frequentlyQuestionsViewModel.getFrequentlyQuestionsOnline(sentPage!!).asyncRequest()
             .subscribe(object : SingleObserver<FrequentlyQuestionsMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -88,8 +89,9 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(t: FrequentlyQuestionsMainResult) {
-                    // Starting RecyclerView with sent data
+                    // Checking if FAQs have been found for the submitted page
                     if (t.status == 200) {
+                        // Starting RecyclerView with sent data
                         initRecycler(t.result.frequentlyQuestions)
                         frequentlyQuestionsViewModel.insertAllFrequentlyQuestions(t.result.frequentlyQuestions)
                     } else if (t.status == 404) {
@@ -126,7 +128,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                     }
 
                     override fun onSuccess(t: List<FrequentlyQuestion>) {
-                        // Starting RecyclerView with sent data
+                        // Checking if FAQs have been found for the submitted page
                         if (t.isEmpty()) {
                             makeShortToast(
                                 this@FrequentlyQuestionsActivity,
@@ -134,6 +136,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                             )
                             finish()
                         } else {
+                            // Starting RecyclerView with sent data
                             initRecycler(t)
                         }
                     }
@@ -151,6 +154,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
     }
 
     private fun playLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
         compositeDisposable.add(frequentlyQuestionsViewModel.isDataLoading.subscribe {
             runOnUiThread {
                 if (it) {

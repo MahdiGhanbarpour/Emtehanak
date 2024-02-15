@@ -55,9 +55,12 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         binding = ActivityExamMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Get the list of sent questions
         questions = intent.getParcelableArray(SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY)!!
 
+        // Changing the color of the Status Bar
         changeStatusBarColor(window, "#20A84D", false)
+
         initOptionsRecycler()
         initAttachmentRecycler()
         setQuestionData()
@@ -66,9 +69,11 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
+            // Show exit bottom sheet
             exitBottomSheet.show(supportFragmentManager, null)
         }
         binding.btNextExamMain.setOnClickListener {
+            // Checking whether the questions are finished or not
             if (questionPosition == questions.size - 1) {
                 // Checking if the Exam Result Bottom Sheet is currently displayed or not
                 if (!examResultBottomSheet.isVisible) {
@@ -92,6 +97,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
                     examResultBottomSheet.show(supportFragmentManager, null)
                 }
             } else {
+                // Go to the next question
                 questionPosition++
                 binding.btNextExamMain.visibility = View.INVISIBLE
 
@@ -99,7 +105,9 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             }
         }
         binding.cardViewDontKnowExamMain.setOnClickListener {
+            // Checking whether the question has been answered or not
             if (!isQuestionAnswered) {
+                // Skip the question and display the correct answer
 
                 isQuestionAnswered = true
                 unansweredCount++
@@ -119,6 +127,8 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             }
         }
         binding.cardViewReportQuestionExamMain.setOnClickListener {
+            // Report that the question is broken
+            // TODO
             makeShortToast(this, "گزارش شما ثبت شد")
         }
         binding.ivHelpExamMain.setOnClickListener {
@@ -128,6 +138,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     }
 
     private fun initOptionsRecycler() {
+        // init Options Recycler
         val data = mutableListOf<Option>()
 
         examOptionAdapter = ExamOptionAdapter(data, this)
@@ -138,6 +149,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     }
 
     private fun initAttachmentRecycler() {
+        // init Attachment Recycler
         val data = arrayListOf<Attachment>()
 
         examAttachmentAdapter = ExamAttachmentAdapter(data)
@@ -149,9 +161,11 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
     @SuppressLint("SetTextI18n")
     private fun setQuestionData() {
+        // Putting question information in views
         binding.tvQuestionExamMain.text = questions[questionPosition].question
         binding.tvStateExamMain.text = (questionPosition + 1).toString() + " از " + questions.size
 
+        // Changing the State Exam Main progress value
         val animator = ValueAnimator.ofInt(
             binding.progressStateExamMain.progress, (100 / (questions.size - 1)) * questionPosition
         )
@@ -175,6 +189,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     }
 
     private fun startQuestionAnim() {
+        // Show question change animation
         val firstAnim = AnimationSet(true)
         firstAnim.addAnimation(translateAnimation(0f, 1100f, 0f, 0f, 450))
         firstAnim.addAnimation(alphaAnimation(1f, 0f, 450))
@@ -202,6 +217,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         })
     }
 
+    // Click on one of the options
     override fun onOptionClicked(isSelectedOptionCorrect: Boolean) {
         isQuestionAnswered = true
 
@@ -241,6 +257,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        // Show exit bottom sheet
         exitBottomSheet.show(supportFragmentManager, null)
     }
 }

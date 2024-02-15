@@ -26,6 +26,7 @@ class ExamOptionAdapter(
             binding.tvOptionNumber.text = (adapterPosition + 1).toString()
             binding.tvOption.text = data.option
 
+            // Checking whether the option to put the adapter on is correct or not
             if (isOptionsCorrect[adapterPosition] == true) {
                 whenOptionIsCorrect()
             } else if (isOptionsCorrect[adapterPosition] == false) {
@@ -57,6 +58,7 @@ class ExamOptionAdapter(
     }
 
     private fun whenOptionIsCorrect() {
+        // Change the color of the correct option
         binding.cardViewExamOption.setCardBackgroundColor(
             ContextCompat.getColor(
                 binding.root.context, R.color.green
@@ -72,6 +74,7 @@ class ExamOptionAdapter(
     }
 
     private fun whenOptionIsIncorrect() {
+        // Change the color of the wrong option
         binding.cardViewExamOption.setCardBackgroundColor(
             ContextCompat.getColor(
                 binding.root.context, R.color.red
@@ -87,6 +90,7 @@ class ExamOptionAdapter(
     }
 
     private fun checkOptions(selectedItemPosition: Int) {
+        // Checking whether the option selected by the user is correct or not
         if (data[selectedItemPosition].isCorrect) {
             isOptionsCorrect[selectedItemPosition] = true
         } else {
@@ -104,6 +108,7 @@ class ExamOptionAdapter(
     }
 
     fun unanswered() {
+        // Show the correct option
         val correctOptionIndex = data.mapIndexedNotNull { index, questionOptions ->
             index.takeIf { questionOptions.isCorrect }
         }[0]

@@ -31,6 +31,7 @@ class ExamResultBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Getting the number of correct and incorrect answers and non-answers
         correctAnswersCount = requireArguments().getInt(
             SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
         )
@@ -49,6 +50,7 @@ class ExamResultBottomSheet : BottomSheetDialogFragment() {
 
     private fun listener() {
         binding.btFinishExamResult.setOnClickListener {
+            // Close this bottom sheet and close the parent activity
             dismiss()
             requireActivity().finish()
         }
@@ -56,17 +58,21 @@ class ExamResultBottomSheet : BottomSheetDialogFragment() {
 
     @SuppressLint("SetTextI18n")
     private fun setMainData() {
+        // Putting the received information in the views
         binding.tvCorrectExamResult.text = correctAnswersCount.toString()
         binding.tvIncorrectExamResult.text = incorrectAnswersCount.toString()
         binding.tvUnansweredExamResult.text = unansweredCount.toString()
 
+        // Exam percentage calculation
         val percentage =
             (((correctAnswersCount * 3) - incorrectAnswersCount).toDouble() / ((correctAnswersCount + incorrectAnswersCount + unansweredCount).toDouble() * 3)) * 100
 
+        // Approximation to two decimal places
         val number3digits: Double = (percentage * 1000.0).roundToInt() / 1000.0
         val number2digits: Double = (number3digits * 100.0).roundToInt() / 100.0
         val finalPercentage: Double = (number2digits * 10.0).roundToInt() / 10.0
 
+        // Putting the received information in the views
         binding.tvTotalExamResult.text = finalPercentage.toString()
         binding.tvPercentageExamResult.text = finalPercentage.toString()
     }

@@ -83,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun playPauseLoadingAnim(isLoading: Boolean) {
+        // If the information is being received from the server, an animation will be played
         if (isLoading) {
             binding.animationViewLoginReg.visibility = View.VISIBLE
             binding.btContinueLogin.text = null

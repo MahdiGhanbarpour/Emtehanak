@@ -11,10 +11,12 @@ class ExamRepository(private val apiService: ApiService) {
         return apiService.getExams(grade)
     }
 
+    // Getting the list of popular exams from the server based on the user's grade
     fun getPopularExams(grade: String): Single<ExamsMainResult> {
         return apiService.getPopularExams(grade)
     }
 
+    // Getting the list of exam questions with the help of exam id
     fun getExamsQuestion(examId: Int): Single<QuestionMainResult> {
         return apiService.getExamsQuestion(examId)
     }

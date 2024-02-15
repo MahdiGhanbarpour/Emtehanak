@@ -9,6 +9,8 @@ import ir.mahdighanbarpour.khwarazmiapp.model.repositories.FrequentlyQuestionsRe
 
 class FrequentlyQuestionsViewModel(private val frequentlyQuestionsRepository: FrequentlyQuestionsRepository) :
     ViewModel() {
+
+    // Determines whether something is being received from the server or not
     val isDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     // Getting the data of the frequently asked questions of the posted page from the local database
@@ -16,6 +18,7 @@ class FrequentlyQuestionsViewModel(private val frequentlyQuestionsRepository: Fr
         return frequentlyQuestionsRepository.getFrequentlyQuestionsLocal(page)
     }
 
+    // Getting the data of the frequently asked questions of the posted page from server
     fun getFrequentlyQuestionsOnline(page: String): Single<FrequentlyQuestionsMainResult> {
         isDataLoading.onNext(true)
 
