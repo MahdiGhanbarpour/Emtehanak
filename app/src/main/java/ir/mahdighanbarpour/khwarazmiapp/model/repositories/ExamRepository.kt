@@ -20,4 +20,8 @@ class ExamRepository(private val apiService: ApiService) {
     fun getExamsQuestion(examId: Int): Single<QuestionMainResult> {
         return apiService.getExamsQuestion(examId)
     }
+
+    fun searchExams(grade: String, search: String): Single<ExamsMainResult> {
+        return apiService.searchExams(grade, search)
+    }
 }

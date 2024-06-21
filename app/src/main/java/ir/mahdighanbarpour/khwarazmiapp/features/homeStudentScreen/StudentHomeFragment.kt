@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.CoursesAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.PopularExamAdapter
@@ -93,6 +94,10 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             Handler(Looper.myLooper()!!).postDelayed({
                 binding.swipeRefreshStudentMain.isRefreshing = false
             }, 1500)
+        }
+        binding.linearLayoutTopStartItemStudentMain.setOnClickListener {
+            val intent = Intent(requireContext(), ExamsListActivity::class.java)
+            startActivity(intent)
         }
     }
 

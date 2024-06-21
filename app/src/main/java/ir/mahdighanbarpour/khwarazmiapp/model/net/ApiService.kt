@@ -30,6 +30,11 @@ interface ApiService {
         @Query("grade") grade: String
     ): Single<ExamsMainResult>
 
+    @GET("exam/search-exams")
+    fun searchExams(
+        @Query("grade") grade: String, @Query("search") search: String
+    ): Single<ExamsMainResult>
+
     @GET("exam/exam-questions")
     fun getExamsQuestion(
         @Query("exam") examId: Int

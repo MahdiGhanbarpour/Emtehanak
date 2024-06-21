@@ -68,4 +68,7 @@
     <string name="unanswered">پاسخ نزده</string>
     <string name="finish_exam">اتمام آزمون</string>
     <string name="final_percentage">درصد نهایی :</string>
+    <string name="bookmarks">نشان شده ها</string>
+    <string name="filter">فیلتر</string>
+    <string name="search_exam">جستجو آزمون</string>
 </resources>

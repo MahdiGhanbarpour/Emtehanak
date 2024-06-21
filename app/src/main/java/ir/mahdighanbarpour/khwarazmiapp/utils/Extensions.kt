@@ -1,5 +1,6 @@
 package ir.mahdighanbarpour.khwarazmiapp.utils
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -8,10 +9,12 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
+import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -109,4 +112,9 @@ fun alphaAnimation(fromAlpha: Float, toAlpha: Float, duration: Long): AlphaAnima
     anim.duration = duration
 
     return anim
+}
+
+fun Context.hideKeyboard(view: View) {
+    val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }

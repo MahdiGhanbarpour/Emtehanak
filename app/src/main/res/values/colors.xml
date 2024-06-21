@@ -37,6 +37,7 @@
 
     <color name="transparent_color_0_percent">#00000000</color>
     <color name="transparent_color_5_percent">#0D000000</color>
+    <color name="transparent_color_7_percent">#12000000</color>
     <color name="transparent_color_10_percent">#1A000000</color>
     <color name="transparent_color_15_percent">#26000000</color>
     <color name="transparent_color_30_percent">#4D000000</color>
