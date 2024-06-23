@@ -78,8 +78,6 @@ class LoginActivity : AppCompatActivity() {
         binding.ivHelpLogin.setColorFilter(
             ContextCompat.getColor(this, color), android.graphics.PorterDuff.Mode.SRC_IN
         )
-
-        binding.tvAcceptanceTerms.setTextColor(ContextCompat.getColor(this, color))
     }
 
     fun playPauseLoadingAnim(isLoading: Boolean) {

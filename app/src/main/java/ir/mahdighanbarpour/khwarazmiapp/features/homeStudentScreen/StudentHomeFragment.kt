@@ -99,6 +99,10 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
             startActivity(intent)
         }
+        binding.ivMorePopularExamsStudentMain.setOnClickListener {
+            val intent = Intent(requireContext(), ExamsListActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initData() {

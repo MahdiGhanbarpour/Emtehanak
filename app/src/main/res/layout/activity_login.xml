@@ -46,42 +46,20 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
         app:navGraph="@navigation/nav_login" />
 
-    <LinearLayout
-        android:id="@+id/linearLayoutAcceptanceTerms"
+    <TextView
+        android:id="@+id/tvAcceptanceTerms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:paddingHorizontal="2dp"
+        android:text="@string/terms_and_conditions"
+        android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="2dp"
-            android:text="@string/your_entry_means_acceptance"
-            android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/tvAcceptanceTerms"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingHorizontal="2dp"
-            android:text="@string/terms_and_conditions"
-            android:textColor="@color/student_color"
-            android:textSize="13sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="2dp"
-            android:text="@string/is"
-            android:textSize="13sp" />
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btContinueLogin"
@@ -92,7 +70,7 @@
         android:outlineProvider="none"
         android:text="@string/continue_to"
         app:cornerRadius="8dp"
-        app:layout_constraintBottom_toTopOf="@id/linearLayoutAcceptanceTerms"
+        app:layout_constraintBottom_toTopOf="@id/tvAcceptanceTerms"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

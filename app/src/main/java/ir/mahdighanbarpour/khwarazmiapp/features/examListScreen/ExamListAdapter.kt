@@ -23,7 +23,7 @@ class ExamListAdapter(
             binding.tvExamListAuthorItem.text = data.authorName
 
             binding.tvExamListPriceItem.text =
-                if (data.price == 0) "رایگان" else "${data.price} تومان "
+                if (data.price == 0) "رایگان" else "${data.price} تومان"
 
             Glide.with(binding.root).load(data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivExamListImageItem)

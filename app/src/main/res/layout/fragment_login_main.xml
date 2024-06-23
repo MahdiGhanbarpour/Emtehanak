@@ -83,6 +83,7 @@
         app:boxStrokeWidth="1.5dp"
         app:counterEnabled="true"
         app:counterMaxLength="11"
+        app:cursorColor="@color/black"
         app:errorEnabled="true"
         app:helperText="شماره تلفن همراه می بایست با 09 شروع شود"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,6 +101,7 @@
             android:maxLength="11"
             android:maxLines="1"
             android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

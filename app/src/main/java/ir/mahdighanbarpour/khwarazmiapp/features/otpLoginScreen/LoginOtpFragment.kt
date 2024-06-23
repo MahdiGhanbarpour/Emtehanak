@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -400,6 +401,7 @@ class LoginOtpFragment : Fragment() {
                     Snackbar.make(
                         binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
                     ).setAction("تلاش مجدد") { checkOtpCode() }.show()
+                    Log.v("testLog", e.message.toString())
                 }
 
                 override fun onSuccess(t: StudentMainResult) {

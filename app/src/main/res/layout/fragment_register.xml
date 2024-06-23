@@ -33,6 +33,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvRegister"
@@ -47,6 +48,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -77,6 +79,7 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
             app:errorIconDrawable="@null"
             app:errorTextAppearance="@style/CustomErrorTextAppearance"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,6 +96,7 @@
                 android:maxLength="2"
                 android:maxLines="1"
                 android:paddingVertical="2dp"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
                 android:textSize="13sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -110,6 +114,7 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
             app:errorIconDrawable="@null"
             app:errorTextAppearance="@style/CustomErrorTextAppearance">
 
@@ -121,6 +126,7 @@
                 android:inputType="text"
                 android:maxLength="8"
                 android:maxLines="2"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
                 android:textSize="13sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -137,6 +143,7 @@
             app:boxCornerRadiusTopEnd="8dp"
             app:boxCornerRadiusTopStart="8dp"
             app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
             app:errorIconDrawable="@null"
             app:errorTextAppearance="@style/CustomErrorTextAppearance"
             app:layout_constraintEnd_toEndOf="parent"
@@ -153,6 +160,7 @@
                 android:maxLength="4"
                 android:maxLines="1"
                 android:paddingVertical="2dp"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
                 android:textSize="13sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -173,6 +181,7 @@
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayoutBirthdayReg"
@@ -187,6 +196,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -206,6 +216,7 @@
         app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeColor="@color/teacher_color"
         app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
         app:hintTextColor="@color/teacher_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -220,6 +231,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -240,6 +252,7 @@
         app:boxCornerRadiusTopStart="8dp"
         app:boxStrokeColor="@color/teacher_color"
         app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
         app:hintTextColor="@color/teacher_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -255,6 +268,7 @@
             android:maxLength="4"
             android:maxLines="1"
             android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
             android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
