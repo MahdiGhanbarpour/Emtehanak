@@ -20,7 +20,7 @@
             android:elevation="4dp"
             app:itemIconTint="@color/bottom_nav_item_color"
             app:itemTextColor="@color/bottom_nav_item_color"
-            app:menu="@menu/menu_bottom_nav" />
+            app:menu="@menu/menu_bottom_nav_student" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_host_fragment_student"
@@ -41,6 +41,6 @@
         app:headerLayout="@layout/layout_drawer_header"
         app:itemIconTint="@color/student_color"
         app:itemRippleColor="?android:colorControlHighlight"
-        app:menu="@menu/menu_nav_drawer" />
+        app:menu="@menu/menu_nav_drawer_student" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

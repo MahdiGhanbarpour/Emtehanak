@@ -4,9 +4,14 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.StudentRepository
+import ir.mahdighanbarpour.khwarazmiapp.model.repositories.TeacherRepository
 
-class LoginOtpViewModel(private val studentRepository: StudentRepository) : ViewModel() {
+class LoginOtpViewModel(
+    private val studentRepository: StudentRepository,
+    private val teacherRepository: TeacherRepository
+) : ViewModel() {
 
     // Determines whether something is being received from the server or not
     val isDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
@@ -16,6 +21,15 @@ class LoginOtpViewModel(private val studentRepository: StudentRepository) : View
         isDataLoading.onNext(true)
 
         return studentRepository.loginStudent(phoneNumber).doFinally {
+            isDataLoading.onNext(false)
+        }
+    }
+
+    // receiving teacher information
+    fun loginTeacher(phoneNumber: String): Single<TeacherMainResult> {
+        isDataLoading.onNext(true)
+
+        return teacherRepository.loginTeacher(phoneNumber).doFinally {
             isDataLoading.onNext(false)
         }
     }

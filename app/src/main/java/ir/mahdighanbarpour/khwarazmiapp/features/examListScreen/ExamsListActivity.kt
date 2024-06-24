@@ -22,6 +22,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.hideKeyboard
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
@@ -30,7 +31,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
     private lateinit var examListAdapter: ExamListAdapter
     private lateinit var grade: String
 
-    private val examListViewModel: ExamListViewModel by inject()
+    private val examListViewModel: ExamListViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
 
     private val compositeDisposable = CompositeDisposable()

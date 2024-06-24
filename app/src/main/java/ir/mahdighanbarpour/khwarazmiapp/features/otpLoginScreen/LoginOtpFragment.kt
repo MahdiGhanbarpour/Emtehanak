@@ -29,7 +29,9 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentLoginOtpBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.mainTeacherScreen.TeacherMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_OTP_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
@@ -343,7 +345,6 @@ class LoginOtpFragment : Fragment() {
             val enteredOtpCode =
                 binding.etFirstOtp.text.toString() + binding.etSecondOtp.text.toString() + binding.etThirdOtp.text.toString() + binding.etFourthOtp.text.toString()
 
-            // TODO
             // Check the correctness of the entered code
             if (enteredOtpCode != "1234") {
                 changeEditTextsColor(R.color.red)
@@ -353,22 +354,9 @@ class LoginOtpFragment : Fragment() {
                     if (selectedRole == STUDENT) {
                         playLoadingAnim()
                         getStudentInformation()
-
                     } else {
-                        changeEditTextsColor(R.color.teacher_color)
-
-                        val roleBundle = Bundle()
-                        roleBundle.putString(
-                            SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
-                        )
-
-                        roleBundle.putString(
-                            SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber
-                        )
-
-                        navController.navigate(
-                            R.id.action_loginOtpFragment_to_registerFragment, roleBundle
-                        )
+                        playLoadingAnim()
+                        getTeacherInformation()
                     }
                 }
             }
@@ -427,6 +415,58 @@ class LoginOtpFragment : Fragment() {
         } else {
             // Open the registration page
             changeEditTextsColor(R.color.student_color)
+
+            val roleBundle = Bundle()
+            roleBundle.putString(
+                SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY, selectedRole
+            )
+
+            roleBundle.putString(SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY, enteredNumber)
+
+            navController.navigate(
+                R.id.action_loginOtpFragment_to_registerFragment, roleBundle
+            )
+        }
+    }
+
+    private fun getTeacherInformation() {
+        // receiving teacher information
+        loginOtpViewModel.loginTeacher(enteredNumber).asyncRequest()
+            .subscribe(object : SingleObserver<TeacherMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    Snackbar.make(
+                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                    ).setAction("تلاش مجدد") { checkOtpCode() }.show()
+                    Log.v("testLog", e.message.toString())
+                }
+
+                override fun onSuccess(t: TeacherMainResult) {
+                    checkTeacherInformation(t)
+                }
+            })
+    }
+
+    private fun checkTeacherInformation(result: TeacherMainResult) {
+        // Checking if there is a teacher with this phone number or not
+        if (result.status == 200) {
+            // Saves the teacher's login and then opens the teacher's home page
+            editor.putBoolean(IS_USER_LOGGED_IN, true)
+            editor.putString(USER_FULL_NAME, result.result.teacher.fullName)
+            editor.putString(USER_PHONE_NUM, enteredNumber)
+            editor.putString(USER_GRADE, null)
+            editor.putString(USER_ROLE, selectedRole)
+            editor.commit()
+
+            val intent = Intent(requireContext(), TeacherMainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        } else {
+            // Open the registration page
+            changeEditTextsColor(R.color.teacher_color)
 
             val roleBundle = Bundle()
             roleBundle.putString(

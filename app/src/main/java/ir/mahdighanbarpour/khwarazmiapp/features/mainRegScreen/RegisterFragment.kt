@@ -24,7 +24,12 @@ import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.IS_USER_LOGGED_IN
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_ACTIVITY_YEAR_TO_GRADES_REGISTER_FRAGMENT_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_BIRTHDAY_TO_GRADES_REGISTER_FRAGMENT_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_NAME_TO_GRADES_REGISTER_FRAGMENT_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_GRADES_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_REG_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_STUDY_FIELD_TO_GRADES_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
@@ -108,12 +113,6 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Toast.makeText(
-            requireContext(),
-            "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است برای استفاده بهتر از نرم افزار ترجیحا پایه نهم را انتخاب کنید",
-            Toast.LENGTH_LONG
-        ).show()
-
         initUi()
         setGradeAdapter()
         setBirthdayMonthAdapter()
@@ -152,6 +151,12 @@ class RegisterFragment : Fragment() {
         } else if (selectedRole == STUDENT) {
             mainColor = R.color.student_color
             setSelectedRoleColor("نام و نام خانوادگی دانش آموز")
+
+            Toast.makeText(
+                requireContext(),
+                "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است برای استفاده بهتر از نرم افزار ترجیحا پایه نهم را انتخاب کنید",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
         editor = sharedPreferences.edit()
@@ -185,6 +190,8 @@ class RegisterFragment : Fragment() {
         val enteredMonth = binding.tvMonthReg.text.toString()
         val enteredYear = binding.etYearReg.text.toString()
         val enteredGrade = binding.tvStudentGradeReg.text.toString()
+        val enteredExpertise = binding.tvTeacherExpertiseReg.text.toString()
+        val enteredActivityYear = binding.etActivityYearReg.text.toString()
 
         var isEnteredDayOk = false
         var isEnteredMonthOk = false
@@ -234,11 +241,28 @@ class RegisterFragment : Fragment() {
 
                 // Checking the user role and opening the corresponding home page
                 if (selectedRole == TEACHER) {
-                    makeShortToast(
-                        requireContext(), "بخش دبیران در حال توسعه است. با تشکر از شکیبایی شما"
+                    val teacherBundle = Bundle()
+                    teacherBundle.putString(
+                        SEND_ENTERED_NAME_TO_GRADES_REGISTER_FRAGMENT_KEY, enteredName
                     )
-                    // TODO
+                    teacherBundle.putString(
+                        SEND_ENTERED_PHONE_NUMBER_TO_GRADES_REGISTER_FRAGMENT_KEY, enteredPhoneNum
+                    )
+                    teacherBundle.putString(
+                        SEND_ENTERED_BIRTHDAY_TO_GRADES_REGISTER_FRAGMENT_KEY,
+                        "$enteredYear/${monthItems.indexOf(enteredMonth)}/$enteredDay"
+                    )
+                    teacherBundle.putString(
+                        SEND_ENTERED_STUDY_FIELD_TO_GRADES_REGISTER_FRAGMENT_KEY, enteredExpertise
+                    )
+                    teacherBundle.putString(
+                        SEND_ENTERED_ACTIVITY_YEAR_TO_GRADES_REGISTER_FRAGMENT_KEY,
+                        enteredActivityYear
+                    )
 
+                    navController.navigate(
+                        R.id.action_registerFragment_to_gradesRegisterFragment, teacherBundle
+                    )
                 } else {
                     playLoadingAnim()
                     registerStudent(
@@ -412,6 +436,10 @@ class RegisterFragment : Fragment() {
                     // Checking whether the registration was successful or not
                     if (t.status == 200) {
                         openStudentHomePage(name, grade)
+                    } else {
+                        Snackbar.make(
+                            binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                        ).setAction("تلاش مجدد") { checkInputs() }.show()
                     }
                 }
             })

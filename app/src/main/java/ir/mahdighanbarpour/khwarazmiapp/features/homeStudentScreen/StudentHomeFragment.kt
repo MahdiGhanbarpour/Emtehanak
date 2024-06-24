@@ -33,6 +33,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     PopularExamAdapter.PopularExamEvents, ExperiencedTeachersAdapter.ExperiencedTeachersEvents {
@@ -43,7 +44,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     private lateinit var popularExamAdapter: PopularExamAdapter
     private lateinit var snackbar: Snackbar
 
-    private val studentHomeViewModel: StudentHomeViewModel by inject()
+    private val studentHomeViewModel: StudentHomeViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
 
     private val compositeDisposable = CompositeDisposable()

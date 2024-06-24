@@ -50,13 +50,6 @@ class LoginMainFragment : Fragment() {
         )
         binding.radioGroupRoleLogin.check(R.id.radioBtStudentLogin)
 
-        // TODO
-        Toast.makeText(
-            requireContext(),
-            "به دلیل اینکه نرم افزار در نسخه های اولیه قرار دارد و امکانات آن کامل نشده است برای استفاده بهتر از نرم افزار ترجیحا دانش آموز را انتخاب کنید",
-            Toast.LENGTH_LONG
-        ).show()
-
         listener()
     }
 

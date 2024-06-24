@@ -69,4 +69,16 @@
     <string name="bookmarks">نشان شده ها</string>
     <string name="filter">فیلتر</string>
     <string name="search_exam">جستجو آزمون</string>
+    <string name="first">اول</string>
+    <string name="second">دوم</string>
+    <string name="third">سوم</string>
+    <string name="fourth">چهارم</string>
+    <string name="fifth">پنجم</string>
+    <string name="sixth">ششم</string>
+    <string name="seventh">هفتم</string>
+    <string name="eighth">هشتم</string>
+    <string name="ninth">نهم</string>
+    <string name="tenth">دهم</string>
+    <string name="eleventh">یازدهم</string>
+    <string name="twelfth">دوازدهم</string>
 </resources>

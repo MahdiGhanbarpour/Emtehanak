@@ -15,6 +15,7 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityStudentMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogLogoutBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.aboutUsScreen.AboutUsActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.profileStudentScreen.StudentProfileFragment
@@ -111,13 +112,18 @@ class StudentMainActivity : AppCompatActivity() {
             // Performing the relevant work based on the selected item
             when (it.itemId) {
                 R.id.menu_home -> {
-                    makeShortToast(this, "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
-                    // TODO
+                    // Closing the navigation drawer and going to the home page
+                    binding.drawerLayStudentMain.closeDrawers()
+                    supportFragmentManager.beginTransaction().hide(active).show(firstFragment)
+                        .commitNow()
+                    active = firstFragment
                 }
 
                 R.id.menu_exams -> {
-                    makeShortToast(this, "بخش آزمون ها در حال توسعه است. با تشکر از شکیبایی شما")
-                    // TODO
+                    // Closing the navigation drawer and going to the exams page
+                    binding.drawerLayStudentMain.closeDrawers()
+                    val intent = Intent(this, ExamsListActivity::class.java)
+                    startActivity(intent)
                 }
 
                 R.id.menu_teachers -> {

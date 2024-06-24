@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLoginBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.GradesRegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.termsScreen.TermsActivity
@@ -104,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             "fragment_login_otp" -> {
-                // Accessing the checkInput function inside the LoginOtpFragment
+                // Accessing the checkOtpCode function inside the LoginOtpFragment
                 val loginOtpFragment =
                     navHostFragment.childFragmentManager.fragments.firstOrNull { it is LoginOtpFragment } as? LoginOtpFragment
                 loginOtpFragment?.checkOtpCode()
@@ -114,6 +115,13 @@ class LoginActivity : AppCompatActivity() {
                 // Accessing the checkInputs function inside the RegisterFragment
                 val registerFragment =
                     navHostFragment.childFragmentManager.fragments.firstOrNull { it is RegisterFragment } as? RegisterFragment
+                registerFragment?.checkInputs()
+            }
+
+            "fragment_grades_register" -> {
+                // Accessing the checkInputs function inside the RegisterFragment
+                val registerFragment =
+                    navHostFragment.childFragmentManager.fragments.firstOrNull { it is GradesRegisterFragment } as? GradesRegisterFragment
                 registerFragment?.checkInputs()
             }
         }

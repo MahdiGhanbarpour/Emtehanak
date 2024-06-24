@@ -32,6 +32,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelable
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExamDetailActivity : AppCompatActivity() {
 
@@ -39,7 +40,7 @@ class ExamDetailActivity : AppCompatActivity() {
     private lateinit var examDetailAdapter: ExamDetailAdapter
     private lateinit var data: Exam
 
-    private val examViewModel: ExamViewModel by inject()
+    private val examViewModel: ExamViewModel by viewModel()
 
     private val helpBottomSheet = HelpBottomSheet()
     private val compositeDisposable = CompositeDisposable()
