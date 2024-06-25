@@ -9,8 +9,10 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.google.android.material.card.MaterialCardView
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityTeacherMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogLogoutBinding
@@ -30,6 +32,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_STUDY_FIELD
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
 
@@ -184,9 +187,13 @@ class TeacherMainActivity : AppCompatActivity() {
         val navigationView = binding.navViewTeacherMain
         val headerView = navigationView.getHeaderView(0)
 
-        val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeaderTeacher) as TextView
+        val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeader) as TextView
+        val tvUserDetail = headerView.findViewById<View>(R.id.tvUserDetailDrawerHeader) as TextView
+        val cardViewProfile = headerView.findViewById<View>(R.id.cardViewProfileImageDrawerHeader) as MaterialCardView
 
+        cardViewProfile.setCardBackgroundColor(ContextCompat.getColor(this, R.color.teacher_color))
         tvUsername.text = sharedPreferences.getString(USER_FULL_NAME, "خطا")
+        tvUserDetail.text = sharedPreferences.getString(USER_STUDY_FIELD, "خطا")
     }
 
     private fun showLogOutDialog() {
@@ -209,6 +216,7 @@ class TeacherMainActivity : AppCompatActivity() {
             editor.putString(USER_PHONE_NUM, null)
             editor.putString(USER_GRADE, null)
             editor.putString(USER_ROLE, null)
+            editor.putString(USER_STUDY_FIELD, null)
             editor.commit()
 
             val intent = Intent(this, LoginActivity::class.java)

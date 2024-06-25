@@ -17,10 +17,10 @@ class ExamListViewModel(private val examRepository: ExamRepository) : ViewModel(
         }
     }
 
-    fun searchExams(grade: String, search: String): Single<ExamsMainResult> {
+    fun searchExams(grade: String, search: String, gradeList: String): Single<ExamsMainResult> {
         isDataLoading.onNext(true)
 
-        return examRepository.searchExams(grade, search).doFinally {
+        return examRepository.searchExams(grade, search, gradeList).doFinally {
             isDataLoading.onNext(false)
         }
     }

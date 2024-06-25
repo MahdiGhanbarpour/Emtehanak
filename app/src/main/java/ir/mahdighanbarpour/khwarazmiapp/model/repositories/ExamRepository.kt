@@ -16,7 +16,7 @@ class ExamRepository(private val apiService: ApiService) {
         return apiService.getExamsQuestion(examId)
     }
 
-    fun searchExams(grade: String, search: String): Single<ExamsMainResult> {
-        return apiService.searchExams(grade, search)
+    fun searchExams(grade: String, search: String, gradeList: String): Single<ExamsMainResult> {
+        return apiService.searchExams(grade, search, gradeList)
     }
 }

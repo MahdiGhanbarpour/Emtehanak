@@ -27,6 +27,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_STUDY_FIELD
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
@@ -142,7 +143,7 @@ class GradesRegisterFragment : Fragment() {
             override fun onSuccess(t: TeacherMainResult) {
                 // Checking whether the registration was successful or not
                 if (t.status == 200) {
-                    openTeacherHomePage(name, phoneNumber, grade)
+                    openTeacherHomePage(name, phoneNumber, grade, studyField)
                 } else {
                     Snackbar.make(
                         binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
@@ -152,13 +153,16 @@ class GradesRegisterFragment : Fragment() {
         })
     }
 
-    private fun openTeacherHomePage(name: String, phoneNumber: String, grade: String) {
+    private fun openTeacherHomePage(
+        name: String, phoneNumber: String, grade: String, studyField: String
+    ) {
         // Saves the teacher's login and then opens the teacher's home page
         editor.putBoolean(IS_USER_LOGGED_IN, true)
         editor.putString(USER_FULL_NAME, name)
         editor.putString(USER_PHONE_NUM, phoneNumber)
         editor.putString(USER_GRADE, grade)
         editor.putString(USER_ROLE, TEACHER)
+        editor.putString(USER_STUDY_FIELD, studyField)
         editor.commit()
 
         val intent = Intent(requireContext(), TeacherMainActivity::class.java)

@@ -43,7 +43,9 @@ interface ApiService {
 
     @GET("exam/search-exams")
     fun searchExams(
-        @Query("grade") grade: String, @Query("search") search: String
+        @Query("grade") grade: String,
+        @Query("search") search: String,
+        @Query("gradeList") gradeList: String,
     ): Single<ExamsMainResult>
 
     @GET("exam/exam-questions")

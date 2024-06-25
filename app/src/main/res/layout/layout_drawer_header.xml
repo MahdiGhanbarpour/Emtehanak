@@ -7,20 +7,19 @@
     android:layoutDirection="rtl">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewProfileImageDrawerHeaderTeacher"
+        android:id="@+id/cardViewProfileImageDrawerHeader"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/teacher_color"
         app:cardCornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tvUsernameDrawerHeaderTeacher"
+        app:layout_constraintEnd_toStartOf="@+id/linearUserInfoDrawerHeader"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ivProfileImageDrawerHeaderTeacher"
+            android:id="@+id/ivProfileImageDrawerHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="12dp"
@@ -29,18 +28,48 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <LinearLayout
+        android:id="@+id/linearUserInfoDrawerHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/cardViewProfileImageDrawerHeader"
+        app:layout_constraintTop_toTopOf="parent">
+
         <TextView
-            android:id="@+id/tvUsernameDrawerHeaderTeacher"
+            android:id="@+id/tvUsernameDrawerHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardViewProfileImageDrawerHeaderTeacher"
-            app:layout_constraintTop_toTopOf="parent"
             tools:text="مهدی قنبرپور"
             android:textColor="?attr/colorOnSecondary"
             android:textSize="14sp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginTop="4dp"
+            android:backgroundTint="#0A000000"
+            android:clickable="true"
+            android:focusable="true"
+            android:outlineProvider="none"
+            app:cardCornerRadius="6dp">
+
+            <TextView
+                android:id="@+id/tvUserDetailDrawerHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginVertical="4dp"
+                tools:text="پایه نهم"
+                android:textSize="13sp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

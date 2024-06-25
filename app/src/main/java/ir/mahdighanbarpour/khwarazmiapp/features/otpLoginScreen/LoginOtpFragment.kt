@@ -43,6 +43,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_STUDY_FIELD
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import org.koin.android.ext.android.inject
@@ -459,6 +460,7 @@ class LoginOtpFragment : Fragment() {
             editor.putString(USER_PHONE_NUM, enteredNumber)
             editor.putString(USER_GRADE, result.result.teacher.grades)
             editor.putString(USER_ROLE, selectedRole)
+            editor.putString(USER_STUDY_FIELD, result.result.teacher.studyField)
             editor.commit()
 
             val intent = Intent(requireContext(), TeacherMainActivity::class.java)

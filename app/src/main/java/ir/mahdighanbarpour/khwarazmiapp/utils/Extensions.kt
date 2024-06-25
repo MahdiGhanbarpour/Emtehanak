@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
@@ -16,8 +17,14 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.SimpleColorFilter
+import com.airbnb.lottie.model.KeyPath
+import com.airbnb.lottie.value.LottieValueCallback
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
@@ -117,4 +124,15 @@ fun alphaAnimation(fromAlpha: Float, toAlpha: Float, duration: Long): AlphaAnima
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun LottieAnimationView.changeLayersColor(
+    @ColorRes colorRes: Int
+) {
+    val color = ContextCompat.getColor(context, colorRes)
+    val filter = SimpleColorFilter(color)
+    val keyPath = KeyPath("**")
+    val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
+
+    addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }

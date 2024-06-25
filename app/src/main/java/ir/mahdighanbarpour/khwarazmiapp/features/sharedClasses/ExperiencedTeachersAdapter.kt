@@ -27,13 +27,15 @@ class ExperiencedTeachersAdapter(
             binding.tvExperiencedTeacherNameItem.text = data.first
             binding.tvExperiencedTeacherCourseItem.text = data.second
 
+            binding.cardViewExperiencedTeachersProfileImageItem.setCardBackgroundColor(
+                ContextCompat.getColor(binding.root.context, R.color.teacher_color))
+
             // If the teacher has a picture, it will show the picture
             if (data.third != null) {
                 binding.ivExperiencedTeachersProfileImageItem.visibility = View.VISIBLE
                 binding.ivExperiencedTeachersDefaultProfileImageItem.visibility = View.GONE
                 binding.cardViewExperiencedTeachersProfileImageItem.setCardBackgroundColor(
-                    ContextCompat.getColor(binding.root.context, R.color.white)
-                )
+                    ContextCompat.getColor(binding.root.context, R.color.white))
 
                 // Load image
                 Glide.with(binding.root.context).load(data.third).error(R.drawable.img_error)

@@ -11,14 +11,19 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamsListBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
+import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
+import ir.mahdighanbarpour.khwarazmiapp.utils.changeLayersColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.hideKeyboard
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import org.koin.android.ext.android.inject
@@ -29,7 +34,8 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
 
     private lateinit var binding: ActivityExamsListBinding
     private lateinit var examListAdapter: ExamListAdapter
-    private lateinit var grade: String
+    private lateinit var userGrade: String
+    private lateinit var userRole: String
 
     private val examListViewModel: ExamListViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
@@ -41,7 +47,14 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         binding = ActivityExamsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        grade = sharedPreferences.getString(USER_GRADE, "")!!
+        userGrade = sharedPreferences.getString(USER_GRADE, "")!!
+        userRole = sharedPreferences.getString(USER_ROLE, "")!!
+
+        if (userRole == TEACHER) {
+            binding.btFilterExamList.setBackgroundColor(getColor(R.color.teacher_color))
+            binding.animationViewExamList.changeLayersColor(R.color.teacher_color)
+            binding.ivErrorExamList.setColorFilter(getColor(R.color.teacher_color))
+        }
 
         initExamListRecycler()
         initData()
@@ -117,7 +130,18 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
     }
 
     private fun getExams() {
-        examListViewModel.getExamList(grade, "", "-1").asyncRequest()
+        val grade: String
+        val gradeList: String
+
+        if (userRole == STUDENT) {
+            grade = userGrade
+            gradeList = ""
+        } else {
+            grade = ""
+            gradeList = userGrade
+        }
+
+        examListViewModel.getExamList(grade, gradeList, "-1").asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)
@@ -154,7 +178,18 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
     }
 
     private fun searchExams(search: String) {
-        examListViewModel.searchExams(grade, search).asyncRequest()
+        val grade: String
+        val gradeList: String
+
+        if (userRole == STUDENT) {
+            grade = userGrade
+            gradeList = ""
+        } else {
+            grade = ""
+            gradeList = userGrade
+        }
+
+        examListViewModel.searchExams(grade, search, gradeList).asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)

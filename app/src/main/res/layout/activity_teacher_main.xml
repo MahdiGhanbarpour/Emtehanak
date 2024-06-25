@@ -36,7 +36,7 @@
         android:layout_gravity="start"
         android:paddingHorizontal="8dp"
         android:theme="@style/NavigationTheme"
-        app:headerLayout="@layout/layout_drawer_header_teacher"
+        app:headerLayout="@layout/layout_drawer_header"
         app:itemIconTint="@color/teacher_color"
         app:itemRippleColor="?android:colorControlHighlight"
         app:menu="@menu/menu_nav_drawer_teacher" />

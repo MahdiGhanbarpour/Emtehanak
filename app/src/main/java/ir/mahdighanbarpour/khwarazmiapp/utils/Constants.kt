@@ -55,6 +55,7 @@ const val USER_FULL_NAME = "user_full_name"
 const val USER_PHONE_NUM = "user_phone_num"
 const val USER_GRADE = "user_grade"
 const val USER_ROLE = "user_role"
+const val USER_STUDY_FIELD = "user_study_field"
 
 // Constants related to connection with the server
 const val BASE_URL = "https://persiadev.net/khwarizmi/"
