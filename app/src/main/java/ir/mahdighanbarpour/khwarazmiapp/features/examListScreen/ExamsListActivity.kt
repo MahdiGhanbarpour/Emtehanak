@@ -117,7 +117,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
     }
 
     private fun getExams() {
-        examListViewModel.getExamList(grade).asyncRequest()
+        examListViewModel.getExamList(grade, "", "-1").asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     compositeDisposable.add(d)

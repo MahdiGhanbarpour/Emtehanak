@@ -19,7 +19,7 @@
             android:id="@+id/cardViewExperiencedTeachersProfileImageItem"
             android:layout_width="54dp"
             android:layout_height="54dp"
-            android:backgroundTint="@color/student_color"
+            android:backgroundTint="@color/teacher_color"
             app:cardCornerRadius="28dp"
             app:layout_constraintBottom_toTopOf="@+id/linearLayoutExperiencedTeachersDetailItem"
             app:layout_constraintEnd_toEndOf="parent"

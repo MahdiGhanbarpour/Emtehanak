@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.homeTeacherScreen
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,13 +17,12 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
+import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentTeacherHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.CoursesAdapter
+import ir.mahdighanbarpour.khwarazmiapp.features.mainTeacherScreen.TeacherMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapter
-import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
@@ -35,16 +34,15 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
-    PopularExamAdapter.PopularExamEvents, ExperiencedTeachersAdapter.ExperiencedTeachersEvents {
+class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
+    ExperiencedTeachersAdapter.ExperiencedTeachersEvents {
 
-    private lateinit var binding: FragmentStudentHomeBinding
-    private lateinit var coursesAdapter: CoursesAdapter
+    private lateinit var binding: FragmentTeacherHomeBinding
     private lateinit var experiencedTeachersAdapter: ExperiencedTeachersAdapter
     private lateinit var popularExamAdapter: PopularExamAdapter
     private lateinit var snackbar: Snackbar
 
-    private val studentHomeViewModel: StudentHomeViewModel by viewModel()
+    private val teacherHomeViewModel: TeacherHomeViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
 
     private val compositeDisposable = CompositeDisposable()
@@ -52,7 +50,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStudentHomeBinding.inflate(layoutInflater)
+        binding = FragmentTeacherHomeBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -60,7 +58,6 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         super.onViewCreated(view, savedInstanceState)
 
         initSlider()
-        initCourseRecycler()
         initExperiencedTeachersRecycler()
         initPopularExamRecycler()
 
@@ -83,24 +80,24 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
 
     private fun listener() {
-        binding.cardViewOpenDrawerStudentMain.setOnClickListener {
+        binding.cardViewOpenDrawerTeacherMain.setOnClickListener {
             // If the button is pressed, it will open the NavigationDrawer
-            (requireActivity() as StudentMainActivity).openDrawer()
+            (requireActivity() as TeacherMainActivity).openDrawer()
         }
-        binding.swipeRefreshStudentMain.setOnRefreshListener {
+        binding.swipeRefreshTeacherMain.setOnRefreshListener {
             // Refresh data
             initData()
 
             // Stop rotating refresh view after 1500ms
             Handler(Looper.myLooper()!!).postDelayed({
-                binding.swipeRefreshStudentMain.isRefreshing = false
+                binding.swipeRefreshTeacherMain.isRefreshing = false
             }, 1500)
         }
-        binding.linearLayoutTopStartItemStudentMain.setOnClickListener {
+        binding.linearLayoutTopStartItemTeacherMain.setOnClickListener {
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
             startActivity(intent)
         }
-        binding.ivMorePopularExamsStudentMain.setOnClickListener {
+        binding.ivMorePopularExamsTeacherMain.setOnClickListener {
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
             startActivity(intent)
         }
@@ -109,7 +106,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
     private fun initData() {
         // Checking if the user has internet or not
         if (isInternetAvailable(requireContext())) {
-            binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+            binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
 
             // If the snack bar is displayed, it will be hidden
             if (this::snackbar.isInitialized) {
@@ -120,7 +117,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             getPopularExams()
         } else {
             // Display the error to the user
-            binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
+            binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
 
             popularExamAdapter.setData(arrayListOf())
 
@@ -135,55 +132,55 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
     private fun getPopularExams() {
         // Getting the list of popular exams from the server based on the user's grade
-        studentHomeViewModel.getPopularExams(
-            sharedPreferences.getString(USER_GRADE, null)!!, "", "5"
+        teacherHomeViewModel.getPopularExams(
+            "", sharedPreferences.getString(USER_GRADE, null)!!, "5"
         ).asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
-            override fun onSubscribe(d: Disposable) {
-                compositeDisposable.add(d)
-            }
-
-            override fun onError(e: Throwable) {
-                // Error report to user
-                binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
-
-                snackbar = Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    "خطا در دریافت اطلاعات",
-                    Snackbar.LENGTH_LONG
-                ).setAction(
-                    "تلاش دوباره"
-                ) {
-                    binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
-                    getPopularExams()
+                override fun onSubscribe(d: Disposable) {
+                    compositeDisposable.add(d)
                 }
-                snackbar.show()
-            }
 
-            override fun onSuccess(t: ExamsMainResult) {
-                // Checking if exams have been found for the submitted grade
-                if (t.result.exams.isEmpty()) {
-                    binding.cardViewPopularExamsStudentMain.visibility = View.GONE
-                    binding.recyclerPopularExamsStudentMain.visibility = View.GONE
-                } else {
-                    // Starting RecyclerView with sent data
-                    setPopularExamRecyclerData(t.result)
+                override fun onError(e: Throwable) {
+                    // Error report to user
+                    binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
+
+                    snackbar = Snackbar.make(
+                        requireActivity().findViewById(android.R.id.content),
+                        "خطا در دریافت اطلاعات",
+                        Snackbar.LENGTH_LONG
+                    ).setAction(
+                        "تلاش دوباره"
+                    ) {
+                        binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
+                        getPopularExams()
+                    }
+                    snackbar.show()
                 }
-            }
-        })
+
+                override fun onSuccess(t: ExamsMainResult) {
+                    // Checking if exams have been found for the submitted grade
+                    if (t.result.exams.isEmpty()) {
+                        binding.cardViewPopularExamsTeacherMain.visibility = View.GONE
+                        binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
+                    } else {
+                        // Starting RecyclerView with sent data
+                        setPopularExamRecyclerData(t.result)
+                    }
+                }
+            })
     }
 
     private fun playLoadingAnim() {
         // If the information is being received from the server, an animation will be played
-        compositeDisposable.add(studentHomeViewModel.isPopularExamsDataLoading.subscribe {
+        compositeDisposable.add(teacherHomeViewModel.isPopularExamsDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 if (it) {
-                    binding.animationViewPopularExamsStudentMain.visibility = View.VISIBLE
+                    binding.animationViewPopularExamsTeacherMain.visibility = View.VISIBLE
 
-                    binding.animationViewPopularExamsStudentMain.playAnimation()
+                    binding.animationViewPopularExamsTeacherMain.playAnimation()
                 } else {
-                    binding.animationViewPopularExamsStudentMain.visibility = View.GONE
+                    binding.animationViewPopularExamsTeacherMain.visibility = View.GONE
 
-                    binding.animationViewPopularExamsStudentMain.pauseAnimation()
+                    binding.animationViewPopularExamsTeacherMain.pauseAnimation()
                 }
             }
         })
@@ -209,47 +206,15 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             ),
         )
 
-        binding.sliderMain.setImageList(imageList)
-    }
-
-    private fun initCourseRecycler() {
-        // Making the adapter and making the necessary settings
-        val data = arrayListOf(
-            Pair(
-                "علوم تجربی",
-                "http://www.chap.sch.ir/sites/default/files/styles/image_node_book/public/book_image/1402-1403/C906.jpg"
-            ),
-            Pair(
-                "ریاضی",
-                "http://www.chap.sch.ir/sites/default/files/styles/image_node_book/public/book_image/1402-1403/C905.jpg"
-            ),
-            Pair(
-                "فارسی",
-                "http://www.chap.sch.ir/sites/default/files/styles/image_node_book/public/book_image/1402-1403/C903.jpg"
-            ),
-            Pair(
-                "مطالعات اجتماعی",
-                "http://www.chap.sch.ir/sites/default/files/styles/image_node_book/public/book_image/1402-1403/C907.jpg"
-            ),
-            Pair(
-                "عربی",
-                "http://www.chap.sch.ir/sites/default/files/styles/image_node_book/public/book_image/1402-1403/C909_0.jpg"
-            ),
-        )
-
-        coursesAdapter = CoursesAdapter(data, this)
-        binding.recyclerCoursesStudentMain.adapter = coursesAdapter
-
-        binding.recyclerCoursesStudentMain.layoutManager =
-            LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        binding.sliderMainTeacher.setImageList(imageList)
     }
 
     private fun initPopularExamRecycler() {
         // Making the adapter and making the necessary settings
         popularExamAdapter = PopularExamAdapter(arrayListOf(), this)
-        binding.recyclerPopularExamsStudentMain.adapter = popularExamAdapter
+        binding.recyclerPopularExamsTeacherMain.adapter = popularExamAdapter
 
-        binding.recyclerPopularExamsStudentMain.layoutManager =
+        binding.recyclerPopularExamsTeacherMain.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
     }
 
@@ -273,20 +238,14 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         )
 
         experiencedTeachersAdapter = ExperiencedTeachersAdapter(data, this)
-        binding.recyclerExperiencedTeachersStudentMain.adapter = experiencedTeachersAdapter
+        binding.recyclerExperiencedTeachersTeacherMain.adapter = experiencedTeachersAdapter
 
-        binding.recyclerExperiencedTeachersStudentMain.layoutManager =
+        binding.recyclerExperiencedTeachersTeacherMain.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
     }
 
     private fun setPopularExamRecyclerData(data: ExamsResult) {
         popularExamAdapter.setData(data.exams)
-    }
-
-    override fun onCourseClicked(data: Pair<String, String>) {
-        // One of the courses has been clicked
-        // TODO
-        makeShortToast(requireContext(), "این بخش در حال توسعه است. با تشکر از شکیبایی شما")
     }
 
     override fun onPopularExamClicked(data: Exam) {

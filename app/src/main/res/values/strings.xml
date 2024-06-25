@@ -38,6 +38,7 @@
     <string name="teachers">اساتید</string>
     <string name="main_courses">دروس اصلی</string>
     <string name="add_question">افزودن سوال</string>
+    <string name="add_exam">افزودن آزمون</string>
     <string name="see_more">دیدن بقیه</string>
     <string name="course_image">تصویر درس</string>
     <string name="popular_exams">پرطرفدار ترین آزمون ها</string>
@@ -81,4 +82,5 @@
     <string name="tenth">دهم</string>
     <string name="eleventh">یازدهم</string>
     <string name="twelfth">دوازدهم</string>
+    <string name="classes">کلاس ها</string>
 </resources>

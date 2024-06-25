@@ -117,6 +117,8 @@ class StudentMainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().hide(active).show(firstFragment)
                         .commitNow()
                     active = firstFragment
+
+                    binding.bottomNavStudentMain.selectedItemId = R.id.homeStudentFragment
                 }
 
                 R.id.menu_exams -> {
@@ -181,8 +183,8 @@ class StudentMainActivity : AppCompatActivity() {
         val navigationView = binding.navViewStudentMain
         val headerView = navigationView.getHeaderView(0)
 
-        val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeader) as TextView
-        val tvGrade = headerView.findViewById<View>(R.id.tvUserDetailDrawerHeader) as TextView
+        val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeaderStudent) as TextView
+        val tvGrade = headerView.findViewById<View>(R.id.tvUserDetailDrawerHeaderStudent) as TextView
 
         tvUsername.text = sharedPreferences.getString(USER_FULL_NAME, "خطا")
         tvGrade.text = "پایه " + sharedPreferences.getString(USER_GRADE, "خطا")

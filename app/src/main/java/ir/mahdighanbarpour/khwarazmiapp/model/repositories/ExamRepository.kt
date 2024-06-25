@@ -7,13 +7,8 @@ import ir.mahdighanbarpour.khwarazmiapp.model.net.ApiService
 
 class ExamRepository(private val apiService: ApiService) {
 
-    fun getExams(grade: String): Single<ExamsMainResult> {
-        return apiService.getExams(grade)
-    }
-
-    // Getting the list of popular exams from the server based on the user's grade
-    fun getPopularExams(grade: String): Single<ExamsMainResult> {
-        return apiService.getPopularExams(grade)
+    fun getExams(grade: String, gradeList: String, limit: String): Single<ExamsMainResult> {
+        return apiService.getExams(grade, gradeList, limit)
     }
 
     // Getting the list of exam questions with the help of exam id

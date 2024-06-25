@@ -11,14 +11,14 @@
             android:title="@string/home" />
 
         <item
+            android:id="@+id/menu_classes"
+            android:icon="@drawable/ic_teacher_selected"
+            android:title="@string/classes" />
+
+        <item
             android:id="@+id/menu_exams"
             android:icon="@drawable/ic_exam"
             android:title="@string/exams" />
-
-        <item
-            android:id="@+id/menu_teachers"
-            android:icon="@drawable/ic_teacher_selected"
-            android:title="@string/teachers" />
 
         <item
             android:id="@+id/menu_bookmarks"

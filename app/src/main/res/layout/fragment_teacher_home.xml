@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white_dark"
+    android:layoutDirection="rtl">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutToolBarTeacherMain"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewOpenDrawerTeacherMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:cardCornerRadius="6dp"
+            app:cardElevation="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/white_dark"
+                android:contentDescription="@string/open_menu"
+                android:padding="6dp"
+                android:src="@drawable/ic_menu"
+                app:tint="@color/teacher_color" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tvToolBarTextTeacherMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardViewOpenDrawerTeacherMain"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btCoinsTeacherMain"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="#1A2D7DE2"
+            android:minWidth="70dp"
+            android:outlineProvider="none"
+            android:text="5"
+            android:textColor="@color/teacher_color"
+            app:cornerRadius="6dp"
+            app:icon="@drawable/ic_coin_teacher"
+            app:iconGravity="end"
+            app:iconTintMode="multiply"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshTeacherMain"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutToolBarTeacherMain"
+        app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/teacher_color">
+
+        <ScrollView
+            android:id="@+id/scrollViewTeacherMain"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp">
+
+                <View
+                    android:id="@+id/viewBackgroundTeacherMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="225dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewSliderTeacherMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/error_bg_color"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:strokeColor="@color/black_transparent_15_percent"
+                    app:strokeWidth="0.2dp">
+
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/sliderMainTeacher"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#F5F5F5"
+                        android:layoutDirection="ltr"
+                        app:iss_auto_cycle="true"
+                        app:iss_delay="2000"
+                        app:iss_error_image="@drawable/img_error"
+                        app:iss_period="2000"
+                        app:iss_placeholder="@drawable/shape_placeholder"
+                        app:iss_selected_dot="@drawable/shape_circle_slider_selector_teacher" />
+
+                    <ImageView
+                        android:id="@+id/ivErrorSliderTeacherMain"
+                        android:layout_width="75dp"
+                        android:layout_height="75dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/error_communicating_server"
+                        android:elevation="16dp"
+                        android:src="@drawable/ic_internet_error"
+                        android:visibility="gone"
+                        app:tint="@color/teacher_color" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewItemsTeacherMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:outlineProvider="none"
+                    app:cardCornerRadius="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewSliderTeacherMain">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayoutItemsTeacherMain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutTopItemsTeacherMain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/linearLayoutTopStartItemTeacherMain"
+                                android:layout_width="match_parent"
+                                android:layout_height="110dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardCornerRadius="6dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/black_transparent_15_percent"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/exams"
+                                        android:src="@drawable/ic_exam"
+                                        app:tint="@color/teacher_color" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/exams"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/linearLayoutTopEndItemTeacherMain"
+                                android:layout_width="match_parent"
+                                android:layout_height="110dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="16dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardCornerRadius="6dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/black_transparent_15_percent"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/main_courses"
+                                        android:src="@drawable/ic_book"
+                                        app:tint="@color/teacher_color" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/classes"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayoutBottomItemsTeacherMain"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/linearLayoutTopItemsTeacherMain">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/linearLayoutBottomStartItemTeacherMain"
+                                android:layout_width="match_parent"
+                                android:layout_height="110dp"
+                                android:layout_marginStart="16dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardCornerRadius="6dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/black_transparent_15_percent"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/teachers"
+                                        android:src="@drawable/ic_logo"
+                                        app:tint="@color/teacher_color" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/teachers"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/linearLayoutBottomEndItemTeacherMain"
+                                android:layout_width="match_parent"
+                                android:layout_height="110dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginBottom="16dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                app:cardCornerRadius="6dp"
+                                app:cardElevation="0dp"
+                                app:strokeColor="@color/black_transparent_15_percent"
+                                app:strokeWidth="1dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical"
+                                    android:weightSum="2">
+
+                                    <ImageView
+                                        android:layout_width="36dp"
+                                        android:layout_height="36dp"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:contentDescription="@string/add_question"
+                                        android:padding="2dp"
+                                        android:src="@drawable/ic_add"
+                                        app:tint="@color/teacher_color" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginTop="4dp"
+                                        android:layout_weight="1"
+                                        android:text="@string/add_exam"
+                                        android:textColor="@color/black" />
+
+                                </LinearLayout>
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                        </LinearLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <!--                <com.google.android.material.card.MaterialCardView-->
+                <!--                    android:id="@+id/cardViewCoursesTeacherMain"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="36dp"-->
+                <!--                    android:layout_marginHorizontal="16dp"-->
+                <!--                    android:layout_marginTop="24dp"-->
+                <!--                    app:cardCornerRadius="10dp"-->
+                <!--                    app:cardElevation="0dp"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/cardViewItemsTeacherMain">-->
+
+                <!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="match_parent">-->
+
+                <!--                        <TextView-->
+                <!--                            android:layout_width="wrap_content"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginStart="16dp"-->
+                <!--                            android:text="@string/main_courses"-->
+                <!--                            android:textColor="@color/black"-->
+                <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--                        <ImageView-->
+                <!--                            android:id="@+id/ivMoreCoursesTeacherMain"-->
+                <!--                            android:layout_width="wrap_content"-->
+                <!--                            android:layout_height="wrap_content"-->
+                <!--                            android:layout_marginEnd="12dp"-->
+                <!--                            android:background="?selectableItemBackgroundBorderless"-->
+                <!--                            android:clickable="true"-->
+                <!--                            android:contentDescription="@string/see_more"-->
+                <!--                            android:focusable="true"-->
+                <!--                            android:padding="4dp"-->
+                <!--                            android:src="@drawable/ic_arrow"-->
+                <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                            app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+                <!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+                <!--                </com.google.android.material.card.MaterialCardView>-->
+
+                <!--                <androidx.recyclerview.widget.RecyclerView-->
+                <!--                    android:id="@+id/recyclerCoursesTeacherMain"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginStart="16dp"-->
+                <!--                    android:layout_marginTop="24dp"-->
+                <!--                    android:nestedScrollingEnabled="true"-->
+                <!--                    android:overScrollMode="never"-->
+                <!--                    android:paddingEnd="8dp"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesTeacherMain"-->
+                <!--                    tools:itemCount="1"-->
+                <!--                    tools:listitem="@layout/item_course" />-->
+
+                <!--                <com.airbnb.lottie.LottieAnimationView-->
+                <!--                    android:id="@+id/animationViewCoursesTeacherMain"-->
+                <!--                    android:layout_width="120dp"-->
+                <!--                    android:layout_height="120dp"-->
+                <!--                    android:elevation="16dp"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@+id/cardViewPopularExamsTeacherMain"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesTeacherMain"-->
+                <!--                    app:lottie_autoPlay="false"-->
+                <!--                    app:lottie_colorFilter="@color/teacher_color"-->
+                <!--                    app:lottie_loop="true"-->
+                <!--                    app:lottie_rawRes="@raw/loading" />-->
+
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/ivErrorCoursesTeacherMain"-->
+                <!--                    android:layout_width="120dp"-->
+                <!--                    android:layout_height="120dp"-->
+                <!--                    android:contentDescription="@string/error_communicating_server"-->
+                <!--                    android:elevation="16dp"-->
+                <!--                    android:src="@drawable/ic_internet_error"-->
+                <!--                    android:visibility="gone"-->
+                <!--                    app:layout_constraintBottom_toTopOf="@+id/cardViewPopularExamsTeacherMain"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintStart_toStartOf="parent"-->
+                <!--                    app:layout_constraintTop_toBottomOf="@+id/cardViewCoursesTeacherMain"-->
+                <!--                    app:tint="@color/teacher_color" />-->
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewPopularExamsTeacherMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewItemsTeacherMain">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/popular_exams"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/ivMorePopularExamsTeacherMain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:contentDescription="@string/see_more"
+                            android:focusable="true"
+                            android:padding="4dp"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerPopularExamsTeacherMain"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="never"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsTeacherMain"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_popular_exam" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationViewPopularExamsTeacherMain"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:elevation="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/cardViewExperiencedTeachersTeacherMain"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsTeacherMain"
+                    app:lottie_autoPlay="false"
+                    app:lottie_colorFilter="@color/teacher_color"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading" />
+
+                <ImageView
+                    android:id="@+id/ivErrorPopularExamsTeacherMain"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:contentDescription="@string/error_communicating_server"
+                    android:elevation="16dp"
+                    android:src="@drawable/ic_internet_error"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@id/cardViewExperiencedTeachersTeacherMain"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsTeacherMain"
+                    app:tint="@color/teacher_color" />
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardViewExperiencedTeachersTeacherMain"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="228dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewPopularExamsTeacherMain">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:text="@string/experienced_teachers"
+                            android:textColor="@color/black"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/ivMoreExperiencedTeachersTeacherMain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="12dp"
+                            android:background="?selectableItemBackgroundBorderless"
+                            android:clickable="true"
+                            android:contentDescription="@string/see_more"
+                            android:focusable="true"
+                            android:padding="4dp"
+                            android:src="@drawable/ic_arrow"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerExperiencedTeachersTeacherMain"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:nestedScrollingEnabled="true"
+                    android:overScrollMode="never"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersTeacherMain"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_experienced_teachers" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animationViewExperiencedTeachersTeacherMain"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:elevation="16dp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersTeacherMain"
+                    app:lottie_autoPlay="false"
+                    app:lottie_colorFilter="@color/teacher_color"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading" />
+
+                <ImageView
+                    android:id="@+id/ivErrorExperiencedTeachersTeacherMain"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:contentDescription="@string/error_communicating_server"
+                    android:elevation="16dp"
+                    android:src="@drawable/ic_internet_error"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cardViewExperiencedTeachersTeacherMain"
+                    app:tint="@color/teacher_color" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

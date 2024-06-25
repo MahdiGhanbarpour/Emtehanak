@@ -457,7 +457,7 @@ class LoginOtpFragment : Fragment() {
             editor.putBoolean(IS_USER_LOGGED_IN, true)
             editor.putString(USER_FULL_NAME, result.result.teacher.fullName)
             editor.putString(USER_PHONE_NUM, enteredNumber)
-            editor.putString(USER_GRADE, null)
+            editor.putString(USER_GRADE, result.result.teacher.grades)
             editor.putString(USER_ROLE, selectedRole)
             editor.commit()
 

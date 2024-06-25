@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -104,12 +105,14 @@ class GradesRegisterFragment : Fragment() {
         val teacherActivityYear =
             requireArguments().getString(SEND_ENTERED_ACTIVITY_YEAR_TO_GRADES_REGISTER_FRAGMENT_KEY)!!
 
+        val jsonGrades = Gson().toJson(selectedGrades)
+
         registerTeacher(
             teacherName,
             teacherPhoneNumber,
             teacherBirthday,
             teacherStudyField,
-            selectedGrades.toString(),
+            jsonGrades,
             teacherActivityYear
         )
     }
@@ -139,7 +142,7 @@ class GradesRegisterFragment : Fragment() {
             override fun onSuccess(t: TeacherMainResult) {
                 // Checking whether the registration was successful or not
                 if (t.status == 200) {
-                    openTeacherHomePage(name, phoneNumber)
+                    openTeacherHomePage(name, phoneNumber, grade)
                 } else {
                     Snackbar.make(
                         binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
@@ -149,12 +152,12 @@ class GradesRegisterFragment : Fragment() {
         })
     }
 
-    private fun openTeacherHomePage(name: String, phoneNumber: String) {
+    private fun openTeacherHomePage(name: String, phoneNumber: String, grade: String) {
         // Saves the teacher's login and then opens the teacher's home page
         editor.putBoolean(IS_USER_LOGGED_IN, true)
         editor.putString(USER_FULL_NAME, name)
         editor.putString(USER_PHONE_NUM, phoneNumber)
-        editor.putString(USER_GRADE, null)
+        editor.putString(USER_GRADE, grade)
         editor.putString(USER_ROLE, TEACHER)
         editor.commit()
 

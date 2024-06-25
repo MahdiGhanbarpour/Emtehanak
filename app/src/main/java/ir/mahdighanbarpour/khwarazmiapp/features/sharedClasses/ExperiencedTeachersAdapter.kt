@@ -1,9 +1,10 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters
+package ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -30,6 +31,9 @@ class ExperiencedTeachersAdapter(
             if (data.third != null) {
                 binding.ivExperiencedTeachersProfileImageItem.visibility = View.VISIBLE
                 binding.ivExperiencedTeachersDefaultProfileImageItem.visibility = View.GONE
+                binding.cardViewExperiencedTeachersProfileImageItem.setCardBackgroundColor(
+                    ContextCompat.getColor(binding.root.context, R.color.white)
+                )
 
                 // Load image
                 Glide.with(binding.root.context).load(data.third).error(R.drawable.img_error)
