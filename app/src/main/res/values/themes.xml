@@ -23,6 +23,27 @@
         <item name="android:textSize">13sp</item>
     </style>
 
+    <style name="CustomTextInputLayoutTeacherTheme" parent="CustomTextInputLayoutPlaceHolderTextTheme">
+        <item name="android:textSize">13sp</item>
+        <item name="boxStrokeColor">@color/teacher_color</item>
+        <item name="hintTextColor">@color/teacher_color</item>
+    </style>
+
+    <style name="CustomHintTextAppearance" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="CustomTeacherSwitchTheme" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="colorSurface">@color/gray_light</item>
+        <item name="colorSecondary">@color/teacher_color</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CustomAutoCompleteTextViewTeacherTheme" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">@color/teacher_color</item>
+        <item name="hintTextColor">@color/teacher_color</item>
+    </style>
+
     <style name="CustomBottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
     </style>

@@ -18,6 +18,7 @@ import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentTeacherHomeBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.addExamScreen.AddExamActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainTeacherScreen.TeacherMainActivity
@@ -99,6 +100,10 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         }
         binding.ivMorePopularExamsTeacherMain.setOnClickListener {
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
+            startActivity(intent)
+        }
+        binding.linearLayoutBottomEndItemTeacherMain.setOnClickListener {
+            val intent = Intent(requireContext(), AddExamActivity::class.java)
             startActivity(intent)
         }
     }
