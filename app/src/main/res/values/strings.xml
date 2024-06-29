@@ -85,9 +85,10 @@
     <string name="classes">کلاس ها</string>
     <string name="lesson">درس</string>
     <string name="exam_level">سطح آزمون</string>
-    <string name="exam_description">توضیحات آزمون</string>
+    <string name="exam_description">توضیحات آزمون ( اختیاری )</string>
     <string name="exam_name">نام آزمون</string>
     <string name="exam_price">قیمت آزمون</string>
-    <string name="tap_to_select_exam_image">برای انتخاب تصویر آزمون ضربه بزنید</string>
-    <string name="teacher_message">پیام دبیر</string>
+    <string name="tap_to_select_exam_image">برای انتخاب تصویر آزمون ضربه بزنید ( اختیاری )</string>
+    <string name="teacher_message">پیام دبیر ( اختیاری )</string>
+    <string name="delete">حذف</string>
 </resources>

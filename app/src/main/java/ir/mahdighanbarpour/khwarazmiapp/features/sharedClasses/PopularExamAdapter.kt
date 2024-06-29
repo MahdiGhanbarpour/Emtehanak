@@ -9,9 +9,10 @@ import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemPopularExamBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 
 class PopularExamAdapter(
-    private var data: ArrayList<Exam>, private val popularExamEvents: PopularExamEvents
+    private var data: List<Exam>, private val popularExamEvents: PopularExamEvents
 ) : RecyclerView.Adapter<PopularExamAdapter.PopularExamAdapterViewHolder>() {
 
     private lateinit var binding: ItemPopularExamBinding
@@ -25,7 +26,7 @@ class PopularExamAdapter(
             binding.tvPopularExamNameItem.text = data.name
 
             // Load image
-            Glide.with(binding.root.context).load(data.image).error(R.drawable.img_error)
+            Glide.with(binding.root.context).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivPopularExamImageItem)
 
             // One of the items has been clicked
@@ -50,10 +51,12 @@ class PopularExamAdapter(
         holder.bindData(data[position])
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: ArrayList<Exam>) {
-        this.data = data
-        notifyDataSetChanged()
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     interface PopularExamEvents {

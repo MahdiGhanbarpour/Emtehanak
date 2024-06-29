@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
@@ -16,7 +17,7 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamsListBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
-import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
@@ -51,9 +52,17 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         userRole = sharedPreferences.getString(USER_ROLE, "")!!
 
         if (userRole == TEACHER) {
-            binding.btFilterExamList.setBackgroundColor(getColor(R.color.teacher_color))
+            binding.btFilterExamList.setBackgroundColor(
+                ContextCompat.getColor(
+                    this, R.color.teacher_color
+                )
+            )
             binding.animationViewExamList.changeLayersColor(R.color.teacher_color)
-            binding.ivErrorExamList.setColorFilter(getColor(R.color.teacher_color))
+            binding.ivErrorExamList.setColorFilter(
+                ContextCompat.getColor(
+                    this, R.color.teacher_color
+                )
+            )
         }
 
         initExamListRecycler()
@@ -173,7 +182,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
             })
     }
 
-    private fun setExamListRecyclerData(exams: ExamsResult) {
+    private fun setExamListRecyclerData(exams: ExamResult) {
         examListAdapter.setData(exams.exams)
     }
 

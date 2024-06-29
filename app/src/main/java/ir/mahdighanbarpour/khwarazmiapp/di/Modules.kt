@@ -1,6 +1,7 @@
 package ir.mahdighanbarpour.khwarazmiapp.di
 
 import android.content.Context
+import ir.mahdighanbarpour.khwarazmiapp.features.addExamScreen.AddExamViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamListViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsViewModel
@@ -41,4 +42,5 @@ val myModules = module {
     viewModel { ExamListViewModel(get()) }
     viewModel { SplashScreenViewModel(get(), get()) }
     viewModel { TeacherHomeViewModel(get()) }
+    viewModel { AddExamViewModel(get()) }
 }

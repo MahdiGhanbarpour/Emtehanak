@@ -61,6 +61,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -94,6 +95,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLayoutExamNameAddExam">
@@ -126,6 +128,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="@+id/etLayoutExamDescAddExam"
                 app:layout_constraintStart_toEndOf="@+id/etLayoutLessonAddExam"
@@ -156,6 +159,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toStartOf="@id/etLayoutGradeAddExam"
                 app:layout_constraintStart_toStartOf="@+id/etLayoutExamDescAddExam"
@@ -186,6 +190,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etLayoutLessonAddExam"
@@ -219,6 +224,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:errorIconDrawable="@null"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -291,7 +297,20 @@
                     android:id="@+id/ivExamImageAddExam"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="@string/exam_image"
                     tools:src="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/ivDeleteExamImageAddExam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/shape_all_corner_rounded"
+                    android:backgroundTint="@color/teacher_color"
+                    android:contentDescription="@string/delete"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_delete" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -309,6 +328,7 @@
                 app:boxCornerRadiusTopStart="8dp"
                 app:boxStrokeWidth="1.5dp"
                 app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewPickImageAddExam"
@@ -372,6 +392,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/switchTotalPercentAddExam" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationViewAddExam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btAddExam"
+                app:layout_constraintEnd_toEndOf="@+id/btAddExam"
+                app:layout_constraintStart_toStartOf="@+id/btAddExam"
+                app:layout_constraintTop_toTopOf="@+id/btAddExam"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dot_loading" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -84,6 +84,7 @@
         app:counterEnabled="true"
         app:counterMaxLength="11"
         app:cursorColor="@color/black"
+        app:cursorErrorColor="@color/red"
         app:errorEnabled="true"
         app:helperText="شماره تلفن همراه می بایست با 09 شروع شود"
         app:layout_constraintEnd_toEndOf="parent"

@@ -9,9 +9,10 @@ import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamListBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 
 class ExamListAdapter(
-    private var data: ArrayList<Exam>, private val examListEvents: ExamListEvents
+    private var data: List<Exam>, private val examListEvents: ExamListEvents
 ) : RecyclerView.Adapter<ExamListAdapter.ExamListAdapterViewHolder>() {
 
     private lateinit var binding: ItemExamListBinding
@@ -25,7 +26,7 @@ class ExamListAdapter(
             binding.tvExamListPriceItem.text =
                 if (data.price == 0) "رایگان" else "${data.price} تومان"
 
-            Glide.with(binding.root).load(data.image).error(R.drawable.img_error)
+            Glide.with(binding.root).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivExamListImageItem)
 
             itemView.setOnClickListener {
@@ -47,8 +48,19 @@ class ExamListAdapter(
         holder.bindData(data[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(data: ArrayList<Exam>) {
+    fun setData(data: List<Exam>) {
+        this.data = arrayListOf()
+        notifyDataSetChanged()
+
         this.data = data
         notifyDataSetChanged()
     }

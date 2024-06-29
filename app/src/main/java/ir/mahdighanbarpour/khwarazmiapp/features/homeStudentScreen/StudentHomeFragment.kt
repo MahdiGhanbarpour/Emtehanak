@@ -26,7 +26,6 @@ import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapte
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
-import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
@@ -62,7 +61,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         initSlider()
         initCourseRecycler()
         initExperiencedTeachersRecycler()
-        initPopularExamRecycler()
+        initPopularExamRecycler(arrayListOf())
 
         initData()
 
@@ -110,6 +109,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         // Checking if the user has internet or not
         if (isInternetAvailable(requireContext())) {
             binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+            binding.recyclerPopularExamsStudentMain.visibility = View.VISIBLE
 
             // If the snack bar is displayed, it will be hidden
             if (this::snackbar.isInitialized) {
@@ -121,8 +121,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
         } else {
             // Display the error to the user
             binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
-
-            popularExamAdapter.setData(arrayListOf())
+            binding.recyclerPopularExamsStudentMain.visibility = View.INVISIBLE
 
             snackbar = Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
@@ -166,7 +165,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
                     binding.recyclerPopularExamsStudentMain.visibility = View.GONE
                 } else {
                     // Starting RecyclerView with sent data
-                    setPopularExamRecyclerData(t.result)
+                    initPopularExamRecycler(t.result.exams)
                 }
             }
         })
@@ -244,9 +243,9 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
     }
 
-    private fun initPopularExamRecycler() {
+    private fun initPopularExamRecycler(data: List<Exam>) {
         // Making the adapter and making the necessary settings
-        popularExamAdapter = PopularExamAdapter(arrayListOf(), this)
+        popularExamAdapter = PopularExamAdapter(data, this)
         binding.recyclerPopularExamsStudentMain.adapter = popularExamAdapter
 
         binding.recyclerPopularExamsStudentMain.layoutManager =
@@ -277,10 +276,6 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
 
         binding.recyclerExperiencedTeachersStudentMain.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-    }
-
-    private fun setPopularExamRecyclerData(data: ExamsResult) {
-        popularExamAdapter.setData(data.exams)
     }
 
     override fun onCourseClicked(data: Pair<String, String>) {

@@ -22,6 +22,7 @@ import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.EXAM_DETAIL
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
@@ -116,6 +117,7 @@ class ExamDetailActivity : AppCompatActivity() {
         data = intent.getParcelable(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun playLoadingAnim() {
         // If the information is being received from the server, an animation will be played
         compositeDisposable.add(examViewModel.isDataLoading.subscribe {
@@ -145,7 +147,7 @@ class ExamDetailActivity : AppCompatActivity() {
         }
 
         // Load image
-        Glide.with(binding.root.context).load(data.image).error(R.drawable.img_error)
+        Glide.with(binding.root.context).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
             .apply(RequestOptions().centerCrop()).into(binding.ivImageExamDetail)
     }
 

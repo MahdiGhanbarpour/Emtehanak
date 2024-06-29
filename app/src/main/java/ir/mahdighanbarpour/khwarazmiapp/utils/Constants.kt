@@ -59,3 +59,4 @@ const val USER_STUDY_FIELD = "user_study_field"
 
 // Constants related to connection with the server
 const val BASE_URL = "https://persiadev.net/khwarizmi/"
+const val MEDIA_BASE_URL = "https://persiadev.net/khwarizmi"

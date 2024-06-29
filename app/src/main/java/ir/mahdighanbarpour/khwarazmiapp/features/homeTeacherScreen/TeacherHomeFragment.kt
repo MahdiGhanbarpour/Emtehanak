@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,6 @@ import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeache
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapter
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
-import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
@@ -60,7 +60,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
 
         initSlider()
         initExperiencedTeachersRecycler()
-        initPopularExamRecycler()
+        initPopularExamRecycler(arrayListOf())
 
         initData()
 
@@ -112,6 +112,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         // Checking if the user has internet or not
         if (isInternetAvailable(requireContext())) {
             binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
+            binding.recyclerPopularExamsTeacherMain.visibility = View.VISIBLE
 
             // If the snack bar is displayed, it will be hidden
             if (this::snackbar.isInitialized) {
@@ -123,8 +124,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         } else {
             // Display the error to the user
             binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
-
-            popularExamAdapter.setData(arrayListOf())
+            binding.recyclerPopularExamsTeacherMain.visibility = View.INVISIBLE
 
             snackbar = Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
@@ -140,38 +140,39 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         teacherHomeViewModel.getPopularExams(
             "", sharedPreferences.getString(USER_GRADE, null)!!, "5"
         ).asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
-                override fun onSubscribe(d: Disposable) {
-                    compositeDisposable.add(d)
-                }
+            override fun onSubscribe(d: Disposable) {
+                compositeDisposable.add(d)
+            }
 
-                override fun onError(e: Throwable) {
-                    // Error report to user
-                    binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
+            override fun onError(e: Throwable) {
+                // Error report to user
+                binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
 
-                    snackbar = Snackbar.make(
-                        requireActivity().findViewById(android.R.id.content),
-                        "خطا در دریافت اطلاعات",
-                        Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) {
-                        binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
-                        getPopularExams()
-                    }
-                    snackbar.show()
+                snackbar = Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    "خطا در دریافت اطلاعات",
+                    Snackbar.LENGTH_LONG
+                ).setAction(
+                    "تلاش دوباره"
+                ) {
+                    binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
+                    getPopularExams()
                 }
+                snackbar.show()
+                Log.v("testLog", e.message.toString())
+            }
 
-                override fun onSuccess(t: ExamsMainResult) {
-                    // Checking if exams have been found for the submitted grade
-                    if (t.result.exams.isEmpty()) {
-                        binding.cardViewPopularExamsTeacherMain.visibility = View.GONE
-                        binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
-                    } else {
-                        // Starting RecyclerView with sent data
-                        setPopularExamRecyclerData(t.result)
-                    }
+            override fun onSuccess(t: ExamsMainResult) {
+                // Checking if exams have been found for the submitted grade
+                if (t.result.exams.isEmpty()) {
+                    binding.cardViewPopularExamsTeacherMain.visibility = View.GONE
+                    binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
+                } else {
+                    // Starting RecyclerView with sent data
+                    initPopularExamRecycler(t.result.exams)
                 }
-            })
+            }
+        })
     }
 
     private fun playLoadingAnim() {
@@ -214,9 +215,9 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         binding.sliderMainTeacher.setImageList(imageList)
     }
 
-    private fun initPopularExamRecycler() {
+    private fun initPopularExamRecycler(data: List<Exam>) {
         // Making the adapter and making the necessary settings
-        popularExamAdapter = PopularExamAdapter(arrayListOf(), this)
+        popularExamAdapter = PopularExamAdapter(data, this)
         binding.recyclerPopularExamsTeacherMain.adapter = popularExamAdapter
 
         binding.recyclerPopularExamsTeacherMain.layoutManager =
@@ -247,10 +248,6 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
 
         binding.recyclerExperiencedTeachersTeacherMain.layoutManager =
             LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
-    }
-
-    private fun setPopularExamRecyclerData(data: ExamsResult) {
-        popularExamAdapter.setData(data.exams)
     }
 
     override fun onPopularExamClicked(data: Exam) {

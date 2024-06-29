@@ -1,11 +1,14 @@
 package ir.mahdighanbarpour.khwarazmiapp.model.net
 
 import io.reactivex.rxjava3.core.Single
+import ir.mahdighanbarpour.khwarazmiapp.model.data.AddExamMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -57,4 +60,11 @@ interface ApiService {
     fun getFrequentlyQuestions(
         @Query("page") page: String
     ): Single<FrequentlyQuestionsMainResult>
+
+    @Multipart
+    @POST("exam/add-exam")
+    fun addExam(
+        @Part("data") data: RequestBody,
+        @Part image: MultipartBody.Part
+    ): Single<AddExamMainResult>
 }

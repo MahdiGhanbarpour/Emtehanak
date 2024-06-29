@@ -7,12 +7,12 @@ data class ExamsMainResult(
     @SerializedName("massage")
     val massage: String,
     @SerializedName("result")
-    val result: ExamsResult,
+    val result: ExamResult,
     @SerializedName("status")
     val status: Int
 )
 
-data class ExamsResult(
+data class ExamResult(
     @SerializedName("exams")
-    val exams: ArrayList<Exam>
+    val exams: List<Exam>
 )
