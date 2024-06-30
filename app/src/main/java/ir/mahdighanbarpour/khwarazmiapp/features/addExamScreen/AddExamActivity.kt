@@ -22,8 +22,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityAddExamBinding
+import ir.mahdighanbarpour.khwarazmiapp.features.addEamQuestionScreen.AddExamQuestionActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.AddExamMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamSent
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_GRADE_TO_ADD_EXAM_QUESTION_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_ID_TO_ADD_EXAM_QUESTION_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
@@ -357,7 +360,7 @@ class AddExamActivity : AppCompatActivity() {
                 val dataPart = examDataJson.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
                 // Add the exam to the server
-                addExam(dataPart, body)
+                addExam(dataPart, body, grade)
             } else {
                 // Error report to user
                 Snackbar.make(
@@ -375,12 +378,12 @@ class AddExamActivity : AppCompatActivity() {
             val examDataJson = gson.toJson(examData)
             val dataPart = examDataJson.toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
-            addExam(dataPart, body)
+            addExam(dataPart, body, grade)
         }
 
     }
 
-    private fun addExam(data: RequestBody, image: MultipartBody.Part) {
+    private fun addExam(data: RequestBody, image: MultipartBody.Part, grade: String) {
         addExamViewModel.addExam(data, image).asyncRequest()
             .subscribe(object : SingleObserver<AddExamMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -400,7 +403,17 @@ class AddExamActivity : AppCompatActivity() {
                 override fun onSuccess(t: AddExamMainResult) {
                     Log.v("testLog", Gson().toJson(t))
                     if (t.status == 200) {
-                        finish()
+                        val intent =
+                            Intent(this@AddExamActivity, AddExamQuestionActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        intent.putExtra(
+                            SEND_CREATED_EXAM_ID_TO_ADD_EXAM_QUESTION_PAGE_KEY, t.result.id
+                        )
+                        intent.putExtra(
+                            SEND_CREATED_EXAM_GRADE_TO_ADD_EXAM_QUESTION_PAGE_KEY, grade
+                        )
+                        startActivity(intent)
                     } else {
                         Snackbar.make(
                             binding.root, "خطایی در افزودن آزمون رخ داد", Snackbar.LENGTH_LONG

@@ -91,4 +91,16 @@
     <string name="tap_to_select_exam_image">برای انتخاب تصویر آزمون ضربه بزنید ( اختیاری )</string>
     <string name="teacher_message">پیام دبیر ( اختیاری )</string>
     <string name="delete">حذف</string>
+    <string name="add_exam_question">افزودن سوالات آزمون</string>
+    <string name="tap_to_add_exam_question">برای افزودن سوال ضربه بزنید</string>
+    <string name="tap_to_add_image_to_question">برای افزودن تصویر به سوال ضربه بزنید</string>
+    <string name="add_image">افزودن تصویر</string>
+    <string name="description_optional">توضیحات ( اختیاری )</string>
+    <string name="add_option">افزودن گزینه</string>
+    <string name="add_questions">افزودن سوالات</string>
+    <string name="question_option">گزینه سوال</string>
+    <string name="is_option_correct">آیا این گزینه صحیح است ؟</string>
+    <string name="question_title">صورت سوال</string>
+    <string name="you_have_not_selected_image_for_question">شما هیچ تصویری را برای این سوال انتخاب نکرده اید</string>
+    <string name="you_have_not_added_any_options_for_question">شما هیچ گزینه ای را برای این سوال اضافه نکرده اید</string>
 </resources>

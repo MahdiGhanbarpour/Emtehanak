@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="125dp"
+    android:layout_marginHorizontal="36dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/shape_all_corner_rounded"
+    android:backgroundTint="@color/transparent_color_7_percent"
+    android:layoutDirection="rtl">
+
+    <TextView
+        android:id="@+id/tvQuestionNumberAddExamQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="سوال 1" />
+
+    <TextView
+        android:id="@+id/tvQuestionAddExamQuestion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:justificationMode="inter_word"
+        android:maxLines="3"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvQuestionNumberAddExamQuestion"
+        tools:ignore="UnusedAttribute"
+        tools:text="دسته بندی هر یک از عناصری که در زیر شرح داده شده در کدام گزینه آمده است ؟
+
+الف ) عنصری از دوره چهارم که در لایه ظرفیتش 8 الکترون وجود دارد و مجموج n و l زیر لایه آخر آن  برار 4 است.
+ب ) عنصری از دوره سوم که شمار الکترون های موجود در زیر لایه های s آن دو برابر شمار الکترون های لایه آخر آن است.
+پ ) عنصری با عدد جرمی 73 که اختلاف الکترون ها و نوترون های اتم آن برابر عدد 9 است." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
