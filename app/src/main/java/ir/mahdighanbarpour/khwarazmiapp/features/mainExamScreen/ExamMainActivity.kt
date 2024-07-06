@@ -2,11 +2,11 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,11 +62,12 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         changeStatusBarColor(window, "#20A84D", false)
 
         initOptionsRecycler()
-        initAttachmentRecycler()
+        initAttachmentRecycler(arrayListOf())
         setQuestionData()
         listener()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun listener() {
         binding.ivBack.setOnClickListener {
             // Show exit bottom sheet
@@ -148,10 +149,8 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
-    private fun initAttachmentRecycler() {
+    private fun initAttachmentRecycler(data: List<Attachment>) {
         // init Attachment Recycler
-        val data = arrayListOf<Attachment>()
-
         examAttachmentAdapter = ExamAttachmentAdapter(data)
         binding.recyclerAttachmentExamMain.adapter = examAttachmentAdapter
 
@@ -167,7 +166,8 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         // Changing the State Exam Main progress value
         val animator = ValueAnimator.ofInt(
-            binding.progressStateExamMain.progress, (100 / (questions.size - 1)) * questionPosition
+            binding.progressStateExamMain.progress,
+            (100 / (if (questions.size == 1) 1 else questions.size - 1)) * questionPosition
         )
         animator.duration = 500
 
@@ -185,7 +185,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         examOptionAdapter = ExamOptionAdapter(data.toMutableList(), this)
         binding.recyclerOptionsExamMain.adapter = examOptionAdapter
 
-        examAttachmentAdapter.setData(questions[questionPosition].attachments)
+        initAttachmentRecycler(questions[questionPosition].attachments)
     }
 
     private fun startQuestionAnim() {
@@ -213,11 +213,14 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
                 binding.cardViewQuestionExamMain.startAnimation(secondAnim)
                 binding.recyclerOptionsExamMain.startAnimation(secondAnim)
                 binding.cardViewDontKnowExamMain.startAnimation(secondAnim)
+
+                binding.root.smoothScrollTo(0, 0)
             }
         })
     }
 
     // Click on one of the options
+    @SuppressLint("SetTextI18n")
     override fun onOptionClicked(isSelectedOptionCorrect: Boolean) {
         isQuestionAnswered = true
 

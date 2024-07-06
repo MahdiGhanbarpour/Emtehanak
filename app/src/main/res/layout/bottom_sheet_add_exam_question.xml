@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="42dp"
             android:background="@drawable/shape_all_corner_rounded"
             android:backgroundTint="@color/transparent_color_7_percent"
             android:nestedScrollingEnabled="true"
@@ -195,7 +195,7 @@
                     app:cursorColor="@color/black"
                     app:cursorErrorColor="@color/red"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btAddExam"
+                    app:layout_constraintEnd_toStartOf="@id/btAttachmentAddExamQuestion"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/viewPickAttachmentImageAddExamQuestion"
                     app:placeholderTextAppearance="@style/CustomHintTextAppearance">
@@ -214,7 +214,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btAddExam"
+                    android:id="@+id/btAttachmentAddExamQuestion"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:layout_marginTop="4dp"
@@ -223,11 +223,13 @@
                     android:contentDescription="@string/add_image"
                     android:outlineProvider="none"
                     android:text="@string/add_image"
+                    android:textColor="@color/white"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="@+id/etLayoutAttachmentAddExamQuestion"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/etLayoutAttachmentAddExamQuestion"
-                    app:layout_constraintTop_toTopOf="@+id/etLayoutAttachmentAddExamQuestion" />
+                    app:layout_constraintTop_toTopOf="@+id/etLayoutAttachmentAddExamQuestion"
+                    app:rippleColor="@color/white_transparent_50_percent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -238,7 +240,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="42dp"
             android:background="@drawable/shape_all_corner_rounded"
             android:backgroundTint="@color/transparent_color_7_percent"
             android:nestedScrollingEnabled="true"
@@ -320,12 +322,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
                     android:text="@string/is_option_correct"
+                    android:textIsSelectable="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/etLayoutOptionAddExamQuestion" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btAddExamQuestion"
+                    android:id="@+id/btOptionAddExamQuestion"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_marginHorizontal="8dp"
@@ -334,11 +340,13 @@
                     android:contentDescription="@string/add_exam"
                     android:outlineProvider="none"
                     android:text="@string/add_option"
+                    android:textColor="@color/white"
                     app:cornerRadius="6dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cbOptionAddExamQuestion" />
+                    app:layout_constraintTop_toBottomOf="@+id/cbOptionAddExamQuestion"
+                    app:rippleColor="@color/white_transparent_50_percent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -355,11 +363,13 @@
             android:contentDescription="@string/add_exam"
             android:outlineProvider="none"
             android:text="@string/add_question"
+            android:textColor="@color/white"
             app:cornerRadius="6dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewOptionsAddExamQuestion" />
+            app:layout_constraintTop_toBottomOf="@+id/cardViewOptionsAddExamQuestion"
+            app:rippleColor="@color/white_transparent_50_percent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

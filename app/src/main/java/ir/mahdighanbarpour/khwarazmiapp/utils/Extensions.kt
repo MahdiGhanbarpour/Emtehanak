@@ -10,6 +10,7 @@ import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
@@ -29,6 +30,9 @@ import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 // Displaying Toasts that have a short duration
 fun makeShortToast(context: Context, text: String) {
@@ -135,4 +139,19 @@ fun LottieAnimationView.changeLayersColor(
     val callback: LottieValueCallback<ColorFilter> = LottieValueCallback(filter)
 
     addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
+}
+
+fun getFileFromUri(context: Context, uri: Uri): File? {
+    val fileName = uri.lastPathSegment?.split("/")?.lastOrNull() ?: return null
+    val tempFile = File(context.cacheDir, fileName)
+    try {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val outputStream = FileOutputStream(tempFile)
+        inputStream?.copyTo(outputStream)
+        inputStream?.close()
+        outputStream.close()
+    } catch (e: Exception) {
+        Log.v("testLog", e.message.toString())
+    }
+    return tempFile
 }

@@ -1,14 +1,12 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.addExamScreen
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
@@ -16,33 +14,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
-import io.reactivex.rxjava3.core.SingleObserver
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityAddExamBinding
-import ir.mahdighanbarpour.khwarazmiapp.features.addEamQuestionScreen.AddExamQuestionActivity
-import ir.mahdighanbarpour.khwarazmiapp.model.data.AddExamMainResult
-import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamSent
-import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_GRADE_TO_ADD_EXAM_QUESTION_PAGE_KEY
-import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_ID_TO_ADD_EXAM_QUESTION_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.AddExamQuestionActivity
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamRequest
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
-import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
-import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
+import ir.mahdighanbarpour.khwarazmiapp.utils.getFileFromUri
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 
 class AddExamActivity : AppCompatActivity() {
 
@@ -51,10 +35,7 @@ class AddExamActivity : AppCompatActivity() {
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
     private lateinit var uploadImage: Uri
 
-    private val addExamViewModel: AddExamViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
-
-    private val compositeDisposable = CompositeDisposable()
 
     private val lessonItems = listOf(
         "جامع",
@@ -97,12 +78,6 @@ class AddExamActivity : AppCompatActivity() {
         pickImageSetting()
         listener()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.clear()
-    }
-
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
@@ -269,54 +244,24 @@ class AddExamActivity : AppCompatActivity() {
         }
 
         if (isNameOk && isGradeOk && isLessonOk && isPriceOk && isDifficultyOk) {
-            // Checking the user's internet connection
-            if (isInternetAvailable(this)) {
-                playLoadingAnim()
+            // Getting the user's information
+            val authorName = sharedPreferences.getString(USER_FULL_NAME, null)!!
+            val authorPhoneNumber = sharedPreferences.getString(USER_PHONE_NUM, null)!!
 
-                // Getting the user's information
-                val authorName = sharedPreferences.getString(USER_FULL_NAME, null)!!
-                val authorPhoneNumber = sharedPreferences.getString(USER_PHONE_NUM, null)!!
-
-                convertData(
-                    name = name,
-                    description = description,
-                    grade = grade,
-                    lesson = lesson,
-                    authorName = authorName,
-                    authorPhoneNumber = authorPhoneNumber,
-                    price = price,
-                    difficulty = difficulty,
-                    teacherMessage = teacherMessage,
-                    showTotalPercent = totalPercent,
-                    showQuestionAnswer = questionCorrectAnswer
-                )
-            } else {
-                // Display the error of not connecting to the Internet
-                Snackbar.make(
-                    binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
-                ).setAction("تلاش مجدد") { checkInputs() }.show()
-            }
+            convertData(
+                name = name,
+                description = description,
+                grade = grade,
+                lesson = lesson,
+                authorName = authorName,
+                authorPhoneNumber = authorPhoneNumber,
+                price = price,
+                difficulty = difficulty,
+                teacherMessage = teacherMessage,
+                showTotalPercent = totalPercent,
+                showQuestionAnswer = questionCorrectAnswer
+            )
         }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun playLoadingAnim() {
-        // If the information is being received from the server, an animation will be played
-        compositeDisposable.add(addExamViewModel.isDataLoading.subscribe {
-            runOnUiThread {
-                if (it) {
-                    binding.animationViewAddExam.visibility = View.VISIBLE
-                    binding.btAddExam.text = null
-                    binding.btAddExam.icon = null
-                    binding.animationViewAddExam.playAnimation()
-                } else {
-                    binding.animationViewAddExam.visibility = View.GONE
-                    binding.btAddExam.text = "مرحله بعد"
-                    binding.btAddExam.icon = ContextCompat.getDrawable(this, R.drawable.ic_arrow)
-                    binding.animationViewAddExam.pauseAnimation()
-                }
-            }
-        })
     }
 
     private fun convertData(
@@ -332,7 +277,7 @@ class AddExamActivity : AppCompatActivity() {
         showTotalPercent: Boolean,
         showQuestionAnswer: Boolean,
     ) {
-        val examData = ExamSent(
+        val examData = ExamRequest(
             name = name,
             description = description,
             grade = grade,
@@ -343,24 +288,16 @@ class AddExamActivity : AppCompatActivity() {
             difficulty = difficulty,
             teacherMessage = teacherMessage,
             showTotalPercent = showTotalPercent,
-            showQuestionAnswer = showQuestionAnswer
+            showQuestionAnswer = showQuestionAnswer,
+            questions = arrayListOf()
         )
         // Checking if the image is selected
         if (this::uploadImage.isInitialized) {
             // Convert the image to a file
-            val file = getFileFromUri(uploadImage)
+            val file = getFileFromUri(this, uploadImage)
             if (file != null) {
-                // Convert the file to a RequestBody
-                val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-                val body = MultipartBody.Part.createFormData("image", "exam_image.jpg", requestFile)
-
-                // Convert the exam data to a JSON string
-                val gson = Gson()
-                val examDataJson = gson.toJson(examData)
-                val dataPart = examDataJson.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-                // Add the exam to the server
-                addExam(dataPart, body, grade)
+                // Send the exam to add question screen
+                showAddQuestionScreen(examData, file)
             } else {
                 // Error report to user
                 Snackbar.make(
@@ -370,73 +307,16 @@ class AddExamActivity : AppCompatActivity() {
                 ) { checkInputs() }.show()
             }
         } else {
-            val x = ""
-            val requestFile = x.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("image", x, requestFile)
-
-            val gson = Gson()
-            val examDataJson = gson.toJson(examData)
-            val dataPart = examDataJson.toRequestBody("multipart/form-data".toMediaTypeOrNull())
-
-            addExam(dataPart, body, grade)
+            showAddQuestionScreen(examData, null)
         }
-
     }
 
-    private fun addExam(data: RequestBody, image: MultipartBody.Part, grade: String) {
-        addExamViewModel.addExam(data, image).asyncRequest()
-            .subscribe(object : SingleObserver<AddExamMainResult> {
-                override fun onSubscribe(d: Disposable) {
-                    compositeDisposable.add(d)
-                }
+    private fun showAddQuestionScreen(data: ExamRequest, image: File?) {
+        val intent = Intent(this, AddExamQuestionActivity::class.java)
 
-                override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { checkInputs() }.show()
-                    Log.v("testLog", e.message.toString())
-                }
+        intent.putExtra(SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY, data)
+        intent.putExtra(SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY, image)
 
-                override fun onSuccess(t: AddExamMainResult) {
-                    Log.v("testLog", Gson().toJson(t))
-                    if (t.status == 200) {
-                        val intent =
-                            Intent(this@AddExamActivity, AddExamQuestionActivity::class.java)
-                        intent.flags =
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        intent.putExtra(
-                            SEND_CREATED_EXAM_ID_TO_ADD_EXAM_QUESTION_PAGE_KEY, t.result.id
-                        )
-                        intent.putExtra(
-                            SEND_CREATED_EXAM_GRADE_TO_ADD_EXAM_QUESTION_PAGE_KEY, grade
-                        )
-                        startActivity(intent)
-                    } else {
-                        Snackbar.make(
-                            binding.root, "خطایی در افزودن آزمون رخ داد", Snackbar.LENGTH_LONG
-                        ).setAction(
-                            "تلاش دوباره"
-                        ) { checkInputs() }.show()
-                    }
-                }
-            })
-    }
-
-    private fun getFileFromUri(uri: Uri): File? {
-        val fileName = uri.lastPathSegment?.split("/")?.lastOrNull() ?: return null
-        val tempFile = File(cacheDir, fileName)
-        try {
-            val inputStream: InputStream? = contentResolver.openInputStream(uri)
-            val outputStream = FileOutputStream(tempFile)
-            inputStream?.copyTo(outputStream)
-            inputStream?.close()
-            outputStream.close()
-        } catch (e: Exception) {
-            Log.v("testLog", e.message.toString())
-        }
-        return tempFile
+        startActivity(intent)
     }
 }

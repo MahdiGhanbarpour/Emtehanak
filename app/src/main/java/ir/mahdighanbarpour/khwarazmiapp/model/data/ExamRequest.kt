@@ -1,6 +1,10 @@
 package ir.mahdighanbarpour.khwarazmiapp.model.data
 
-data class ExamSent(
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class ExamRequest(
     val name: String,
     val description: String,
     val grade: String,
@@ -11,5 +15,6 @@ data class ExamSent(
     val difficulty: String,
     val teacherMessage: String,
     val showTotalPercent: Boolean,
-    val showQuestionAnswer: Boolean
-)
+    val showQuestionAnswer: Boolean,
+    var questions: List<AddQuestion>
+) : Parcelable

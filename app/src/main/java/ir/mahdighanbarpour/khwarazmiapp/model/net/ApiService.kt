@@ -8,8 +8,11 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -63,8 +66,7 @@ interface ApiService {
 
     @Multipart
     @POST("exam/add-exam")
-    fun addExam(
-        @Part("data") data: RequestBody,
-        @Part image: MultipartBody.Part
+    fun addExamWithQuestions(
+        @Part parts: List<MultipartBody.Part>
     ): Single<AddExamMainResult>
 }

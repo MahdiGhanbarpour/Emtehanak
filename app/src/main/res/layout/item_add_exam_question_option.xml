@@ -21,13 +21,13 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_marginStart="16dp"
-            android:background="@drawable/shape_circle_stroke"
+            android:backgroundTint="@color/gray_sightly_light"
             android:gravity="center"
             android:textColor="@color/gray_sightly_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1" />
+            tools:background="@drawable/ic_incorrect" />
 
         <TextView
             android:id="@+id/tvOption"

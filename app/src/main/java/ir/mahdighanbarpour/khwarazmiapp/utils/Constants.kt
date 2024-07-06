@@ -35,10 +35,10 @@ const val SEND_ENTERED_STUDY_FIELD_TO_GRADES_REGISTER_FRAGMENT_KEY =
 const val SEND_ENTERED_ACTIVITY_YEAR_TO_GRADES_REGISTER_FRAGMENT_KEY =
     "send_entered_activity_year_to_grades_register_fragment"
 
-const val SEND_CREATED_EXAM_ID_TO_ADD_EXAM_QUESTION_PAGE_KEY =
-    "send_created_exam_id_to_add_exam_question_page"
-const val SEND_CREATED_EXAM_GRADE_TO_ADD_EXAM_QUESTION_PAGE_KEY =
-    "send_created_exam_grade_to_add_exam_question_page"
+const val SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY =
+    "send_created_exam_to_add_exam_question_page"
+const val SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY =
+    "send_created_exam_image_to_add_exam_question_page"
 
 // Constants of user roles
 const val TEACHER = "teacher"

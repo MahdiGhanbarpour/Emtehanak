@@ -6,7 +6,6 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.net.ApiService
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 
 class ExamRepository(private val apiService: ApiService) {
 
@@ -23,7 +22,7 @@ class ExamRepository(private val apiService: ApiService) {
         return apiService.searchExams(grade, search, gradeList)
     }
 
-    fun addExam(data: RequestBody, image: MultipartBody.Part): Single<AddExamMainResult> {
-        return apiService.addExam(data, image)
+    fun addExamWithQuestions(parts: List<MultipartBody.Part>): Single<AddExamMainResult> {
+        return apiService.addExamWithQuestions(parts)
     }
 }

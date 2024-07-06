@@ -1,13 +1,15 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.addEamQuestionScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemAddExamQuestionBinding
+import ir.mahdighanbarpour.khwarazmiapp.model.data.AddQuestion
 
-class AddExamQuestionAdapter(private var data: List<String>) :
-    RecyclerView.Adapter<AddExamQuestionAdapter.AddExamQuestionAdapterViewHolder>() {
+class AddExamQuestionAdapter(
+    private var data: List<AddQuestion>, private var addExamQuestionEvents: AddExamQuestionEvents
+) : RecyclerView.Adapter<AddExamQuestionAdapter.AddExamQuestionAdapterViewHolder>() {
 
     private lateinit var binding: ItemAddExamQuestionBinding
 
@@ -15,9 +17,13 @@ class AddExamQuestionAdapter(private var data: List<String>) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: String) {
-            binding.tvQuestionNumberAddExamQuestion.text = "سوال $adapterPosition"
-            binding.tvQuestionAddExamQuestion.text = data
+        fun bindData(data: AddQuestion) {
+            binding.tvQuestionNumberAddExamQuestion.text = "سوال ${adapterPosition + 1}"
+            binding.tvQuestionAddExamQuestion.text = data.question
+
+            binding.ivDeleteQuestionAddExamQuestion.setOnClickListener {
+                addExamQuestionEvents.onDeleteQuestionClick(data)
+            }
         }
     }
 
@@ -35,5 +41,9 @@ class AddExamQuestionAdapter(private var data: List<String>) :
 
     override fun onBindViewHolder(holder: AddExamQuestionAdapterViewHolder, position: Int) {
         holder.bindData(data[position])
+    }
+
+    interface AddExamQuestionEvents {
+        fun onDeleteQuestionClick(question: AddQuestion)
     }
 }

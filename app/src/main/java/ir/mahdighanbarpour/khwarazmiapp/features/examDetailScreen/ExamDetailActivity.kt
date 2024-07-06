@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -221,6 +222,7 @@ class ExamDetailActivity : AppCompatActivity() {
                     ).setAction(
                         "تلاش دوباره"
                     ) { onStartClicked() }.show()
+                    Log.v("testLog", e.message.toString())
                 }
 
                 override fun onSuccess(t: QuestionMainResult) {
