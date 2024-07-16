@@ -27,6 +27,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_MAIN_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
@@ -148,8 +149,9 @@ class ExamDetailActivity : AppCompatActivity() {
         }
 
         // Load image
-        Glide.with(binding.root.context).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
-            .apply(RequestOptions().centerCrop()).into(binding.ivImageExamDetail)
+        Glide.with(binding.root.context).load(MEDIA_BASE_URL + data.image)
+            .error(R.drawable.img_error).apply(RequestOptions().centerCrop())
+            .into(binding.ivImageExamDetail)
     }
 
     private fun initDetailRecycler() {
@@ -230,10 +232,13 @@ class ExamDetailActivity : AppCompatActivity() {
                     if (t.result.questions.isNotEmpty()) {
                         // Send the received questions to the main page of the exam and open that page
                         val intent = Intent(this@ExamDetailActivity, ExamMainActivity::class.java)
+
                         intent.putExtra(
                             SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY,
                             t.result.questions.toTypedArray()
                         )
+                        intent.putExtra(SEND_SELECTED_EXAM_TO_EXAM_MAIN_PAGE_KEY, data)
+
                         startActivity(intent)
                     } else {
                         makeShortToast(this@ExamDetailActivity, "سوالی برای این آزمون یافت نشد!")

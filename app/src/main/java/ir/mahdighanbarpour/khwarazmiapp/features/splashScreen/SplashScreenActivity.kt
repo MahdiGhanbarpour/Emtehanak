@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -70,6 +70,7 @@ class SplashScreenActivity : AppCompatActivity() {
                     Snackbar.make(
                         binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
                     ).setAction("تلاش مجدد") { userLoggedIn() }.show()
+                    Log.v("testLog", e.message.toString())
                 }
 
                 override fun onSuccess(t: StudentMainResult) {

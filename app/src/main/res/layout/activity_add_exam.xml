@@ -363,6 +363,32 @@
                 app:layout_constraintTop_toBottomOf="@id/etLayoutTeacherMessageAddExam" />
 
             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchChangeAnswerAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="4dp"
+                android:checked="false"
+                android:text="قابلیت تغییر پاسخ بعد از پاسخگویی"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchQuestionCorrectAnswerAddExam" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBackToPreviousAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="4dp"
+                android:checked="true"
+                android:text="قابلیت برگشت به سوال قبل"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchChangeAnswerAddExam" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchTotalPercentAddExam"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -373,7 +399,7 @@
                 android:theme="@style/CustomTeacherSwitchTheme"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/switchQuestionCorrectAnswerAddExam" />
+                app:layout_constraintTop_toBottomOf="@id/switchBackToPreviousAddExam" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btAddExam"

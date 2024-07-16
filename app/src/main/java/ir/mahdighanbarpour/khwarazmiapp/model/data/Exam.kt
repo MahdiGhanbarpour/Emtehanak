@@ -20,6 +20,8 @@ data class Exam(
     @SerializedName("price") val price: Int,
     @SerializedName("rating") val rating: Int,
     @SerializedName("showQuestionAnswer") val showQuestionAnswer: Boolean,
+    @SerializedName("changeAnswer") val changeAnswer: Boolean,
+    @SerializedName("backToPrevious") val backToPrevious: Boolean,
     @SerializedName("showTotalPercent") val showTotalPercent: Boolean,
     @SerializedName("teacherMessage") val teacherMessage: String
 ) : Parcelable

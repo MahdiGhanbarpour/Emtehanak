@@ -16,5 +16,7 @@ data class ExamRequest(
     val teacherMessage: String,
     val showTotalPercent: Boolean,
     val showQuestionAnswer: Boolean,
+    val changeAnswer: Boolean,
+    val backToPrevious: Boolean,
     var questions: List<AddQuestion>
 ) : Parcelable

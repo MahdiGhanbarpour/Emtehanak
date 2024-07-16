@@ -1,6 +1,8 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.adapters
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
@@ -63,41 +65,55 @@ class ExamAttachmentAdapter(
             val options = RequestOptions().centerInside().placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
 
-            Glide.with(imageView.context).load(url).apply(options)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        if (retryCount < maxRetries) {
-                            retryCount++
-                            handler.postDelayed({ loadImage() }, 1000)  // Retry after 1 second
-                        } else {
-                            Snackbar.make(
-                                binding.root,
-                                "خطا در دریافت تصویر ضمیمه سوال",
-                                Snackbar.LENGTH_INDEFINITE
-                            ).setAction("تلاش مجدد") {
-                                loadImageWithRetry(imageView, url, maxRetries)
-                            }.show()
+            if (isValidContextForGlide(imageView.context)) {
+                Glide.with(imageView.context).load(url).apply(options)
+                    .listener(object : RequestListener<Drawable> {
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            if (retryCount < maxRetries) {
+                                retryCount++
+                                handler.postDelayed({ loadImage() }, 1000)  // Retry after 1 second
+                            } else {
+                                Snackbar.make(
+                                    binding.root,
+                                    "خطا در دریافت تصویر ضمیمه سوال",
+                                    Snackbar.LENGTH_INDEFINITE
+                                ).setAction("تلاش مجدد") {
+                                    loadImageWithRetry(imageView, url, maxRetries)
+                                }.show()
+                            }
+                            return true
                         }
-                        return true
-                    }
 
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        return false
-                    }
-                }).into(imageView)
+                        override fun onResourceReady(
+                            resource: Drawable?,
+                            model: Any?,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource?,
+                            isFirstResource: Boolean
+                        ): Boolean {
+                            return false
+                        }
+                    }).into(imageView)
+            }
         }
 
         loadImage()
+    }
+
+    private fun isValidContextForGlide(context: Context?): Boolean {
+        if (context == null) {
+            return false
+        }
+        if (context is Activity) {
+            if (context.isDestroyed || context.isFinishing) {
+                return false
+            }
+        }
+        return true
     }
 }

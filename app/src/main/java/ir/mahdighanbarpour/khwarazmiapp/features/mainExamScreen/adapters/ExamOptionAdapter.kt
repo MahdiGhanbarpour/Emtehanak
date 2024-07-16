@@ -11,12 +11,15 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamOptionBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 
 class ExamOptionAdapter(
-    private val data: MutableList<Option>, private val examOptionEvents: ExamOptionEvents
+    private val data: MutableList<Option>,
+    private val examOptionEvents: ExamOptionEvents,
+    private val showCorrectOption: Boolean,
+    private val changeAnswer: Boolean
 ) : RecyclerView.Adapter<ExamOptionAdapter.ExamOptionAdapterViewHolder>() {
 
     private lateinit var binding: ItemExamOptionBinding
 
-    private val isOptionsCorrect = MutableList<Boolean?>(data.size) { null }
+    private var isOptionsCorrect = MutableList<Boolean?>(data.size) { null }
 
     inner class ExamOptionAdapterViewHolder(binding: ItemExamOptionBinding) :
         ViewHolder(binding.root) {
@@ -26,17 +29,26 @@ class ExamOptionAdapter(
             binding.tvOptionNumber.text = (adapterPosition + 1).toString()
             binding.tvOption.text = data.option
 
-            // Checking whether the option to put the adapter on is correct or not
-            if (isOptionsCorrect[adapterPosition] == true) {
-                whenOptionIsCorrect()
-            } else if (isOptionsCorrect[adapterPosition] == false) {
-                whenOptionIsIncorrect()
+            if (showCorrectOption) {
+                // Checking whether the option to put the adapter on is correct or not
+                if (isOptionsCorrect[adapterPosition] == true) {
+                    whenOptionIsCorrect()
+                } else if (isOptionsCorrect[adapterPosition] == false) {
+                    whenOptionIsIncorrect()
+                }
+            } else {
+                if (isOptionsCorrect[adapterPosition] == true) {
+                    whenOptionIsSelected()
+                }
             }
 
             itemView.setOnClickListener {
-                if (isOptionsCorrect.indexOf(true) == -1) {
-                    checkOptions(adapterPosition)
-                    examOptionEvents.onOptionClicked(this@ExamOptionAdapter.data[adapterPosition].isCorrect)
+                if (changeAnswer) {
+                    examOptionEvents.onOptionClicked(this@ExamOptionAdapter.data[adapterPosition])
+                } else {
+                    if (isOptionsCorrect.indexOf(true) == -1) {
+                        examOptionEvents.onOptionClicked(this@ExamOptionAdapter.data[adapterPosition])
+                    }
                 }
             }
         }
@@ -89,35 +101,57 @@ class ExamOptionAdapter(
         binding.tvOptionNumber.text = ""
     }
 
+    private fun whenOptionIsSelected() {
+        // Change the color of the wrong option
+        binding.cardViewExamOption.setCardBackgroundColor(
+            ContextCompat.getColor(
+                binding.root.context, R.color.orange
+            )
+        )
+        binding.tvOption.setTextColor(
+            ContextCompat.getColor(
+                binding.root.context, R.color.white
+            )
+        )
+        binding.tvOptionNumber.setTextColor(
+            ContextCompat.getColor(
+                binding.root.context, R.color.white
+            )
+        )
+
+        binding.tvOptionNumber.setBackgroundResource(R.drawable.ic_correct)
+        binding.tvOptionNumber.text = ""
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
     private fun checkOptions(selectedItemPosition: Int) {
-        // Checking whether the option selected by the user is correct or not
-        if (data[selectedItemPosition].isCorrect) {
-            isOptionsCorrect[selectedItemPosition] = true
+        if (showCorrectOption) {
+            // Checking whether the option selected by the user is correct or not
+            if (data[selectedItemPosition].isCorrect) {
+                isOptionsCorrect[selectedItemPosition] = true
+            } else {
+                val correctOptionIndex = data.mapIndexedNotNull { index, questionOptions ->
+                    index.takeIf { questionOptions.isCorrect }
+                }[0]
+
+                isOptionsCorrect[selectedItemPosition] = false
+                isOptionsCorrect[correctOptionIndex] = true
+
+                notifyItemChanged(correctOptionIndex)
+            }
         } else {
-            val correctOptionIndex = data.mapIndexedNotNull { index, questionOptions ->
-                index.takeIf { questionOptions.isCorrect }
-            }[0]
-
-            isOptionsCorrect[selectedItemPosition] = false
-            isOptionsCorrect[correctOptionIndex] = true
-
-            notifyItemChanged(correctOptionIndex)
+            isOptionsCorrect.fill(null)
+            isOptionsCorrect[selectedItemPosition] = true
         }
 
         notifyItemChanged(selectedItemPosition)
     }
 
-    fun unanswered() {
-        // Show the correct option
-        val correctOptionIndex = data.mapIndexedNotNull { index, questionOptions ->
-            index.takeIf { questionOptions.isCorrect }
-        }[0]
-
-        isOptionsCorrect[correctOptionIndex] = true
-        notifyItemChanged(correctOptionIndex)
+    fun questionAnswered(option: Option) {
+        checkOptions(data.indexOf(option))
     }
 
     interface ExamOptionEvents {
-        fun onOptionClicked(isSelectedOptionCorrect: Boolean)
+        fun onOptionClicked(option: Option)
     }
 }

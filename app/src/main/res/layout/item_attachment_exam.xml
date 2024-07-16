@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/course_image"
-                android:src="@drawable/img_test" />
+                tools:src="@drawable/img_test" />
 
         </com.google.android.material.card.MaterialCardView>
 

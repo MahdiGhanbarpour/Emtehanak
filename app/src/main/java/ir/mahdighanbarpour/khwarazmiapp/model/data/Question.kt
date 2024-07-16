@@ -15,7 +15,8 @@ data class Question(
 @Parcelize
 data class Option(
     @SerializedName("isCorrect") val isCorrect: Boolean,
-    @SerializedName("option") val option: String
+    @SerializedName("option") val option: String,
+    var isUserSelected: Boolean = false
 ) : Parcelable
 
 @Parcelize

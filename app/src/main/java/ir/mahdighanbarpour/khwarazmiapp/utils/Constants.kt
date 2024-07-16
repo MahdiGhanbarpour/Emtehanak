@@ -16,6 +16,7 @@ const val SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY = "send_selected_exam_to_ex
 
 const val SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY =
     "send_selected_exam_question_to_exam_main_page"
+const val SEND_SELECTED_EXAM_TO_EXAM_MAIN_PAGE_KEY = "send_selected_exam_to_exam_main_page"
 
 const val SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
     "send_correct_answers_count_to_exam_result_bottom_sheet"
@@ -23,6 +24,10 @@ const val SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
     "send_incorrect_answers_count_to_exam_result_bottom_sheet"
 const val SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
     "send_unanswered_count_to_exam_result_bottom_sheet"
+const val SEND_TEACHER_MESSAGE_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
+    "send_teacher_message_to_exam_result_bottom_sheet"
+const val SEND_SHOW_TOTAL_PERCENTAGE_TO_EXAM_RESULT_BOTTOM_SHEET_KEY =
+    "send_show_total_percentage_to_exam_result_bottom_sheet"
 
 const val SEND_ENTERED_NAME_TO_GRADES_REGISTER_FRAGMENT_KEY =
     "send_entered_name_to_grades_register_fragment"
@@ -63,5 +68,5 @@ const val USER_ROLE = "user_role"
 const val USER_STUDY_FIELD = "user_study_field"
 
 // Constants related to connection with the server
-const val BASE_URL = "https://persiadev.net/khwarizmi/"
-const val MEDIA_BASE_URL = "https://persiadev.net/khwarizmi"
+const val BASE_URL = "http://192.168.100.15:8000/"
+const val MEDIA_BASE_URL = "http://192.168.100.15:8000"

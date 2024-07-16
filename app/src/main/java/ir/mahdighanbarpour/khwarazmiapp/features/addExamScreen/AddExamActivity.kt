@@ -100,6 +100,16 @@ class AddExamActivity : AppCompatActivity() {
             uploadImage = Uri.EMPTY
             binding.ivExamImageAddExam.setImageDrawable(null)
         }
+        binding.switchQuestionCorrectAnswerAddExam.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.switchChangeAnswerAddExam.isChecked = false
+            }
+        }
+        binding.switchChangeAnswerAddExam.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                binding.switchQuestionCorrectAnswerAddExam.isChecked = false
+            }
+        }
     }
 
     // Setting the dropdown data of the grade
@@ -180,6 +190,8 @@ class AddExamActivity : AppCompatActivity() {
         val teacherMessage = binding.etTeacherMessageAddExam.text.toString()
         val totalPercent = binding.switchTotalPercentAddExam.isChecked
         val questionCorrectAnswer = binding.switchQuestionCorrectAnswerAddExam.isChecked
+        val changeAnswer = binding.switchChangeAnswerAddExam.isChecked
+        val backToPrevious = binding.switchBackToPreviousAddExam.isChecked
 
         val isNameOk: Boolean
         val isGradeOk: Boolean
@@ -259,7 +271,9 @@ class AddExamActivity : AppCompatActivity() {
                 difficulty = difficulty,
                 teacherMessage = teacherMessage,
                 showTotalPercent = totalPercent,
-                showQuestionAnswer = questionCorrectAnswer
+                showQuestionAnswer = questionCorrectAnswer,
+                changeAnswer = changeAnswer,
+                backToPrevious = backToPrevious
             )
         }
     }
@@ -276,6 +290,8 @@ class AddExamActivity : AppCompatActivity() {
         teacherMessage: String,
         showTotalPercent: Boolean,
         showQuestionAnswer: Boolean,
+        changeAnswer: Boolean,
+        backToPrevious: Boolean
     ) {
         val examData = ExamRequest(
             name = name,
@@ -288,6 +304,8 @@ class AddExamActivity : AppCompatActivity() {
             difficulty = difficulty,
             teacherMessage = teacherMessage,
             showTotalPercent = showTotalPercent,
+            changeAnswer = changeAnswer,
+            backToPrevious = backToPrevious,
             showQuestionAnswer = showQuestionAnswer,
             questions = arrayListOf()
         )
