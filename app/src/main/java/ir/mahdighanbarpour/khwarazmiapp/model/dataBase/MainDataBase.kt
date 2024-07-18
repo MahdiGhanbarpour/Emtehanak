@@ -17,7 +17,9 @@ abstract class MainDataBase : RoomDatabase() {
         @Volatile
         private var dataBase: MainDataBase? = null
 
+        // Getting the instance of the database
         fun getDataBase(context: Context): MainDataBase {
+            // Synchronizing the database instance
             synchronized(this) {
                 if (dataBase == null) {
                     dataBase = Room.databaseBuilder(

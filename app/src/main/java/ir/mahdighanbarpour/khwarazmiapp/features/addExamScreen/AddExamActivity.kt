@@ -71,6 +71,7 @@ class AddExamActivity : AppCompatActivity() {
         binding = ActivityAddExamBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Changing the status bar color
         changeStatusBarColor(window, "#2d7de2", false)
         setDifficultyAdapter()
         setLessonAdapter()
@@ -81,31 +82,38 @@ class AddExamActivity : AppCompatActivity() {
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
+            // Finish the activity
             finish()
         }
         binding.ivExamImageAddExam.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
             checkAndRequestPermission()
         }
         binding.viewPickImageAddExam.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
             checkAndRequestPermission()
         }
         binding.btAddExam.setOnClickListener {
+            // If the add exam button is pressed, the data will be sent to the server
             if (binding.animationViewAddExam.visibility == View.GONE) {
                 checkInputs()
             }
         }
         binding.ivDeleteExamImageAddExam.setOnClickListener {
+            // If the delete button is pressed, the image will be deleted
             binding.cardViewExamImageAddExam.visibility = View.GONE
 
             uploadImage = Uri.EMPTY
             binding.ivExamImageAddExam.setImageDrawable(null)
         }
         binding.switchQuestionCorrectAnswerAddExam.setOnCheckedChangeListener { _, isChecked ->
+            // If the switch is checked, the answer will be correct
             if (isChecked) {
                 binding.switchChangeAnswerAddExam.isChecked = false
             }
         }
         binding.switchChangeAnswerAddExam.setOnCheckedChangeListener { _, isChecked ->
+            // If the switch is checked, the answer will be changed
             if (isChecked) {
                 binding.switchQuestionCorrectAnswerAddExam.isChecked = false
             }
@@ -134,18 +142,22 @@ class AddExamActivity : AppCompatActivity() {
         // Register for Activity Results in onCreate()
         pickImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                // Handle the result
                 if (result.resultCode == Activity.RESULT_OK) {
                     val uri: Uri? = result.data?.data
+                    // Handle the selected image
                     uri?.let {
                         binding.cardViewExamImageAddExam.visibility = View.VISIBLE
                         binding.ivExamImageAddExam.setImageURI(it)
                         uploadImage = it
                     } ?: run {
+                        // Handle the case where the image is not selected
                         makeShortToast(this@AddExamActivity, "تصویری انتخاب نشده است")
                     }
                 }
             }
 
+        // Request permission launcher
         requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -161,7 +173,9 @@ class AddExamActivity : AppCompatActivity() {
         }
     }
 
+    // Request permission
     private fun checkAndRequestPermission() {
+        // Check if the permission is already granted
         if (ContextCompat.checkSelfPermission(
                 this, Manifest.permission.READ_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
@@ -174,13 +188,16 @@ class AddExamActivity : AppCompatActivity() {
         }
     }
 
+    // Get intent for gallery
     private fun getIntentForGallery(): Intent {
         return Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
     }
 
+    // Check inputs
     private fun checkInputs() {
+        // Getting the data from the user
         val name = binding.etExamNameAddExam.text.toString()
         val description = binding.etExamDescAddExam.text.toString()
         val grade = binding.etGradeAddExam.text.toString()
@@ -199,7 +216,7 @@ class AddExamActivity : AppCompatActivity() {
         val isPriceOk: Boolean
         val isDifficultyOk: Boolean
 
-
+        // Checking if the data is not empty
         if (name.isEmpty()) {
             binding.etLayoutExamNameAddExam.error = "لطفا نام آزمون را وارد کنید"
             isNameOk = false
@@ -208,10 +225,12 @@ class AddExamActivity : AppCompatActivity() {
             isNameOk = true
         }
 
+        // Checking if the data is not empty
         if (grade.isEmpty()) {
             binding.etLayoutGradeAddExam.error = "لطفا پایه را وارد کنید"
             isGradeOk = false
         } else {
+            // Checking if the data is in the list
             if (grade !in gradeItems) {
                 binding.etLayoutGradeAddExam.error = "پایه معتبر نمی باشد"
                 isGradeOk = false
@@ -221,6 +240,7 @@ class AddExamActivity : AppCompatActivity() {
             }
         }
 
+        // Checking if the data is not empty
         if (price.isEmpty()) {
             binding.etLayoutExamPriceAddExam.error = "لطفا قیمت آزمون را وارد کنید"
             isPriceOk = false
@@ -229,10 +249,12 @@ class AddExamActivity : AppCompatActivity() {
             isPriceOk = true
         }
 
+        // Checking if the data is not empty
         if (lesson.isEmpty()) {
             binding.etLayoutLessonAddExam.error = "لطفا درس را وارد کنید"
             isLessonOk = false
         } else {
+            // Checking if the data is in the list
             if (lesson !in lessonItems) {
                 binding.etLayoutLessonAddExam.error = "درس معتبر نمی باشد"
                 isLessonOk = false
@@ -242,10 +264,12 @@ class AddExamActivity : AppCompatActivity() {
             }
         }
 
+        // Checking if the data is not empty
         if (difficulty.isEmpty()) {
             binding.etLayoutDifficultyAddExam.error = "لطفا سطح آزمون را وارد کنید"
             isDifficultyOk = false
         } else {
+            // Checking if the data is in the list
             if (difficulty !in difficultyItems) {
                 binding.etLayoutDifficultyAddExam.error = "سطح آزمون معتبر نمی باشد"
                 isDifficultyOk = false
@@ -255,11 +279,13 @@ class AddExamActivity : AppCompatActivity() {
             }
         }
 
+        // Checking if the data is not empty
         if (isNameOk && isGradeOk && isLessonOk && isPriceOk && isDifficultyOk) {
             // Getting the user's information
             val authorName = sharedPreferences.getString(USER_FULL_NAME, null)!!
             val authorPhoneNumber = sharedPreferences.getString(USER_PHONE_NUM, null)!!
 
+            // Convert the data to a JSON string
             convertData(
                 name = name,
                 description = description,
@@ -278,6 +304,7 @@ class AddExamActivity : AppCompatActivity() {
         }
     }
 
+    // Convert the data to a JSON string
     private fun convertData(
         name: String,
         description: String,
@@ -293,6 +320,7 @@ class AddExamActivity : AppCompatActivity() {
         changeAnswer: Boolean,
         backToPrevious: Boolean
     ) {
+        // Create an ExamRequest object
         val examData = ExamRequest(
             name = name,
             description = description,
@@ -325,13 +353,16 @@ class AddExamActivity : AppCompatActivity() {
                 ) { checkInputs() }.show()
             }
         } else {
+            // Send the exam to add question screen
             showAddQuestionScreen(examData, null)
         }
     }
 
+    // Show the add question screen
     private fun showAddQuestionScreen(data: ExamRequest, image: File?) {
         val intent = Intent(this, AddExamQuestionActivity::class.java)
 
+        // Send the exam to add question screen
         intent.putExtra(SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY, data)
         intent.putExtra(SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY, image)
 

@@ -19,11 +19,13 @@ class AddExamQuestionOptionAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Option) {
+            // Set the option text and background color based on the isCorrect property
             binding.tvOption.text = data.option
             binding.tvOptionNumber.setBackgroundResource(if (data.isCorrect) R.drawable.ic_correct else R.drawable.ic_incorrect)
 
+            // Set the click listener for the delete button
             binding.ivDeleteExamOptionAddExamQuestion.setOnClickListener {
-                addExamOptionEvents.onOptionClick(data, adapterPosition)
+                addExamOptionEvents.onDeleteOptionClick(data, adapterPosition)
             }
         }
     }
@@ -48,6 +50,6 @@ class AddExamQuestionOptionAdapter(
     }
 
     interface AddExamOptionEvents {
-        fun onOptionClick(option: Option, position: Int)
+        fun onDeleteOptionClick(option: Option, position: Int)
     }
 }

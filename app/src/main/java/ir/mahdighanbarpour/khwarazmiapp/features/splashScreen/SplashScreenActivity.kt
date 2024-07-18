@@ -58,10 +58,12 @@ class SplashScreenActivity : AppCompatActivity() {
         compositeDisposable.clear()
     }
 
+    // Login student
     private fun loginStudent() {
         splashScreenViewModel.loginStudent(phoneNumber).asyncRequest()
             .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to the CompositeDisposable
                     compositeDisposable.add(d)
                 }
 
@@ -74,7 +76,9 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(t: StudentMainResult) {
+                    // Checking if the user is registered or not
                     if (t.status != 404) {
+                        // If the user is registered, it will open the specified page
                         if (t.result.student.fullName == sharedPreferences.getString(
                                 USER_FULL_NAME, null
                             )
@@ -90,10 +94,12 @@ class SplashScreenActivity : AppCompatActivity() {
             })
     }
 
+    // Login teacher
     private fun loginTeacher() {
         splashScreenViewModel.loginTeacher(phoneNumber).asyncRequest()
             .subscribe(object : SingleObserver<TeacherMainResult> {
                 override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to the CompositeDisposable
                     compositeDisposable.add(d)
                 }
 
@@ -106,7 +112,9 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onSuccess(t: TeacherMainResult) {
+                    // Checking if the user is registered or not
                     if (t.status != 404) {
+                        // If the user is registered, it will open the specified page
                         if (t.result.teacher.fullName == sharedPreferences.getString(
                                 USER_FULL_NAME, null
                             )

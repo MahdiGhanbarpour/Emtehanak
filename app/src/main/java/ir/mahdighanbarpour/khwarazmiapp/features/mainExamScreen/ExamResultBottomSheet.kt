@@ -48,9 +48,11 @@ class ExamResultBottomSheet : BottomSheetDialogFragment() {
             SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
         )
 
+        // Getting the teacher message
         teacherMessage =
             requireArguments().getString(SEND_TEACHER_MESSAGE_TO_EXAM_RESULT_BOTTOM_SHEET_KEY, "")
 
+        // Getting whether the total percentage should be displayed or not
         showTotalPercentage = requireArguments().getBoolean(
             SEND_SHOW_TOTAL_PERCENTAGE_TO_EXAM_RESULT_BOTTOM_SHEET_KEY, true
         )
@@ -89,6 +91,7 @@ class ExamResultBottomSheet : BottomSheetDialogFragment() {
             binding.tvTotalExamResult.text = finalPercentage.toString()
             binding.tvPercentageExamResult.text = finalPercentage.toString()
         } else {
+            // Putting the received information in the views
             binding.tvPercentageExamResult.visibility = View.GONE
             binding.cardViewTotalExamResult.visibility = View.GONE
             binding.cardViewIncorrectExamResult.visibility = View.GONE

@@ -20,11 +20,13 @@ class AddExamQuestionAttachmentAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: AddQuestionAttachment) {
+            // Set the image and description of the attachment
             binding.ivAttachmentImageAddExamQuestion.setImageURI(data.image.toUri())
             binding.tvAttachmentDetailAddExamQuestion.text = data.description
 
+            // Set the click listener for the delete button
             binding.ivDeleteExamImageAddExamQuestion.setOnClickListener {
-                attachmentEvents.onAttachmentClick(data, adapterPosition)
+                attachmentEvents.onDeleteAttachmentClick(data, adapterPosition)
             }
         }
     }
@@ -49,6 +51,6 @@ class AddExamQuestionAttachmentAdapter(
     }
 
     interface AttachmentEvents {
-        fun onAttachmentClick(attachment: AddQuestionAttachment, position: Int)
+        fun onDeleteAttachmentClick(attachment: AddQuestionAttachment, position: Int)
     }
 }

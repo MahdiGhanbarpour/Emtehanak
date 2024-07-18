@@ -20,8 +20,10 @@ class RegisterViewModel(
     fun registerStudent(
         name: String, phoneNumber: String, birthday: String, grade: String
     ): Single<StudentMainResult> {
+        // Determines whether something is being received from the server or not
         isDataLoading.onNext(true)
 
+        // Student registration
         return studentRepository.registerStudent(name, phoneNumber, birthday, grade).doFinally {
             isDataLoading.onNext(false)
         }
@@ -36,8 +38,10 @@ class RegisterViewModel(
         grade: String,
         activityYear: String
     ): Single<TeacherMainResult> {
+        // Determines whether something is being received from the server or not
         isDataLoading.onNext(true)
 
+        // Teacher registration
         return teacherRepository.registerTeacher(
             name, phoneNumber, birthday, studyField, grade, activityYear
         ).doFinally {

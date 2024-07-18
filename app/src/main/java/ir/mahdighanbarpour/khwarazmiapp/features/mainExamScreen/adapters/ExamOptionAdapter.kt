@@ -26,6 +26,7 @@ class ExamOptionAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Option) {
+            // Set data
             binding.tvOptionNumber.text = (adapterPosition + 1).toString()
             binding.tvOption.text = data.option
 
@@ -42,6 +43,7 @@ class ExamOptionAdapter(
                 }
             }
 
+            // add click listener
             itemView.setOnClickListener {
                 if (changeAnswer) {
                     examOptionEvents.onOptionClicked(this@ExamOptionAdapter.data[adapterPosition])

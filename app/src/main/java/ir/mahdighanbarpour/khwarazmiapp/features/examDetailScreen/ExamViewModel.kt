@@ -13,8 +13,10 @@ class ExamViewModel(private val examRepository: ExamRepository) : ViewModel() {
 
     // Getting the list of exam questions with the help of exam id
     fun getExamsQuestion(examId: Int): Single<QuestionMainResult> {
+        // Set the loading state to true
         isDataLoading.onNext(true)
 
+        // Getting the list of exam questions with the help of exam id
         return examRepository.getExamsQuestion(examId).doFinally {
             isDataLoading.onNext(false)
         }

@@ -5,11 +5,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -141,6 +140,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
             "", sharedPreferences.getString(USER_GRADE, null)!!, "5"
         ).asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
             override fun onSubscribe(d: Disposable) {
+                // Add the disposable to Composite Disposable
                 compositeDisposable.add(d)
             }
 
@@ -159,7 +159,6 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
                     getPopularExams()
                 }
                 snackbar.show()
-                Log.v("testLog", e.message.toString())
             }
 
             override fun onSuccess(t: ExamsMainResult) {

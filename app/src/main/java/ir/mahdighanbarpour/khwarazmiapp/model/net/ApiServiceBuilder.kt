@@ -8,6 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 // Build retrofit and api service
 fun apiServiceBuilder(): ApiService {
 
+    // Retrofit builder
     val retrofit =
         Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create()).build()

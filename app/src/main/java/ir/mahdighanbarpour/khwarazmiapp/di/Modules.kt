@@ -22,18 +22,23 @@ import org.koin.dsl.module
 
 // Adding repetitive classes in the app to dependency injection
 val myModules = module {
+    // Adding shared preferences to dependency injection
     single { androidContext().getSharedPreferences("Emtehanak", Context.MODE_PRIVATE) }
 
+    // Adding the database to dependency injection
     single { MainDataBase.getDataBase(get()) }
     single { get<MainDataBase>().mainDao }
 
+    // Adding the repositories to dependency injection
     single { FrequentlyQuestionsRepository(get(), get()) }
     single { StudentRepository(get()) }
     single { TeacherRepository(get()) }
     single { ExamRepository(get()) }
 
+    // Adding the api service to dependency injection
     single { apiServiceBuilder() }
 
+    // Adding the view models to dependency injection
     viewModel { FrequentlyQuestionsViewModel(get()) }
     viewModel { LoginOtpViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }

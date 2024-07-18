@@ -4,13 +4,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getColor
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -185,6 +185,7 @@ class RegisterFragment : Fragment() {
 
     // Checking the information entered by the user
     fun checkInputs() {
+        // Getting the information entered by the user
         val enteredName = binding.etFullNameReg.text.toString()
         val enteredDay = binding.etDayReg.text.toString()
         val enteredMonth = binding.tvMonthReg.text.toString()

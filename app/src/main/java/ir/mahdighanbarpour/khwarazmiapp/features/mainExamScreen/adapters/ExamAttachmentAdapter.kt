@@ -34,6 +34,7 @@ class ExamAttachmentAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: Attachment) {
+            // Set data
             binding.tvAttachmentDetailItem.text = data.detail
 
             // Load image
@@ -57,15 +58,20 @@ class ExamAttachmentAdapter(
         holder.bindData(data[position])
     }
 
+    // Load image with retry
     fun loadImageWithRetry(imageView: ImageView, url: String, maxRetries: Int) {
         var retryCount = 0
         val handler = Handler(Looper.getMainLooper())
 
+        // Load image
         fun loadImage() {
+            // Set options
             val options = RequestOptions().centerInside().placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
 
+            // Check if the context is valid
             if (isValidContextForGlide(imageView.context)) {
+                // Load image
                 Glide.with(imageView.context).load(url).apply(options)
                     .listener(object : RequestListener<Drawable> {
                         override fun onLoadFailed(
@@ -74,10 +80,12 @@ class ExamAttachmentAdapter(
                             target: Target<Drawable>?,
                             isFirstResource: Boolean
                         ): Boolean {
+                            // Retry if the image failed to load
                             if (retryCount < maxRetries) {
                                 retryCount++
                                 handler.postDelayed({ loadImage() }, 1000)  // Retry after 1 second
                             } else {
+                                // Show error message
                                 Snackbar.make(
                                     binding.root,
                                     "خطا در دریافت تصویر ضمیمه سوال",
@@ -96,6 +104,7 @@ class ExamAttachmentAdapter(
                             dataSource: DataSource?,
                             isFirstResource: Boolean
                         ): Boolean {
+                            // Image loaded successfully
                             return false
                         }
                     }).into(imageView)
@@ -106,9 +115,12 @@ class ExamAttachmentAdapter(
     }
 
     private fun isValidContextForGlide(context: Context?): Boolean {
+        // Check if the context is valid
         if (context == null) {
             return false
         }
+
+        // Check if the context is an activity
         if (context is Activity) {
             if (context.isDestroyed || context.isFinishing) {
                 return false

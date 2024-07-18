@@ -18,9 +18,11 @@ class AddExamQuestionAdapter(
 
         @SuppressLint("SetTextI18n")
         fun bindData(data: AddQuestion) {
+            // Set the question and question number
             binding.tvQuestionNumberAddExamQuestion.text = "سوال ${adapterPosition + 1}"
             binding.tvQuestionAddExamQuestion.text = data.question
 
+            // Set the click listener for the delete button
             binding.ivDeleteQuestionAddExamQuestion.setOnClickListener {
                 addExamQuestionEvents.onDeleteQuestionClick(data)
             }

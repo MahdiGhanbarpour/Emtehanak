@@ -55,6 +55,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
         binding = ActivityAddExamQuestionBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Changing the status bar color
         changeStatusBarColor(window, "#2d7de2", false)
         getData()
         initAddExamQuestionRecycler(listOf())
@@ -63,18 +64,23 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Clear the compositeDisposable to avoid memory leaks
         compositeDisposable.clear()
     }
 
 
     private fun listener() {
         binding.ivBack.setOnClickListener {
+            // If the back button is pressed, the page will be closed
             finish()
         }
         binding.viewAddExamQuestion.setOnClickListener {
+            // If the viewAddExamQuestion is clicked, the Bottom Sheet will be displayed
             showAddExamQuestionBottomSheet()
         }
         binding.btAddExamQuestion.setOnClickListener {
+            // If the addExamQuestion button is clicked, the data will be sent to the server
             if (binding.animationViewAddExamQuestion.visibility == View.GONE) {
                 checkData()
             }
@@ -82,6 +88,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
     }
 
     private fun getData() {
+        // Getting the data from the previous page
         exam = intent.getParcelable(SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY)
         examImage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getSerializableExtra(
@@ -91,14 +98,15 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
             intent.getSerializableExtra(SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY) as File?
         }
 
-        Log.v("testLog", examImage.toString())
-
+        // Checking if the data is not null
         if (!this::exam.isInitialized) {
+            // If the data is null, the page will be closed
             makeShortToast(this, "خطا در ساخت آزمون")
             finish()
         }
     }
 
+    // Adding the questions to the list
     private fun initAddExamQuestionRecycler(data: List<AddQuestion>) {
         addExamQuestionAdapter = AddExamQuestionAdapter(data, this)
         binding.recyclerAddExamQuestion.adapter = addExamQuestionAdapter
@@ -106,12 +114,14 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
     }
 
+    // Getting the data from the Bottom Sheet
     fun getBottomSheetData(data: AddQuestion) {
         this.data.add(data)
         initAddExamQuestionRecycler(this.data)
     }
 
     private fun checkData() {
+        // Checking internet connection
         if (isInternetAvailable(this)) {
             exam.questions = data
 
@@ -128,12 +138,15 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                 requestFile
             )
 
+            // Create a list of MultipartBody.Part for the attachments
             val parts = mutableListOf<MultipartBody.Part>()
             parts.add(MultipartBody.Part.createFormData("data", examJson))
             parts.add(examImagePart)
 
+            // Convert the attachments to a list of file paths
             val attachments = data.flatMap { it.attachment.map { attachment -> attachment.image } }
 
+            // Create a MultipartBody.Part for each attachment
             attachments.forEachIndexed { index, file ->
                 parts.add(
                     MultipartBody.Part.createFormData(
@@ -143,10 +156,6 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                     )
                 )
             }
-
-            Log.v("testLog", examJson)
-            Log.v("testLog", examImage.toString())
-            Log.v("testLog", parts.map { it.body }.toString())
 
             // Add the exam to the server
             playLoadingAnim()
@@ -177,10 +186,12 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
         })
     }
 
+    // Adding the questions to the server
     private fun addQuestions(parts: List<MultipartBody.Part>) {
         addExamQuestionViewModel.addExamWithQuestions(parts).asyncRequest()
             .subscribe(object : SingleObserver<AddExamMainResult> {
                 override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to the compositeDisposable
                     compositeDisposable.add(d)
                 }
 
@@ -195,6 +206,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                 }
 
                 override fun onSuccess(t: AddExamMainResult) {
+                    // If the data is received successfully, the page will be closed
                     if (t.status == 200) {
                         val intent =
                             Intent(this@AddExamQuestionActivity, TeacherMainActivity::class.java)
@@ -207,7 +219,6 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                         ).setAction(
                             "تلاش دوباره"
                         ) { checkData() }.show()
-                        Log.v("testLog", t.massage)
                     }
                 }
             })
@@ -223,6 +234,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
     }
 
     override fun onDeleteQuestionClick(question: AddQuestion) {
+        // Removing the question from the list
         data.remove(question)
         initAddExamQuestionRecycler(data)
     }

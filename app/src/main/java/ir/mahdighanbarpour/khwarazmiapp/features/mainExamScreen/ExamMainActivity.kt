@@ -3,7 +3,6 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -74,8 +73,6 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         // Changing the color of the Status Bar
         changeStatusBarColor(window, "#20A84D", false)
 
-        Log.v("testLog", exam.changeAnswer.toString())
-
         initOptionsRecycler()
         initAttachmentRecycler(arrayListOf())
         setQuestionData()
@@ -89,6 +86,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             exitBottomSheet.show(supportFragmentManager, null)
         }
         binding.btNextExamMain.setOnClickListener {
+            // Checking question position
             if (!exam.backToPrevious && !isQuestionAnswered) {
                 showUnansweredDialog()
             } else {
@@ -100,7 +98,6 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             if (questionPosition != 0) {
                 // Go to the previous question
                 questionPosition--
-//                binding.btNextExamMain.visibility = View.INVISIBLE
 
                 if (questionPosition == 0 && exam.backToPrevious) {
                     binding.btPreviousExamMain.visibility = View.INVISIBLE
@@ -180,7 +177,9 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             examOptionAdapter.questionAnswered(questions[questionPosition].options[userSelectedOption])
         }
 
+        // Checking whether the question is the last one or not
         if (questionPosition == questions.size - 1) {
+            // If it is, it will change the button text
             binding.btNextExamMain.text = "دیدن نتایج"
             binding.btNextExamMain.iconPadding = 0
             binding.btNextExamMain.icon = null
@@ -211,17 +210,21 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         )
         firstAnim.addAnimation(alphaAnimation(1f, 0f, 450))
 
+        // Start animation
         binding.cardViewQuestionExamMain.startAnimation(firstAnim)
         binding.recyclerOptionsExamMain.startAnimation(firstAnim)
 
+        // Set animation listener
         firstAnim.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
 
             override fun onAnimationRepeat(animation: Animation) {}
 
             override fun onAnimationEnd(animation: Animation) {
+                // Set question data
                 setQuestionData()
 
+                // Hide question change animation
                 val secondAnim = AnimationSet(true)
                 secondAnim.addAnimation(
                     translateAnimation(
@@ -230,6 +233,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
                 )
                 secondAnim.addAnimation(alphaAnimation(0f, 1f, 450))
 
+                // Start animation
                 binding.cardViewQuestionExamMain.startAnimation(secondAnim)
                 binding.recyclerOptionsExamMain.startAnimation(secondAnim)
 
@@ -245,11 +249,13 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             if (!examResultBottomSheet.isVisible) {
                 val bundle = Bundle()
 
+                // calculate correct and incorrect answers count
                 correctAnswersCount =
                     questions.count { it.options.indexOfFirst { option -> option.isUserSelected && option.isCorrect } != -1 }
                 incorrectAnswersCount =
                     questions.count { it.options.indexOfFirst { option -> option.isUserSelected && !option.isCorrect } != -1 }
 
+                // put data to bundle
                 bundle.putInt(
                     SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY, correctAnswersCount
                 )
@@ -271,7 +277,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
                 examResultBottomSheet.arguments = bundle
 
-                //Display Exam Result Bottom Sheet
+                // Display Exam Result Bottom Sheet
                 examResultBottomSheet.show(supportFragmentManager, null)
             }
         } else {
@@ -290,6 +296,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         // Displaying the unanswered dialog
         val dialog = AlertDialog.Builder(this).create()
 
+        // Setting the dialog view
         val dialogBinding = DialogUnansweredBinding.inflate(layoutInflater)
         dialog.setView(dialogBinding.root)
         dialog.setCancelable(true)
@@ -311,8 +318,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         // Checking whether the question has been answered or not
         isQuestionAnswered = !exam.changeAnswer
 
-//        binding.btNextExamMain.visibility = View.VISIBLE
-
+        // Make delay
         Timer().schedule(timerTask {
             runOnUiThread {
                 val data = questions[questionPosition].options

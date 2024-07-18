@@ -9,6 +9,7 @@ import okhttp3.MultipartBody
 
 class ExamRepository(private val apiService: ApiService) {
 
+    // Getting the list of exams with the help of grade and grade list
     fun getExams(grade: String, gradeList: String, limit: String): Single<ExamsMainResult> {
         return apiService.getExams(grade, gradeList, limit)
     }
@@ -18,10 +19,12 @@ class ExamRepository(private val apiService: ApiService) {
         return apiService.getExamsQuestion(examId)
     }
 
+    // Searching for exams with the help of grade, search and grade list
     fun searchExams(grade: String, search: String, gradeList: String): Single<ExamsMainResult> {
         return apiService.searchExams(grade, search, gradeList)
     }
 
+    // Adding the exam with the help of parts
     fun addExamWithQuestions(parts: List<MultipartBody.Part>): Single<AddExamMainResult> {
         return apiService.addExamWithQuestions(parts)
     }

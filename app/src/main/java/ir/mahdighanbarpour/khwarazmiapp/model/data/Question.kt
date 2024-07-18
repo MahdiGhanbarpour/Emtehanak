@@ -14,6 +14,7 @@ data class Question(
 
 @Parcelize
 data class Option(
+    @SerializedName("id") val id: Int? = null,
     @SerializedName("isCorrect") val isCorrect: Boolean,
     @SerializedName("option") val option: String,
     var isUserSelected: Boolean = false

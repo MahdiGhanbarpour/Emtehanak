@@ -20,15 +20,19 @@ class ExamListAdapter(
     inner class ExamListAdapterViewHolder(itemView: ItemExamListBinding) :
         RecyclerView.ViewHolder(itemView.root) {
         fun bindData(data: Exam) {
+            // Placing the sent data in the relevant views
             binding.tvExamListNameItem.text = data.name
             binding.tvExamListAuthorItem.text = data.authorName
 
+            // If the exam is not free, its price will be displayed
             binding.tvExamListPriceItem.text =
                 if (data.price == 0) "رایگان" else "${data.price} تومان"
 
+            // Load image
             Glide.with(binding.root).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivExamListImageItem)
 
+            // Set click listener
             itemView.setOnClickListener {
                 examListEvents.onExamClick(data)
             }
@@ -58,9 +62,11 @@ class ExamListAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(data: List<Exam>) {
+        // Clear the data
         this.data = arrayListOf()
         notifyDataSetChanged()
 
+        // Add new data
         this.data = data
         notifyDataSetChanged()
     }

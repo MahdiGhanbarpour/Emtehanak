@@ -3,10 +3,10 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -54,6 +54,7 @@ class GradesRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize the checkBoxes list
         checkBoxes = listOf(
             binding.cbFirstGradesRegister,
             binding.cbSecondGradesRegister,
@@ -69,11 +70,14 @@ class GradesRegisterFragment : Fragment() {
             binding.cbTwelfthGradesRegister
         )
 
+        // Initialize the SharedPreferences editor
         editor = sharedPreferences.edit()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+
+        // Clear the compositeDisposable
         compositeDisposable.clear()
     }
 
@@ -81,11 +85,13 @@ class GradesRegisterFragment : Fragment() {
         // Checking if the user has selected a grade or not
         val selectedGrades = arrayListOf<String>()
         for (checkBox in checkBoxes) {
+            // If the checkbox is checked, add it to the selectedGrades list
             if (checkBox.isChecked) {
                 selectedGrades.add(checkBox.text.toString())
             }
         }
 
+        // If the user has not selected a grade, show a toast message
         if (selectedGrades.isEmpty()) {
             makeShortToast(requireContext(), "حداقل یک پایه را انتخاب کنید")
         } else {
@@ -106,8 +112,10 @@ class GradesRegisterFragment : Fragment() {
         val teacherActivityYear =
             requireArguments().getString(SEND_ENTERED_ACTIVITY_YEAR_TO_GRADES_REGISTER_FRAGMENT_KEY)!!
 
+        // Converting the selectedGrades list to a JSON string
         val jsonGrades = Gson().toJson(selectedGrades)
 
+        // Registering the teacher
         registerTeacher(
             teacherName,
             teacherPhoneNumber,
@@ -118,6 +126,7 @@ class GradesRegisterFragment : Fragment() {
         )
     }
 
+    // Registering the teacher
     private fun registerTeacher(
         name: String,
         phoneNumber: String,
@@ -131,10 +140,12 @@ class GradesRegisterFragment : Fragment() {
             name, phoneNumber, birthday, studyField, grade, activityYear
         ).asyncRequest().subscribe(object : SingleObserver<TeacherMainResult> {
             override fun onSubscribe(d: Disposable) {
+                // Adding the disposable to the compositeDisposable
                 compositeDisposable.add(d)
             }
 
             override fun onError(e: Throwable) {
+                // If there is an error, show a toast message
                 Snackbar.make(
                     binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
                 ).setAction("تلاش مجدد") { checkInputs() }.show()
@@ -165,6 +176,7 @@ class GradesRegisterFragment : Fragment() {
         editor.putString(USER_STUDY_FIELD, studyField)
         editor.commit()
 
+        // Opens the teacher's home page
         val intent = Intent(requireContext(), TeacherMainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)

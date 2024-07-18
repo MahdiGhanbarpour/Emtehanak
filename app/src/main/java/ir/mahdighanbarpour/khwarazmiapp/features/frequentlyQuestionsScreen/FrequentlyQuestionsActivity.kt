@@ -1,8 +1,8 @@
 package ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -72,6 +72,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
         frequentlyQuestionsViewModel.getFrequentlyQuestionsOnline(sentPage!!).asyncRequest()
             .subscribe(object : SingleObserver<FrequentlyQuestionsMainResult> {
                 override fun onSubscribe(d: Disposable) {
+                    // Adding the Disposable to the compositeDisposable
                     compositeDisposable.add(d)
                 }
 
@@ -95,6 +96,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                         initRecycler(t.result.frequentlyQuestions)
                         frequentlyQuestionsViewModel.insertAllFrequentlyQuestions(t.result.frequentlyQuestions)
                     } else if (t.status == 404) {
+                        // The page is not found
                         makeShortToast(
                             this@FrequentlyQuestionsActivity,
                             "سوالات متداولی برای این صفحه یافت نشدند!"
@@ -115,6 +117,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
             frequentlyQuestionsViewModel.getFrequentlyQuestionsLocal(sentPage!!).asyncRequest()
                 .subscribe(object : SingleObserver<List<FrequentlyQuestion>> {
                     override fun onSubscribe(d: Disposable) {
+                        // Adding the Disposable to the compositeDisposable
                         compositeDisposable.add(d)
                     }
 

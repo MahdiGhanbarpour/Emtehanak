@@ -60,24 +60,30 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
 
     private fun listener() {
         binding.ivDeleteAttachmentAddExamQuestion.setOnClickListener {
+            // If the delete button is pressed, the image will be deleted
             binding.ivAttachmentAddExamQuestion.visibility = View.GONE
             binding.ivDeleteAttachmentAddExamQuestion.visibility = View.GONE
             binding.ivAttachmentAddExamQuestion.setImageDrawable(null)
             pickedAttachmentImage = null
         }
         binding.viewPickAttachmentImageAddExamQuestion.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
             checkAndRequestPermission()
         }
         binding.ivIconPickAttachmentImageAddExamQuestion.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
             checkAndRequestPermission()
         }
         binding.btAttachmentAddExamQuestion.setOnClickListener {
+            // If the add attachment button is pressed, the attachment will be added
             addAttachment()
         }
         binding.btOptionAddExamQuestion.setOnClickListener {
+            // If the add option button is pressed, the option will be added
             addOption()
         }
         binding.btBottomSheetAddExamQuestion.setOnClickListener {
+            // If the send button is pressed, the data will be sent to the parent activity
             if (!isSendingData) {
                 checkInputs()
             }
@@ -86,6 +92,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
 
     @SuppressLint("SetTextI18n")
     private fun resetData() {
+        // Resetting the data
         attachments = mutableListOf()
         options = mutableListOf()
         pickedAttachmentImage = null
@@ -112,6 +119,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
     }
 
     private fun initAddAttachmentRecycler(data: MutableList<AddQuestionAttachment>) {
+        // Initialize the recycler view
         addAttachmentAdapter = AddExamQuestionAttachmentAdapter(data, this)
         binding.recyclerViewAttachmentAddExamQuestion.adapter = addAttachmentAdapter
         binding.recyclerViewAttachmentAddExamQuestion.layoutManager =
@@ -119,6 +127,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
     }
 
     private fun initAddOptionRecycler(data: MutableList<Option>) {
+        // Initialize the recycler view
         addOptionAdapter = AddExamQuestionOptionAdapter(data, this)
         binding.recyclerViewOptionsAddExamQuestion.adapter = addOptionAdapter
         binding.recyclerViewOptionsAddExamQuestion.layoutManager =
@@ -129,8 +138,11 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         // Register for Activity Results in onCreate()
         pickImageLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                // Handle the result
                 if (result.resultCode == Activity.RESULT_OK) {
                     val uri: Uri? = result.data?.data
+
+                    // Handle the selected image
                     uri?.let {
                         binding.ivAttachmentAddExamQuestion.visibility = View.VISIBLE
                         binding.ivDeleteAttachmentAddExamQuestion.visibility = View.VISIBLE
@@ -142,6 +154,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
                 }
             }
 
+        // Request permission launcher
         requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -155,6 +168,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         }
     }
 
+    // Request permission
     private fun checkAndRequestPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE
@@ -168,17 +182,21 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         }
     }
 
+    // Get intent for gallery
     private fun getIntentForGallery(): Intent {
         return Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
     }
 
+    // Add attachment
     private fun addAttachment() {
+        // Check if the image is selected
         if (pickedAttachmentImage != null) {
             // Convert the Uri to a File object
             val file = getFileFromUri(requireContext(), pickedAttachmentImage!!)
             if (file != null) {
+                // Add the attachment to the list
                 val attachment =
                     AddQuestionAttachment(file, binding.etAttachmentAddExamQuestion.text.toString())
 
@@ -188,18 +206,23 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
                 attachments.add(attachment)
                 initAddAttachmentRecycler(attachments)
             } else {
+                // Handle the case where the file is null
                 makeShortToast(requireContext(), "فایل تصویر نامعتبر است")
             }
         } else {
+            // Handle the case where the image is not selected
             makeShortToast(requireContext(), "لطفا تصویر را انتخاب کنید")
         }
     }
 
+    // Add option
     private fun addOption() {
+        // Check if the option is not empty
         if (binding.etOptionAddExamQuestion.text.toString().isNotEmpty()) {
+            // Add the option to the list
             val option = Option(
-                binding.cbOptionAddExamQuestion.isChecked,
-                binding.etOptionAddExamQuestion.text.toString()
+                isCorrect = binding.cbOptionAddExamQuestion.isChecked,
+                option = binding.etOptionAddExamQuestion.text.toString()
             )
 
             binding.recyclerViewOptionsAddExamQuestion.visibility = View.VISIBLE
@@ -208,10 +231,12 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
             options.add(option)
             initAddOptionRecycler(options)
         } else {
+            // Handle the case where the option is empty
             makeShortToast(requireContext(), "لطفا گزینه سوال را وارد کنید")
         }
     }
 
+    // Check inputs
     private fun checkInputs() {
         val questionTitle = binding.etQuestionAddExamQuestion.text.toString()
 
@@ -222,22 +247,25 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         } else {
             binding.etLayoutQuestionAddExamQuestion.isErrorEnabled = false
 
+            // Check if options are empty
             if (options.isEmpty()) {
                 makeShortToast(requireContext(), "لطفا گزینه های سوال را وارد کنید")
             } else {
+                // Check if at least two options are selected
                 if (options.size < 2) {
                     makeShortToast(requireContext(), "حداقل دو گزینه وارد کنید")
                 } else {
-                    if (options.any { it.isCorrect }) {
+                    if (options.any { it.isCorrect } && options.count { it.isCorrect } == 1) {
                         sendQuestionToParent(questionTitle)
                     } else {
-                        makeShortToast(requireContext(), "حداقل یک گزینه درست وارد کنید")
+                        makeShortToast(requireContext(), "فقط یک گزینه درست وارد کنید")
                     }
                 }
             }
         }
     }
 
+    // Send question to parent
     private fun sendQuestionToParent(questionTitle: String) {
         isSendingData = true
 
@@ -254,7 +282,8 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         dismiss()
     }
 
-    override fun onAttachmentClick(attachment: AddQuestionAttachment, position: Int) {
+    // Delete attachment
+    override fun onDeleteAttachmentClick(attachment: AddQuestionAttachment, position: Int) {
         attachments.remove(attachment)
         initAddAttachmentRecycler(attachments)
 
@@ -264,7 +293,8 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
         }
     }
 
-    override fun onOptionClick(option: Option, position: Int) {
+    // Delete option
+    override fun onDeleteOptionClick(option: Option, position: Int) {
         options.remove(option)
         initAddOptionRecycler(options)
 

@@ -6,7 +6,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getColorStateList
 import androidx.fragment.app.Fragment
@@ -37,8 +36,10 @@ class LoginMainFragment : Fragment() {
         // Apply focus on the Text Input Layout
         binding.etLayoutNumLogin.requestFocus()
 
+        // Getting the NavController
         navController = Navigation.findNavController(view)
 
+        // Setting the default role
         setSelectedRoleColor(
             STUDENT,
             "شماره تلفن همراه دانش آموز",
@@ -101,6 +102,7 @@ class LoginMainFragment : Fragment() {
     fun checkInput() {
         val enteredNum = binding.etNumLogin.text.toString()
 
+        // Checking the length of the entered phone number
         if (enteredNum.length != 11) {
             binding.etLayoutNumLogin.error = "شماره تلفن همراه معتبر نیست"
         } else if (!enteredNum.startsWith("09")) {
@@ -108,8 +110,10 @@ class LoginMainFragment : Fragment() {
         } else if (!TextUtils.isDigitsOnly(enteredNum)) {
             binding.etLayoutNumLogin.error = "شماره تلفن همراه معتبر نیست"
         } else {
+            // If the phone number is valid, it will open the OTP page
             val bundle = Bundle()
 
+            // Sending the role and phone number to the OTP page
             bundle.putString(
                 SEND_SELECTED_ROLE_TO_LOGIN_OTP_FRAGMENT_KEY,
                 if (binding.radioBtStudentLogin.isChecked) STUDENT else TEACHER

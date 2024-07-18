@@ -214,6 +214,7 @@ class ExamDetailActivity : AppCompatActivity() {
         examViewModel.getExamsQuestion(data.id).asyncRequest()
             .subscribe(object : SingleObserver<QuestionMainResult> {
                 override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to Composite Disposable
                     compositeDisposable.add(d)
                 }
 

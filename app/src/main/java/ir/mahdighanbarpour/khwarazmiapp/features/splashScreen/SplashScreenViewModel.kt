@@ -13,10 +13,12 @@ class SplashScreenViewModel(
 ) : ViewModel() {
 
     fun loginStudent(phoneNumber: String): Single<StudentMainResult> {
+        // Login student
         return studentRepository.loginStudent(phoneNumber)
     }
 
     fun loginTeacher(phoneNumber: String): Single<TeacherMainResult> {
+        // Login teacher
         return teacherRepository.loginTeacher(phoneNumber)
     }
 }

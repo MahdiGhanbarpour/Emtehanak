@@ -39,11 +39,13 @@ fun makeShortToast(context: Context, text: String) {
     Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
+// Get parcelable data from intent
 inline fun <reified T : Parcelable> Intent.getParcelable(key: String): T = when {
     Build.VERSION.SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)!!
     else -> getParcelableExtra(key)!!
 }
 
+// Get parcelable array data from intent
 inline fun <reified T : Parcelable> Intent.getParcelableArray(key: String): Array<T>? {
     return when {
         Build.VERSION.SDK_INT >= 33 -> getParcelableArrayExtra(
@@ -54,10 +56,12 @@ inline fun <reified T : Parcelable> Intent.getParcelableArray(key: String): Arra
     }
 }
 
+// Changing the box stroke color
 fun changeBoxStrokeColor(context: Context, textInputLayout: TextInputLayout, color: Int) {
     textInputLayout.boxStrokeColor = ContextCompat.getColor(context, color)
 }
 
+// Dialing the number
 fun makeCall(context: Context, number: String) {
     // Dial the number
     val intent = Intent(Intent.ACTION_DIAL)
@@ -96,10 +100,12 @@ fun isInternetAvailable(context: Context): Boolean {
     return result
 }
 
+// Async request to the server
 fun <T : Any> Single<T>.asyncRequest(): Single<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
 
+// Changing the status bar color
 fun changeStatusBarColor(
     window: Window, statusBarColor: String, isAppearanceLightStatusBars: Boolean
 ) {
@@ -109,6 +115,7 @@ fun changeStatusBarColor(
         isAppearanceLightStatusBars
 }
 
+// Creating the translate animation
 fun translateAnimation(
     fromX: Float, toX: Float, fromY: Float, toY: Float, duration: Long
 ): TranslateAnimation {
@@ -118,6 +125,7 @@ fun translateAnimation(
     return anim
 }
 
+// Creating the alpha animation
 fun alphaAnimation(fromAlpha: Float, toAlpha: Float, duration: Long): AlphaAnimation {
     val anim = AlphaAnimation(fromAlpha, toAlpha)
     anim.duration = duration
@@ -125,11 +133,13 @@ fun alphaAnimation(fromAlpha: Float, toAlpha: Float, duration: Long): AlphaAnima
     return anim
 }
 
+// Hiding the keyboard
 fun Context.hideKeyboard(view: View) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
+// Changing the LottieAnimationView layers color
 fun LottieAnimationView.changeLayersColor(
     @ColorRes colorRes: Int
 ) {
@@ -141,6 +151,7 @@ fun LottieAnimationView.changeLayersColor(
     addValueCallback(keyPath, LottieProperty.COLOR_FILTER, callback)
 }
 
+// Getting the file from the uri
 fun getFileFromUri(context: Context, uri: Uri): File? {
     val fileName = uri.lastPathSegment?.split("/")?.lastOrNull() ?: return null
     val tempFile = File(context.cacheDir, fileName)

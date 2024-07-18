@@ -5,10 +5,10 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -21,9 +21,9 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.CoursesAdapter
+import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapter
-import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
@@ -96,10 +96,12 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             }, 1500)
         }
         binding.linearLayoutTopStartItemStudentMain.setOnClickListener {
+            // If the linear layout is clicked, the page will be opened
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
             startActivity(intent)
         }
         binding.ivMorePopularExamsStudentMain.setOnClickListener {
+            // If the button is clicked, the page will be opened
             val intent = Intent(requireContext(), ExamsListActivity::class.java)
             startActivity(intent)
         }
@@ -138,6 +140,7 @@ class StudentHomeFragment : Fragment(), CoursesAdapter.CourseEvents,
             sharedPreferences.getString(USER_GRADE, null)!!, "", "5"
         ).asyncRequest().subscribe(object : SingleObserver<ExamsMainResult> {
             override fun onSubscribe(d: Disposable) {
+                // Add the Disposable to the CompositeDisposable
                 compositeDisposable.add(d)
             }
 

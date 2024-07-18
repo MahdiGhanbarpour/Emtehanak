@@ -20,8 +20,10 @@ class FrequentlyQuestionsViewModel(private val frequentlyQuestionsRepository: Fr
 
     // Getting the data of the frequently asked questions of the posted page from server
     fun getFrequentlyQuestionsOnline(page: String): Single<FrequentlyQuestionsMainResult> {
+        // Determines whether something is being received from the server or not
         isDataLoading.onNext(true)
 
+        // Getting the data of the frequently asked questions of the posted page from server
         return frequentlyQuestionsRepository.getFrequentlyQuestionsOnline(page).doFinally {
             isDataLoading.onNext(false)
         }
