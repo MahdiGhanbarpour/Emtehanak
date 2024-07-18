@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamDetailBinding
+import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogExamDetailBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.ExamMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.HelpBottomSheet
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
@@ -77,7 +79,7 @@ class ExamDetailActivity : AppCompatActivity() {
         }
         binding.btStartExamDetail.setOnClickListener {
             // The start exam button is pressed
-            onStartClicked()
+            showDialog()
         }
         binding.ivLikeExamDetail.setOnClickListener {
             // Checking if this exam has already been liked or not
@@ -260,6 +262,50 @@ class ExamDetailActivity : AppCompatActivity() {
             //Display Help Bottom Sheet
             helpBottomSheet.show(supportFragmentManager, null)
             helpBottomSheet.arguments = bundle
+        }
+    }
+
+    private fun showDialog() {
+        var text = ""
+
+        text += if (data.showQuestionAnswer) {
+            "✔️ پاسخ هر سوال بعد از پاسخ گویی به آن، به شما نمایش داده می شود."
+        } else {
+            "❌ پاسخ هر سوال بعد از پاسخ گویی به آن، به شما نمایش داده نمی شود."
+        }
+
+        text += if (data.changeAnswer) {
+            "\n✔️ شما می توانید پاسخی که داده اید را تغییر بدهید."
+        } else {
+            "\n❌ شما نمی توانید پاسخی که داده اید را تغییر بدهید."
+        }
+
+        text += if (data.backToPrevious) {
+            "\n✔️ شما می توانید به سوال قبل برگردید."
+        } else {
+            "\n❌ شما نمی توانید به سوال قبل برگردید."
+        }
+
+        text += if (data.showTotalPercent) {
+            "\n✔️ درصد کل و جزئیات پاسخ های داده شده در آخر به شما نمایش داده می شود."
+        } else {
+            "\n❌ درصد کل و جزئیات پاسخ های داده شده به شما نمایش داده نمی شود."
+        }
+
+        // Displaying the dialog
+        val dialog = AlertDialog.Builder(this).create()
+
+        // Setting the dialog view
+        val dialogBinding = DialogExamDetailBinding.inflate(layoutInflater)
+        dialog.setView(dialogBinding.root)
+        dialog.setCancelable(true)
+        dialogBinding.tvExamDetail.text = text
+        dialog.show()
+
+        dialogBinding.btSureExamDetail.setOnClickListener {
+            // If the cancel button is pressed, the dialog will be closed
+            dialog.dismiss()
+            onStartClicked()
         }
     }
 }
