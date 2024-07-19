@@ -43,10 +43,10 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
     private lateinit var exam: ExamRequest
 
     private val addExamQuestionViewModel: AddExamQuestionViewModel by viewModel()
-    private val addExamQuestionBottomSheet: AddExamQuestionBottomSheet =
-        AddExamQuestionBottomSheet()
     private val compositeDisposable = CompositeDisposable()
 
+    private var addExamQuestionBottomSheet: AddExamQuestionBottomSheet =
+        AddExamQuestionBottomSheet()
     private var examImage: File? = null
     private var data = mutableListOf<AddQuestion>()
 
@@ -229,6 +229,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
         // If it is not showing, it will show it
         if (!addExamQuestionBottomSheet.isVisible) {
             //Display Help Bottom Sheet
+            addExamQuestionBottomSheet = AddExamQuestionBottomSheet()
             addExamQuestionBottomSheet.show(supportFragmentManager, null)
         }
     }

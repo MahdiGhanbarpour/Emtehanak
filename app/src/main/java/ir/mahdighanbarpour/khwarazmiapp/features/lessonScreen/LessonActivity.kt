@@ -11,8 +11,10 @@ import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLessonBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.lessonBookScreen.LessonBookActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Lesson
 import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_LESSON_PDF_TO_LESSON_BOOK_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_LESSON_TO_LESSON_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelable
@@ -39,6 +41,11 @@ class LessonActivity : AppCompatActivity() {
         binding.linearLayoutTopStartItemLessonsMain.setOnClickListener {
             val intent = Intent(this, ExamsListActivity::class.java)
             intent.putExtra(SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY, lesson.name)
+            startActivity(intent)
+        }
+        binding.linearLayoutTopEndItemLessonsMain.setOnClickListener {
+            val intent = Intent(this, LessonBookActivity::class.java)
+            intent.putExtra(SEND_SELECTED_LESSON_PDF_TO_LESSON_BOOK_PAGE_KEY, lesson.pdf)
             startActivity(intent)
         }
     }

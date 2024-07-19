@@ -91,7 +91,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
     }
 
     @SuppressLint("SetTextI18n")
-    private fun resetData() {
+    fun resetData() {
         // Resetting the data
         attachments = mutableListOf()
         options = mutableListOf()
@@ -114,6 +114,9 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
 
         binding.ivAttachmentAddExamQuestion.visibility = View.GONE
         binding.ivDeleteAttachmentAddExamQuestion.visibility = View.GONE
+
+        initAddAttachmentRecycler(attachments)
+        initAddOptionRecycler(options)
 
         isSendingData = false
     }

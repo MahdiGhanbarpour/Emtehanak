@@ -104,4 +104,6 @@
     <string name="you_have_not_selected_image_for_question">شما هیچ تصویری را برای این سوال انتخاب نکرده اید</string>
     <string name="you_have_not_added_any_options_for_question">شما هیچ گزینه ای را برای این سوال اضافه نکرده اید</string>
     <string name="previous">قبلی</string>
+    <string name="scroll_up">حرکت به بالا</string>
+    <string name="scroll_down">حرکت به پایین</string>
 </resources>

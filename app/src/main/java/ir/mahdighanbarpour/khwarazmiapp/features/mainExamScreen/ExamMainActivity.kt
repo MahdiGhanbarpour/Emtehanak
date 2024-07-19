@@ -333,7 +333,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
                 examOptionAdapter.questionAnswered(option)
             }
-        }, 200)
+        }, 100)
 
 
         if (questions[questionPosition].options.indexOfFirst { it.isUserSelected } == -1 || exam.changeAnswer) {

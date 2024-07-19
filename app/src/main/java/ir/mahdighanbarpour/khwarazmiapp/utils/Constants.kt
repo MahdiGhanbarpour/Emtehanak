@@ -26,6 +26,10 @@ const val SEND_SELECTED_LESSON_TO_LESSON_PAGE_KEY = "send_selected_lesson_to_les
 // Constants used to transfer data from lesson page to exam list page
 const val SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY = "send_selected_lesson_to_exam_list_page"
 
+// Constants used to transfer data from lesson page to lesson book page
+const val SEND_SELECTED_LESSON_PDF_TO_LESSON_BOOK_PAGE_KEY =
+    "send_selected_lesson_pdf_to_lesson_book_page"
+
 // Constants used to transfer data from exam detail page to exam main page
 const val SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY =
     "send_selected_exam_question_to_exam_main_page"
@@ -84,5 +88,5 @@ const val USER_ROLE = "user_role"
 const val USER_STUDY_FIELD = "user_study_field"
 
 // Constants related to connection with the server
-const val BASE_URL = "http://192.168.100.15:8000/"
-const val MEDIA_BASE_URL = "http://192.168.100.15:8000"
+const val BASE_URL = "https://mehdi.hivaati.com/"
+const val MEDIA_BASE_URL = "https://mehdi.hivaati.com"
