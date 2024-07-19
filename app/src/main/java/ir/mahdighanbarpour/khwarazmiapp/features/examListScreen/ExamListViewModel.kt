@@ -11,23 +11,27 @@ class ExamListViewModel(private val examRepository: ExamRepository) : ViewModel(
     val isDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     // Getting the list of exams with the help of grade and limit
-    fun getExamList(grade: String, gradeList: String, limit: String): Single<ExamsMainResult> {
+    fun getExamList(
+        grade: String, gradeList: String, lesson: String?, limit: String
+    ): Single<ExamsMainResult> {
         // Determines whether something is being received from the server or not
         isDataLoading.onNext(true)
 
         // Getting the list of exams with the help of grade and limit
-        return examRepository.getExams(grade, gradeList, limit).doFinally {
+        return examRepository.getExams(grade, gradeList, lesson, limit).doFinally {
             isDataLoading.onNext(false)
         }
     }
 
     // Search for exams
-    fun searchExams(grade: String, search: String, gradeList: String): Single<ExamsMainResult> {
+    fun searchExams(
+        grade: String, search: String, lesson: String?, gradeList: String
+    ): Single<ExamsMainResult> {
         // Determines whether something is being received from the server or not
         isDataLoading.onNext(true)
 
         // Getting the list of exams with the help of grade and limit
-        return examRepository.searchExams(grade, search, gradeList).doFinally {
+        return examRepository.searchExams(grade, search, lesson, gradeList).doFinally {
             isDataLoading.onNext(false)
         }
     }

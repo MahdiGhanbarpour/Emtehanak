@@ -8,46 +8,49 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemCourseBinding
+import ir.mahdighanbarpour.khwarazmiapp.model.data.Lesson
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 
-class CoursesAdapter(
-    private val data: ArrayList<Pair<String, String>>, private val courseEvents: CourseEvents
-) : RecyclerView.Adapter<CoursesAdapter.CoursesAdapterViewHolder>() {
+class LessonsAdapter(
+    private val data: List<Lesson>, private val lessonEvents: LessonEvents
+) : RecyclerView.Adapter<LessonsAdapter.LessonsAdapterViewHolder>() {
 
     private lateinit var binding: ItemCourseBinding
 
-    inner class CoursesAdapterViewHolder(binding: ItemCourseBinding) :
+    inner class LessonsAdapterViewHolder(binding: ItemCourseBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: Pair<String, String>) {
+        fun bindData(data: Lesson) {
             // Placing the sent data in the relevant views
-            binding.tvCourseNameItem.text = data.first
+            binding.tvCourseNameItem.text = data.name
 
             // Load image
-            Glide.with(binding.root.context).load(data.second).error(R.drawable.img_error)
+            Glide.with(binding.root.context).load(MEDIA_BASE_URL + data.image)
+                .error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivCourseImageItem)
 
             // One of the items has been clicked
             itemView.setOnClickListener {
-                courseEvents.onCourseClicked(data)
+                lessonEvents.onLessonClicked(data)
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoursesAdapterViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LessonsAdapterViewHolder {
         binding = ItemCourseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CoursesAdapterViewHolder(binding)
+        return LessonsAdapterViewHolder(binding)
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    override fun onBindViewHolder(holder: CoursesAdapterViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LessonsAdapterViewHolder, position: Int) {
         holder.bindData(data[position])
     }
 
-    interface CourseEvents {
-        fun onCourseClicked(data: Pair<String, String>)
+    interface LessonEvents {
+        fun onLessonClicked(data: Lesson)
     }
 }

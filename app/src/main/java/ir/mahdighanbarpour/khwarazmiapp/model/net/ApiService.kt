@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import ir.mahdighanbarpour.khwarazmiapp.model.data.AddExamMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.LessonsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
@@ -44,6 +45,7 @@ interface ApiService {
     fun getExams(
         @Query("grade") grade: String,
         @Query("gradeList") gradeList: String,
+        @Query("lesson") lesson: String?,
         @Query("limit") limit: String
     ): Single<ExamsMainResult>
 
@@ -51,6 +53,7 @@ interface ApiService {
     fun searchExams(
         @Query("grade") grade: String,
         @Query("search") search: String,
+        @Query("lesson") lesson: String?,
         @Query("gradeList") gradeList: String,
     ): Single<ExamsMainResult>
 
@@ -69,4 +72,9 @@ interface ApiService {
     fun addExamWithQuestions(
         @Part parts: List<MultipartBody.Part>
     ): Single<AddExamMainResult>
+
+    @GET("lesson/lessons")
+    fun getLessons(
+        @Query("grade") grade: String, @Query("limit") limit: String
+    ): Single<LessonsMainResult>
 }

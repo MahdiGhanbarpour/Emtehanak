@@ -14,6 +14,7 @@ import ir.mahdighanbarpour.khwarazmiapp.model.dataBase.MainDataBase
 import ir.mahdighanbarpour.khwarazmiapp.model.net.apiServiceBuilder
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.ExamRepository
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.FrequentlyQuestionsRepository
+import ir.mahdighanbarpour.khwarazmiapp.model.repositories.LessonRepository
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.StudentRepository
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.TeacherRepository
 import org.koin.android.ext.koin.androidContext
@@ -34,6 +35,7 @@ val myModules = module {
     single { StudentRepository(get()) }
     single { TeacherRepository(get()) }
     single { ExamRepository(get()) }
+    single { LessonRepository(get()) }
 
     // Adding the api service to dependency injection
     single { apiServiceBuilder() }
@@ -42,7 +44,7 @@ val myModules = module {
     viewModel { FrequentlyQuestionsViewModel(get()) }
     viewModel { LoginOtpViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }
-    viewModel { StudentHomeViewModel(get()) }
+    viewModel { StudentHomeViewModel(get(), get()) }
     viewModel { ExamViewModel(get()) }
     viewModel { ExamListViewModel(get()) }
     viewModel { SplashScreenViewModel(get(), get()) }

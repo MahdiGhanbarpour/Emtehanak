@@ -20,6 +20,12 @@ const val SEND_PAGE_NAME_TO_FREQUENTLY_QUESTIONS_PAGE_KEY =
 // Constants used to transfer data to exam detail page
 const val SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY = "send_selected_exam_to_exam_page"
 
+// Constants used to transfer data from student home page to lesson page
+const val SEND_SELECTED_LESSON_TO_LESSON_PAGE_KEY = "send_selected_lesson_to_lesson_page"
+
+// Constants used to transfer data from lesson page to exam list page
+const val SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY = "send_selected_lesson_to_exam_list_page"
+
 // Constants used to transfer data from exam detail page to exam main page
 const val SEND_SELECTED_EXAM_QUESTION_TO_EXAM_MAIN_PAGE_KEY =
     "send_selected_exam_question_to_exam_main_page"

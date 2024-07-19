@@ -3,6 +3,7 @@ package ir.mahdighanbarpour.khwarazmiapp.features.examListScreen
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
+import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
@@ -43,6 +45,8 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
 
     private val compositeDisposable = CompositeDisposable()
 
+    private var lesson: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityExamsListBinding.inflate(layoutInflater)
@@ -51,6 +55,8 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         // Getting the user's grade and role
         userGrade = sharedPreferences.getString(USER_GRADE, "")!!
         userRole = sharedPreferences.getString(USER_ROLE, "")!!
+
+        lesson = intent.getStringExtra(SEND_SELECTED_LESSON_TO_EXAM_LIST_PAGE_KEY)
 
         // Setting the background color of the buttons
         if (userRole == TEACHER) {
@@ -163,7 +169,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         }
 
         // Getting the list of exams with the help of grade and limit
-        examListViewModel.getExamList(grade, gradeList, "-1").asyncRequest()
+        examListViewModel.getExamList(grade, gradeList, lesson, "-1").asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     // Add the disposable to Composite Disposable
@@ -184,7 +190,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
                     if (t.result.exams.isEmpty()) {
                         Snackbar.make(
                             binding.root,
-                            "آزمونی برای پایه تحصیلی شما یافت نشد!",
+                            "آزمونی برای این پایه تحصیلی و یا این درس شما یافت نشد!",
                             Snackbar.LENGTH_INDEFINITE
                         ).setAction(
                             "باشه"
@@ -215,9 +221,10 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
             grade = ""
             gradeList = userGrade
         }
+        Log.v("testLog", lesson.toString())
 
         // Getting the list of exams with the help of grade and limit
-        examListViewModel.searchExams(grade, search, gradeList).asyncRequest()
+        examListViewModel.searchExams(grade, search, lesson, gradeList).asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     // Add the disposable to Composite Disposable

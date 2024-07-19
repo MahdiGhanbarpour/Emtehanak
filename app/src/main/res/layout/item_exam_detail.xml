@@ -39,11 +39,13 @@
             android:id="@+id/tvValueItemExamDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
+            android:ellipsize="end"
             android:text="رایگان"
+            android:maxLines="2"
+            android:textAlignment="center"
             android:textSize="14sp"
             app:autoSizeMaxTextSize="14sp"
-            app:autoSizeMinTextSize="11sp"
+            app:autoSizeMinTextSize="10sp"
             app:autoSizeTextType="uniform" />
 
     </LinearLayout>

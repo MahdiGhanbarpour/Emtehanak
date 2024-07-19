@@ -160,7 +160,7 @@ class ExamDetailActivity : AppCompatActivity() {
         // Making the adapter and making the necessary settings
         val data = arrayListOf(
             Triple(
-                "طراح", this.data.authorName, R.drawable.ic_logo
+                "طراح", this.data.authorName, R.drawable.ic_user
             ),
             Triple(
                 "قیمت",
@@ -168,7 +168,10 @@ class ExamDetailActivity : AppCompatActivity() {
                 R.drawable.ic_price
             ),
             Triple(
-                "پایه", this.data.grade, R.drawable.ic_book
+                "درس", this.data.lesson, R.drawable.ic_book
+            ),
+            Triple(
+                "پایه", this.data.grade, R.drawable.ic_logo
             ),
             Triple(
                 "درجه سختی", this.data.difficulty, R.drawable.ic_difficulty

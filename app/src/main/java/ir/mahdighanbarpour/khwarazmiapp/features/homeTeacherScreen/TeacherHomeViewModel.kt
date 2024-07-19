@@ -16,7 +16,7 @@ class TeacherHomeViewModel(private val examRepository: ExamRepository) : ViewMod
         // Determines whether something is being received from the server or not
         isPopularExamsDataLoading.onNext(true)
 
-        return examRepository.getExams(grade, gradeList, limit).doFinally {
+        return examRepository.getExams(grade, gradeList, null, limit).doFinally {
             // Determines whether something is being received from the server or not
             isPopularExamsDataLoading.onNext(false)
         }
