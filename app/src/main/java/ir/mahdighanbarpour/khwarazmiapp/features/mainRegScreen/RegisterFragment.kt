@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -438,6 +439,8 @@ class RegisterFragment : Fragment() {
                 override fun onSuccess(t: StudentMainResult) {
                     // Checking whether the registration was successful or not
                     if (t.status == 200) {
+                        FirebaseAnalytics.getInstance(requireContext())
+                            .logEvent(FirebaseAnalytics.Event.SIGN_UP, null)
                         openStudentHomePage(name, grade)
                     } else {
                         Snackbar.make(

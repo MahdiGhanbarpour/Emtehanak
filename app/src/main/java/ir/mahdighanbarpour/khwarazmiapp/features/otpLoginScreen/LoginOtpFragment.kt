@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -410,6 +411,9 @@ class LoginOtpFragment : Fragment() {
             editor.putString(USER_ROLE, selectedRole)
             editor.commit()
 
+            FirebaseAnalytics.getInstance(requireContext())
+                .logEvent(FirebaseAnalytics.Event.LOGIN, null)
+
             val intent = Intent(requireContext(), StudentMainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
@@ -462,6 +466,9 @@ class LoginOtpFragment : Fragment() {
             editor.putString(USER_ROLE, selectedRole)
             editor.putString(USER_STUDY_FIELD, result.result.teacher.studyField)
             editor.commit()
+
+            FirebaseAnalytics.getInstance(requireContext())
+                .logEvent(FirebaseAnalytics.Event.LOGIN, null)
 
             val intent = Intent(requireContext(), TeacherMainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -154,6 +155,8 @@ class GradesRegisterFragment : Fragment() {
             override fun onSuccess(t: TeacherMainResult) {
                 // Checking whether the registration was successful or not
                 if (t.status == 200) {
+                    FirebaseAnalytics.getInstance(requireContext())
+                        .logEvent(FirebaseAnalytics.Event.SIGN_UP, null)
                     openTeacherHomePage(name, phoneNumber, grade, studyField)
                 } else {
                     Snackbar.make(

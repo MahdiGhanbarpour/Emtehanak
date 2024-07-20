@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720610566790",
+    "project_id": "emtehanak-989bf",
+    "storage_bucket": "emtehanak-989bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720610566790:android:2faef3de8156cde535e707",
+        "android_client_info": {
+          "package_name": "ir.mahdighanbarpour.khwarazmiapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCRytCOrK1Ed4E-GBFBqacvUWX0K2J-HE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
