@@ -2,6 +2,7 @@ package ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen
 
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -11,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import io.reactivex.rxjava3.core.SingleObserver
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityExamMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogUnansweredBinding
@@ -22,6 +27,7 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.Attachment
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Question
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ReportQuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.utils.EXAM_MAIN
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_CORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_INCORRECT_ANSWERS_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
@@ -33,12 +39,17 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SHOW_TOTAL_PERCENTAGE_TO_EXAM
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_TEACHER_MESSAGE_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_UNANSWERED_COUNT_TO_EXAM_RESULT_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.alphaAnimation
+import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
 import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelable
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelableArray
+import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import ir.mahdighanbarpour.khwarazmiapp.utils.translateAnimation
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Timer
 import kotlin.concurrent.timerTask
 
@@ -49,15 +60,20 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
     private lateinit var examAttachmentAdapter: ExamAttachmentAdapter
     private lateinit var exam: Exam
     private lateinit var questions: Array<Question>
+    private lateinit var userPhoneNum: String
 
     private var isQuestionAnswered = false
     private var questionPosition = 0
     private var correctAnswersCount = 0
     private var incorrectAnswersCount = 0
 
+    private val examMainViewModel: ExamMainViewModel by viewModel()
+    private val sharedPreferences: SharedPreferences by inject()
+
     private val helpBottomSheet = HelpBottomSheet()
     private val exitBottomSheet = ExitBottomSheet()
     private val examResultBottomSheet = ExamResultBottomSheet()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +86,9 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         // Get the Exam Data
         exam = intent.getParcelable(SEND_SELECTED_EXAM_TO_EXAM_MAIN_PAGE_KEY)
 
+        // Get the user phone number
+        userPhoneNum = sharedPreferences.getString(USER_PHONE_NUM, "")!!
+
         // Changing the color of the Status Bar
         changeStatusBarColor(window, "#20A84D", false)
 
@@ -78,6 +97,14 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         setQuestionData()
         listener()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // Clear the values in Composite Disposable
+        compositeDisposable.clear()
+    }
+
 
     @SuppressLint("SetTextI18n")
     private fun listener() {
@@ -108,8 +135,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         }
         binding.cardViewReportQuestionExamMain.setOnClickListener {
             // Report that the question is broken
-            // TODO
-            makeShortToast(this, "گزارش شما ثبت شد")
+            checkInternetReportQuestion(questions[questionPosition].id)
         }
         binding.ivHelpExamMain.setOnClickListener {
             // The help button is pressed
@@ -310,6 +336,57 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
             dialog.dismiss()
             goNextQuestion()
         }
+    }
+
+    private fun checkInternetReportQuestion(questionId: Int) {
+        // Checking the user's internet connection
+        if (isInternetAvailable(this)) {
+            reportQuestion(questionId)
+        } else {
+            // Display the error of not connecting to the Internet
+            Snackbar.make(
+                binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE
+            ).setAction("تلاش مجدد") { checkInternetReportQuestion(questionId) }.show()
+        }
+    }
+
+    private fun reportQuestion(questionId: Int, retries: Int = 5) {
+        // Report that the question is broken
+        examMainViewModel.reportQuestion(questionId, userPhoneNum).asyncRequest()
+            .subscribe(object : SingleObserver<ReportQuestionMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to Composite Disposable
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (retries > 0) {
+                        // Retry
+                        reportQuestion(questionId, retries - 1)
+                    } else {
+                        // Error report to user
+                        makeShortToast(
+                            this@ExamMainActivity, "خطا در گزارش سوال. لطفا دوباره تلاش کنید."
+                        )
+                    }
+                }
+
+                override fun onSuccess(t: ReportQuestionMainResult) {
+                    // Checking result
+                    if (t.status == 200) {
+                        // Report success
+                        makeShortToast(this@ExamMainActivity, "گزارش شما ثبت شد")
+                    } else if (retries > 0) {
+                        // Retry
+                        reportQuestion(questionId, retries - 1)
+                    } else {
+                        // Error report to user
+                        makeShortToast(
+                            this@ExamMainActivity, "خطا در ثبت گزارش. لطفا دوباره تلاش کنید."
+                        )
+                    }
+                }
+            })
     }
 
     // Click on one of the options

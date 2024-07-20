@@ -4,6 +4,7 @@ import io.reactivex.rxjava3.core.Single
 import ir.mahdighanbarpour.khwarazmiapp.model.data.AddExamMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ReportQuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.net.ApiService
 import okhttp3.MultipartBody
 
@@ -32,4 +33,13 @@ class ExamRepository(private val apiService: ApiService) {
     fun addExamWithQuestions(parts: List<MultipartBody.Part>): Single<AddExamMainResult> {
         return apiService.addExamWithQuestions(parts)
     }
+
+    // Reporting the question with the help of question id and reporter phone number
+    fun reportQuestion(
+        questionId: Int,
+        reporterPhoneNum: String
+    ): Single<ReportQuestionMainResult> {
+        return apiService.reportQuestion(questionId, reporterPhoneNum)
+    }
+
 }

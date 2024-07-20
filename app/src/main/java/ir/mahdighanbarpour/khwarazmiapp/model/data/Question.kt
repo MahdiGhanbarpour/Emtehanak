@@ -7,6 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Question(
+    @SerializedName("id") val id: Int,
     @SerializedName("attachments") val attachments: List<Attachment>,
     @SerializedName("options") val options: List<Option>,
     @SerializedName("question") val question: String

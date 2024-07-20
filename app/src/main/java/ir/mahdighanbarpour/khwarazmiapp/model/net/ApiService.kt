@@ -6,6 +6,7 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.LessonsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.ReportQuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
 import okhttp3.MultipartBody
@@ -77,4 +78,9 @@ interface ApiService {
     fun getLessons(
         @Query("grade") grade: String, @Query("limit") limit: String
     ): Single<LessonsMainResult>
+
+    @GET("support/report-question")
+    fun reportQuestion(
+        @Query("questionId") questionId: Int, @Query("reporterPhoneNum") reporterPhoneNum: String
+    ): Single<ReportQuestionMainResult>
 }

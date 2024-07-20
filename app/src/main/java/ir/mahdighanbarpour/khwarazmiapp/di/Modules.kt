@@ -7,6 +7,7 @@ import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamListViewMode
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.homeTeacherScreen.TeacherHomeViewModel
+import ir.mahdighanbarpour.khwarazmiapp.features.mainExamScreen.ExamMainViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.mainRegScreen.RegisterViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.otpLoginScreen.LoginOtpViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.splashScreen.SplashScreenViewModel
@@ -50,4 +51,5 @@ val myModules = module {
     viewModel { SplashScreenViewModel(get(), get()) }
     viewModel { TeacherHomeViewModel(get()) }
     viewModel { AddExamQuestionViewModel(get()) }
+    viewModel { ExamMainViewModel(get()) }
 }
