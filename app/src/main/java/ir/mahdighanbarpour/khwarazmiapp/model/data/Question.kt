@@ -18,6 +18,7 @@ data class Option(
     @SerializedName("id") val id: Int? = null,
     @SerializedName("isCorrect") val isCorrect: Boolean,
     @SerializedName("option") val option: String,
+    @SerializedName("image") val image: String?,
     var isUserSelected: Boolean = false
 ) : Parcelable
 

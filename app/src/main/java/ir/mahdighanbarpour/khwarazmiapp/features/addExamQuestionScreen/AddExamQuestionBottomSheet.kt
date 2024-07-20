@@ -21,7 +21,7 @@ import ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.adapters.
 import ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.adapters.AddExamQuestionOptionAdapter
 import ir.mahdighanbarpour.khwarazmiapp.model.data.AddQuestion
 import ir.mahdighanbarpour.khwarazmiapp.model.data.AddQuestionAttachment
-import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
+import ir.mahdighanbarpour.khwarazmiapp.model.data.AddQuestionOption
 import ir.mahdighanbarpour.khwarazmiapp.utils.getFileFromUri
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 
@@ -36,9 +36,11 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
 
     private var pickedAttachmentImage: Uri? = null
+    private var pickedOptionImage: Uri? = null
     private var attachments = mutableListOf<AddQuestionAttachment>()
-    private var options = mutableListOf<Option>()
+    private var options = mutableListOf<AddQuestionOption>()
     private var isSendingData = false
+    private var isAttachmentImagePicking = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -66,12 +68,31 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
             binding.ivAttachmentAddExamQuestion.setImageDrawable(null)
             pickedAttachmentImage = null
         }
+        binding.ivDeleteOptionAddExamQuestion.setOnClickListener {
+            // If the delete button is pressed, the image will be deleted
+            binding.ivOptionAddExamQuestion.visibility = View.GONE
+            binding.ivDeleteOptionAddExamQuestion.visibility = View.GONE
+            binding.ivOptionAddExamQuestion.setImageDrawable(null)
+            pickedOptionImage = null
+        }
         binding.viewPickAttachmentImageAddExamQuestion.setOnClickListener {
             // If the pick image button is pressed, the permission will be checked
+            isAttachmentImagePicking = true
             checkAndRequestPermission()
         }
         binding.ivIconPickAttachmentImageAddExamQuestion.setOnClickListener {
             // If the pick image button is pressed, the permission will be checked
+            isAttachmentImagePicking = true
+            checkAndRequestPermission()
+        }
+        binding.viewPickOptionImageAddExamQuestion.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
+            isAttachmentImagePicking = false
+            checkAndRequestPermission()
+        }
+        binding.ivIconPickOptionImageAddExamQuestion.setOnClickListener {
+            // If the pick image button is pressed, the permission will be checked
+            isAttachmentImagePicking = false
             checkAndRequestPermission()
         }
         binding.btAttachmentAddExamQuestion.setOnClickListener {
@@ -129,7 +150,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
     }
 
-    private fun initAddOptionRecycler(data: MutableList<Option>) {
+    private fun initAddOptionRecycler(data: MutableList<AddQuestionOption>) {
         // Initialize the recycler view
         addOptionAdapter = AddExamQuestionOptionAdapter(data, this)
         binding.recyclerViewOptionsAddExamQuestion.adapter = addOptionAdapter
@@ -147,10 +168,17 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
 
                     // Handle the selected image
                     uri?.let {
-                        binding.ivAttachmentAddExamQuestion.visibility = View.VISIBLE
-                        binding.ivDeleteAttachmentAddExamQuestion.visibility = View.VISIBLE
-                        binding.ivAttachmentAddExamQuestion.setImageURI(it)
-                        pickedAttachmentImage = it
+                        if (isAttachmentImagePicking) {
+                            binding.ivAttachmentAddExamQuestion.visibility = View.VISIBLE
+                            binding.ivDeleteAttachmentAddExamQuestion.visibility = View.VISIBLE
+                            binding.ivAttachmentAddExamQuestion.setImageURI(it)
+                            pickedAttachmentImage = it
+                        } else {
+                            binding.ivOptionAddExamQuestion.visibility = View.VISIBLE
+                            binding.ivDeleteOptionAddExamQuestion.visibility = View.VISIBLE
+                            binding.ivOptionAddExamQuestion.setImageURI(it)
+                            pickedOptionImage = it
+                        }
                     } ?: run {
                         makeShortToast(requireContext(), "تصویری انتخاب نشده است")
                     }
@@ -220,19 +248,42 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
 
     // Add option
     private fun addOption() {
+        val optionTitle = binding.etOptionAddExamQuestion.text.toString()
+
         // Check if the option is not empty
-        if (binding.etOptionAddExamQuestion.text.toString().isNotEmpty()) {
-            // Add the option to the list
-            val option = Option(
-                isCorrect = binding.cbOptionAddExamQuestion.isChecked,
-                option = binding.etOptionAddExamQuestion.text.toString()
-            )
+        if (optionTitle.isNotEmpty()) {
+            if (pickedOptionImage != null) {
+                // Convert the Uri to a File object
+                val file = getFileFromUri(requireContext(), pickedOptionImage!!)
+                if (file != null) {
+                    val option = AddQuestionOption(
+                        isCorrect = binding.cbOptionAddExamQuestion.isChecked,
+                        option = optionTitle,
+                        image = file
+                    )
 
-            binding.recyclerViewOptionsAddExamQuestion.visibility = View.VISIBLE
-            binding.tvOptionAddExamQuestion.visibility = View.GONE
+                    binding.recyclerViewOptionsAddExamQuestion.visibility = View.VISIBLE
+                    binding.tvOptionAddExamQuestion.visibility = View.GONE
 
-            options.add(option)
-            initAddOptionRecycler(options)
+                    options.add(option)
+                    initAddOptionRecycler(options)
+                } else {
+                    // Handle the case where the file is null
+                    makeShortToast(requireContext(), "فایل تصویر گزینه نامعتبر است")
+                }
+            } else {
+                val option = AddQuestionOption(
+                    isCorrect = binding.cbOptionAddExamQuestion.isChecked,
+                    option = optionTitle,
+                    image = null
+                )
+
+                binding.recyclerViewOptionsAddExamQuestion.visibility = View.VISIBLE
+                binding.tvOptionAddExamQuestion.visibility = View.GONE
+
+                options.add(option)
+                initAddOptionRecycler(options)
+            }
         } else {
             // Handle the case where the option is empty
             makeShortToast(requireContext(), "لطفا گزینه سوال را وارد کنید")
@@ -297,7 +348,7 @@ class AddExamQuestionBottomSheet : BottomSheetDialogFragment(),
     }
 
     // Delete option
-    override fun onDeleteOptionClick(option: Option, position: Int) {
+    override fun onDeleteOptionClick(option: AddQuestionOption, position: Int) {
         options.remove(option)
         initAddOptionRecycler(options)
 

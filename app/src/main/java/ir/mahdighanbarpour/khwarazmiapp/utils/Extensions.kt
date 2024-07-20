@@ -5,10 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.ColorFilter
+import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.Parcelable
 import android.util.Log
 import android.view.View
@@ -17,6 +20,7 @@ import android.view.WindowManager
 import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
@@ -26,10 +30,18 @@ import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
 import com.airbnb.lottie.model.KeyPath
 import com.airbnb.lottie.value.LottieValueCallback
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
+import ir.mahdighanbarpour.khwarazmiapp.R
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -165,4 +177,73 @@ fun getFileFromUri(context: Context, uri: Uri): File? {
         Log.v("testLog", e.message.toString())
     }
     return tempFile
+}
+
+// Load image with retry
+fun loadImageWithRetry(root: View, imageView: ImageView, url: String, maxRetries: Int) {
+    var retryCount = 0
+    val handler = Handler(Looper.getMainLooper())
+
+    // Load image
+    fun loadImage() {
+        // Set options
+        val options = RequestOptions().centerInside().placeholder(R.drawable.img_loading)
+            .error(R.drawable.img_error)
+
+        // Check if the context is valid
+        if (isValidContextForGlide(imageView.context)) {
+            // Load image
+            Glide.with(imageView.context).load(url).apply(options)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Retry if the image failed to load
+                        if (retryCount < maxRetries) {
+                            retryCount++
+                            handler.postDelayed({ loadImage() }, 1000)  // Retry after 1 second
+                        } else {
+                            // Show error message
+                            Snackbar.make(
+                                root, "خطا در دریافت تصویر ضمیمه سوال", Snackbar.LENGTH_INDEFINITE
+                            ).setAction("تلاش مجدد") {
+                                loadImageWithRetry(root, imageView, url, maxRetries)
+                            }.show()
+                        }
+                        return true
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        // Image loaded successfully
+                        return false
+                    }
+                }).into(imageView)
+        }
+    }
+
+    loadImage()
+}
+
+fun isValidContextForGlide(context: Context?): Boolean {
+    // Check if the context is valid
+    if (context == null) {
+        return false
+    }
+
+    // Check if the context is an activity
+    if (context is Activity) {
+        if (context.isDestroyed || context.isFinishing) {
+            return false
+        }
+    }
+    return true
 }

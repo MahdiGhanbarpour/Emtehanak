@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamOptionBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
+import ir.mahdighanbarpour.khwarazmiapp.utils.loadImageWithRetry
 
 class ExamOptionAdapter(
     private val data: MutableList<Option>,
@@ -41,6 +43,13 @@ class ExamOptionAdapter(
                 if (isOptionsCorrect[adapterPosition] == true) {
                     whenOptionIsSelected()
                 }
+            }
+
+            if (data.image != null) {
+                // Load image
+                loadImageWithRetry(
+                    binding.root, binding.ivOptionImageItem, MEDIA_BASE_URL + data.image, 5
+                )
             }
 
             // add click listener

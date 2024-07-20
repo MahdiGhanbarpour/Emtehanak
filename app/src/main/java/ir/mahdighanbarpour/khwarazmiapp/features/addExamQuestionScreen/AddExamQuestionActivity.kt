@@ -157,6 +157,22 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                 )
             }
 
+            // Add a MultipartBody.Part for each option image
+            data.forEachIndexed { questionIndex, question ->
+                question.options.forEachIndexed { optionIndex, option ->
+                    if (option.image != null) {
+                        parts.add(
+                            MultipartBody.Part.createFormData(
+                                "option_images[$questionIndex][$optionIndex]",
+                                "Option${exam.authorPhoneNumber}${UUID.randomUUID()}${Calendar.getInstance().timeInMillis}.jpg",
+                                option.image.asRequestBody("image/*".toMediaTypeOrNull())
+                            )
+                        )
+                    }
+
+                }
+            }
+
             // Add the exam to the server
             playLoadingAnim()
             addQuestions(parts)

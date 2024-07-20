@@ -2,10 +2,11 @@ package ir.mahdighanbarpour.khwarazmiapp.model.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import java.io.File
 
 @Parcelize
-data class AddQuestion(
-    val attachment: List<AddQuestionAttachment>,
-    val options: List<AddQuestionOption>,
-    val question: String
+data class AddQuestionOption(
+    val isCorrect: Boolean,
+    val option: String,
+    val image: File?,
 ) : Parcelable

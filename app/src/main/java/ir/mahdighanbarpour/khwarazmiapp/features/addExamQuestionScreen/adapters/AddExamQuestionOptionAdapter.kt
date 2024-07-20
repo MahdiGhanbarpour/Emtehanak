@@ -3,13 +3,15 @@ package ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.adapters
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemAddExamQuestionOptionBinding
-import ir.mahdighanbarpour.khwarazmiapp.model.data.Option
+import ir.mahdighanbarpour.khwarazmiapp.model.data.AddQuestionOption
 
 class AddExamQuestionOptionAdapter(
-    private var data: MutableList<Option>, private var addExamOptionEvents: AddExamOptionEvents
+    private var data: MutableList<AddQuestionOption>,
+    private var addExamOptionEvents: AddExamOptionEvents
 ) : RecyclerView.Adapter<AddExamQuestionOptionAdapter.AddExamQuestionOptionAdapterViewHolder>() {
 
     private lateinit var binding: ItemAddExamQuestionOptionBinding
@@ -18,10 +20,11 @@ class AddExamQuestionOptionAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
-        fun bindData(data: Option) {
+        fun bindData(data: AddQuestionOption) {
             // Set the option text and background color based on the isCorrect property
             binding.tvOption.text = data.option
             binding.tvOptionNumber.setBackgroundResource(if (data.isCorrect) R.drawable.ic_correct else R.drawable.ic_incorrect)
+            binding.ivOptionImageItem.setImageURI(data.image?.toUri())
 
             // Set the click listener for the delete button
             binding.ivDeleteExamOptionAddExamQuestion.setOnClickListener {
@@ -50,6 +53,6 @@ class AddExamQuestionOptionAdapter(
     }
 
     interface AddExamOptionEvents {
-        fun onDeleteOptionClick(option: Option, position: Int)
+        fun onDeleteOptionClick(option: AddQuestionOption, position: Int)
     }
 }
