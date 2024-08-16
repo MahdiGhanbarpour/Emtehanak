@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.examListScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.core.Single
@@ -6,7 +6,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.ExamRepository
 
-class ExamListViewModel(private val examRepository: ExamRepository) : ViewModel() {
+class ExamsListViewModel(private val examRepository: ExamRepository) : ViewModel() {
     // Determines whether something is being received from the server or not
     val isDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
 

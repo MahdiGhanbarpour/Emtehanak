@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityLessonBinding
-import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.lessonBookScreen.LessonBookActivity
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Lesson
 import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL

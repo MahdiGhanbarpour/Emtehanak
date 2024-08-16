@@ -203,7 +203,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
     }
 
     // Adding the questions to the server
-    private fun addQuestions(parts: List<MultipartBody.Part>) {
+    private fun addQuestions(parts: List<MultipartBody.Part>, retries: Int = 5) {
         addExamQuestionViewModel.addExamWithQuestions(parts).asyncRequest()
             .subscribe(object : SingleObserver<AddExamMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -212,13 +212,18 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { checkData() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        addQuestions(parts, retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) { checkData() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
                 }
 
                 override fun onSuccess(t: AddExamMainResult) {

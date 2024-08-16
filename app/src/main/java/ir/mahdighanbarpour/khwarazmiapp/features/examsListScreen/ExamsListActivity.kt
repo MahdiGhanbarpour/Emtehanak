@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.examListScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -33,14 +33,14 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
+class ExamsListActivity : AppCompatActivity(), ExamsListAdapter.ExamListEvents {
 
     private lateinit var binding: ActivityExamsListBinding
-    private lateinit var examListAdapter: ExamListAdapter
+    private lateinit var examsListAdapter: ExamsListAdapter
     private lateinit var userGrade: String
     private lateinit var userRole: String
 
-    private val examListViewModel: ExamListViewModel by viewModel()
+    private val examsListViewModel: ExamsListViewModel by viewModel()
     private val sharedPreferences: SharedPreferences by inject()
 
     private val compositeDisposable = CompositeDisposable()
@@ -103,8 +103,8 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
 
     // initialize recycler
     private fun initExamListRecycler() {
-        examListAdapter = ExamListAdapter(arrayListOf(), this)
-        binding.recyclerExamList.adapter = examListAdapter
+        examsListAdapter = ExamsListAdapter(arrayListOf(), this)
+        binding.recyclerExamList.adapter = examsListAdapter
 
         binding.recyclerExamList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -123,7 +123,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
             // Display the error to the user
             binding.ivErrorExamList.visibility = View.VISIBLE
 
-            examListAdapter.setData(arrayListOf())
+            examsListAdapter.setData(arrayListOf())
 
             // Display the error of not connecting to the Internet
             Snackbar.make(binding.root, "عدم دسترسی به اینترنت", Snackbar.LENGTH_INDEFINITE)
@@ -133,7 +133,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
 
     private fun playLoadingAnim() {
         // If the information is being received from the server, an animation will be played
-        compositeDisposable.add(examListViewModel.isDataLoading.subscribe {
+        compositeDisposable.add(examsListViewModel.isDataLoading.subscribe {
             runOnUiThread {
                 if (it) {
                     binding.recyclerExamList.visibility = View.GONE
@@ -155,7 +155,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
     }
 
     // get exams
-    private fun getExams() {
+    private fun getExams(retries: Int = 5) {
         val grade: String
         val gradeList: String
 
@@ -169,7 +169,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         }
 
         // Getting the list of exams with the help of grade and limit
-        examListViewModel.getExamList(grade, gradeList, lesson, "-1").asyncRequest()
+        examsListViewModel.getExamList(grade, gradeList, lesson, "-1").asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     // Add the disposable to Composite Disposable
@@ -177,12 +177,17 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { initData() }.show()
+                    if (retries > 0) {
+                        // Retry
+                        getExams(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) { initData() }.show()
+                    }
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {
@@ -205,11 +210,11 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
 
     // set data
     private fun setExamListRecyclerData(exams: ExamResult) {
-        examListAdapter.setData(exams.exams)
+        examsListAdapter.setData(exams.exams)
     }
 
     // search exams
-    private fun searchExams(search: String) {
+    private fun searchExams(search: String, retries: Int = 5) {
         val grade: String
         val gradeList: String
 
@@ -224,7 +229,7 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
         Log.v("testLog", lesson.toString())
 
         // Getting the list of exams with the help of grade and limit
-        examListViewModel.searchExams(grade, search, lesson, gradeList).asyncRequest()
+        examsListViewModel.searchExams(grade, search, lesson, gradeList).asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
                 override fun onSubscribe(d: Disposable) {
                     // Add the disposable to Composite Disposable
@@ -232,12 +237,17 @@ class ExamsListActivity : AppCompatActivity(), ExamListAdapter.ExamListEvents {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { initData(search) }.show()
+                    if (retries > 0) {
+                        // Retry
+                        searchExams(search, retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) { initData(search) }.show()
+                    }
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {

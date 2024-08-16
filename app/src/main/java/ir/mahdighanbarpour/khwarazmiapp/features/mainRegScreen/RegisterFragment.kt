@@ -421,7 +421,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun registerStudent(
-        name: String, phoneNumber: String, birthday: String, grade: String
+        name: String, phoneNumber: String, birthday: String, grade: String, retries: Int = 5
     ) {
         // Student registration
         registerViewModel.registerStudent(name, phoneNumber, birthday, grade).asyncRequest()
@@ -431,9 +431,15 @@ class RegisterFragment : Fragment() {
                 }
 
                 override fun onError(e: Throwable) {
-                    Snackbar.make(
-                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
-                    ).setAction("تلاش مجدد") { checkInputs() }.show()
+                    if (retries > 0) {
+                        // Retry
+                        registerStudent(name, phoneNumber, birthday, grade, retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                        ).setAction("تلاش مجدد") { checkInputs() }.show()
+                    }
                 }
 
                 override fun onSuccess(t: StudentMainResult) {

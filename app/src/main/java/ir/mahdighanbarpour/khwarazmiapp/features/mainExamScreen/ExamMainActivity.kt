@@ -206,7 +206,7 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         // Checking whether the question is the last one or not
         if (questionPosition == questions.size - 1) {
             // If it is, it will change the button text
-            binding.btNextExamMain.text = "دیدن نتایج"
+            binding.btNextExamMain.text = "اتمام آزمون"
             binding.btNextExamMain.iconPadding = 0
             binding.btNextExamMain.icon = null
             binding.btNextExamMain.setBackgroundColor(
@@ -305,6 +305,12 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
                 // Display Exam Result Bottom Sheet
                 examResultBottomSheet.show(supportFragmentManager, null)
+
+                // Set a dismiss listener to close the activity when the bottom sheet is dismissed
+                examResultBottomSheet.dialog?.setOnDismissListener {
+                    // Close the activity
+                    finish()
+                }
             }
         } else {
             // Go to the next question

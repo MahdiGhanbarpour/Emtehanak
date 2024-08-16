@@ -62,7 +62,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     // Login student
-    private fun loginStudent() {
+    private fun loginStudent(retries: Int = 5) {
         splashScreenViewModel.loginStudent(phoneNumber).asyncRequest()
             .subscribe(object : SingleObserver<StudentMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -71,11 +71,16 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Display the error
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
-                    ).setAction("تلاش مجدد") { userLoggedIn() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        loginStudent(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
+                        ).setAction("تلاش مجدد") { userLoggedIn() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
                 }
 
                 override fun onSuccess(t: StudentMainResult) {
@@ -98,7 +103,7 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     // Login teacher
-    private fun loginTeacher() {
+    private fun loginTeacher(retries: Int = 5) {
         splashScreenViewModel.loginTeacher(phoneNumber).asyncRequest()
             .subscribe(object : SingleObserver<TeacherMainResult> {
                 override fun onSubscribe(d: Disposable) {
@@ -107,11 +112,17 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Display the error
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
-                    ).setAction("تلاش مجدد") { userLoggedIn() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        loginTeacher(retries - 1)
+                    } else {
+                        // Display the error
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_INDEFINITE
+                        ).setAction("تلاش مجدد") { userLoggedIn() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
+
                 }
 
                 override fun onSuccess(t: TeacherMainResult) {

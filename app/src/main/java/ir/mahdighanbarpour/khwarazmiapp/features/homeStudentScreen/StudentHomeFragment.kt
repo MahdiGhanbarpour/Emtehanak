@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.LessonsAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.lessonScreen.LessonActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
@@ -148,7 +148,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
         }
     }
 
-    private fun getPopularExams() {
+    private fun getPopularExams(retries: Int = 5) {
         // Getting the list of popular exams from the server based on the user's grade
         studentHomeViewModel.getPopularExams(grade, "", "5").asyncRequest()
             .subscribe(object : SingleObserver<ExamsMainResult> {
@@ -158,20 +158,25 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
+                    if (retries > 0) {
+                        // Retry
+                        getPopularExams(retries - 1)
+                    } else {
+                        // Error report to user
+                        binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
 
-                    snackbar = Snackbar.make(
-                        requireActivity().findViewById(android.R.id.content),
-                        "خطا در دریافت اطلاعات",
-                        Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) {
-                        binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
-                        getPopularExams()
+                        snackbar = Snackbar.make(
+                            requireActivity().findViewById(android.R.id.content),
+                            "خطا در دریافت اطلاعات",
+                            Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) {
+                            binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+                            getPopularExams()
+                        }
+                        snackbar.show()
                     }
-                    snackbar.show()
                 }
 
                 override fun onSuccess(t: ExamsMainResult) {
@@ -204,7 +209,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
         })
     }
 
-    private fun getLessons() {
+    private fun getLessons(retries: Int = 5) {
         // Getting the list of lessons from the server based on the user's grade
         studentHomeViewModel.getLessons(grade, "5").asyncRequest()
             .subscribe(object : SingleObserver<LessonsMainResult> {
@@ -214,20 +219,25 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    binding.ivErrorLessonsStudentMain.visibility = View.VISIBLE
+                    if (retries > 0) {
+                        // Retry
+                        getLessons(retries - 1)
+                    } else {
+                        // Error report to user
+                        binding.ivErrorLessonsStudentMain.visibility = View.VISIBLE
 
-                    snackbar = Snackbar.make(
-                        requireActivity().findViewById(android.R.id.content),
-                        "خطا در دریافت اطلاعات",
-                        Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) {
-                        binding.ivErrorLessonsStudentMain.visibility = View.GONE
-                        getPopularExams()
+                        snackbar = Snackbar.make(
+                            requireActivity().findViewById(android.R.id.content),
+                            "خطا در دریافت اطلاعات",
+                            Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) {
+                            binding.ivErrorLessonsStudentMain.visibility = View.GONE
+                            getPopularExams()
+                        }
+                        snackbar.show()
                     }
-                    snackbar.show()
                 }
 
                 override fun onSuccess(t: LessonsMainResult) {

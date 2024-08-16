@@ -214,7 +214,7 @@ class ExamDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun getExamsQuestion() {
+    private fun getExamsQuestion(retries: Int = 5) {
         // Getting selected exam questions from the server with the help of exam id
         examViewModel.getExamsQuestion(data.id).asyncRequest()
             .subscribe(object : SingleObserver<QuestionMainResult> {
@@ -224,13 +224,18 @@ class ExamDetailActivity : AppCompatActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { onStartClicked() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        getExamsQuestion(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا در دریافت اطلاعات", Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) { onStartClicked() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
                 }
 
                 override fun onSuccess(t: QuestionMainResult) {

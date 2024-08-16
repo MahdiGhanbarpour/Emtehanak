@@ -67,7 +67,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadOnlineData() {
+    private fun loadOnlineData(retries: Int = 5) {
         // Getting a list of frequently asked questions from the server
         frequentlyQuestionsViewModel.getFrequentlyQuestionsOnline(sentPage!!).asyncRequest()
             .subscribe(object : SingleObserver<FrequentlyQuestionsMainResult> {
@@ -77,16 +77,21 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                 }
 
                 override fun onError(e: Throwable) {
-                    // Error report to user
-                    Snackbar.make(
-                        binding.root,
-                        "خطا در دریافت اطلاعات از سرور! سوالات ذخیره شده نمایش داده میشود.",
-                        Snackbar.LENGTH_LONG
-                    ).setAction(
-                        "تلاش دوباره"
-                    ) { initUi() }.show()
+                    if (retries > 0) {
+                        // Retry
+                        loadOnlineData(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root,
+                            "خطا در دریافت اطلاعات از سرور! سوالات ذخیره شده نمایش داده میشود.",
+                            Snackbar.LENGTH_LONG
+                        ).setAction(
+                            "تلاش دوباره"
+                        ) { initUi() }.show()
 
-                    loadOfflineData()
+                        loadOfflineData()
+                    }
                 }
 
                 override fun onSuccess(t: FrequentlyQuestionsMainResult) {

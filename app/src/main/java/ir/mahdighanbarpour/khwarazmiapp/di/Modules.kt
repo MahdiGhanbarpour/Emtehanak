@@ -3,7 +3,7 @@ package ir.mahdighanbarpour.khwarazmiapp.di
 import android.content.Context
 import ir.mahdighanbarpour.khwarazmiapp.features.addExamQuestionScreen.AddExamQuestionViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamViewModel
-import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamListViewModel
+import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.frequentlyQuestionsScreen.FrequentlyQuestionsViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeViewModel
 import ir.mahdighanbarpour.khwarazmiapp.features.homeTeacherScreen.TeacherHomeViewModel
@@ -47,7 +47,7 @@ val myModules = module {
     viewModel { RegisterViewModel(get(), get()) }
     viewModel { StudentHomeViewModel(get(), get()) }
     viewModel { ExamViewModel(get()) }
-    viewModel { ExamListViewModel(get()) }
+    viewModel { ExamsListViewModel(get()) }
     viewModel { SplashScreenViewModel(get(), get()) }
     viewModel { TeacherHomeViewModel(get()) }
     viewModel { AddExamQuestionViewModel(get()) }

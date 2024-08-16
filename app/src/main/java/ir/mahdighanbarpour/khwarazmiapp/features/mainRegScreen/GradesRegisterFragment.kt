@@ -134,7 +134,8 @@ class GradesRegisterFragment : Fragment() {
         birthday: String,
         studyField: String,
         grade: String,
-        activityYear: String
+        activityYear: String,
+        retries: Int = 5
     ) {
         // Registering the teacher
         registerViewModel.registerTeacher(
@@ -146,10 +147,17 @@ class GradesRegisterFragment : Fragment() {
             }
 
             override fun onError(e: Throwable) {
-                // If there is an error, show a toast message
-                Snackbar.make(
-                    binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
-                ).setAction("تلاش مجدد") { checkInputs() }.show()
+                if (retries > 0) {
+                    // Retry
+                    registerTeacher(
+                        name, phoneNumber, birthday, studyField, grade, activityYear, retries - 1
+                    )
+                } else {
+                    // If there is an error, show a toast message
+                    Snackbar.make(
+                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                    ).setAction("تلاش مجدد") { checkInputs() }.show()
+                }
             }
 
             override fun onSuccess(t: TeacherMainResult) {

@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.examListScreen
+package ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -11,9 +11,9 @@ import ir.mahdighanbarpour.khwarazmiapp.databinding.ItemExamListBinding
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 
-class ExamListAdapter(
+class ExamsListAdapter(
     private var data: List<Exam>, private val examListEvents: ExamListEvents
-) : RecyclerView.Adapter<ExamListAdapter.ExamListAdapterViewHolder>() {
+) : RecyclerView.Adapter<ExamsListAdapter.ExamListAdapterViewHolder>() {
 
     private lateinit var binding: ItemExamListBinding
 

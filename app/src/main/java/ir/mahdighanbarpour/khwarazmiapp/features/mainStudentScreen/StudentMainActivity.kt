@@ -17,7 +17,7 @@ import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.ActivityStudentMainBinding
 import ir.mahdighanbarpour.khwarazmiapp.databinding.DialogLogoutBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.aboutUsScreen.AboutUsActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.examListScreen.ExamsListActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.StudentHomeFragment
 import ir.mahdighanbarpour.khwarazmiapp.features.mainLoginScreen.LoginActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.profileStudentScreen.StudentProfileFragment

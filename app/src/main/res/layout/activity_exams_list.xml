@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="rtl"
-    tools:context=".features.examListScreen.ExamsListActivity">
+    tools:context=".features.examsListScreen.ExamsListActivity">
 
     <ImageView
         android:id="@+id/ivBack"

@@ -379,7 +379,7 @@ class LoginOtpFragment : Fragment() {
         })
     }
 
-    private fun getStudentInformation() {
+    private fun getStudentInformation(retries: Int = 5) {
         // receiving student information
         loginOtpViewModel.loginStudent(enteredNumber).asyncRequest()
             .subscribe(object : SingleObserver<StudentMainResult> {
@@ -388,10 +388,16 @@ class LoginOtpFragment : Fragment() {
                 }
 
                 override fun onError(e: Throwable) {
-                    Snackbar.make(
-                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
-                    ).setAction("تلاش مجدد") { checkOtpCode() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        getStudentInformation(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                        ).setAction("تلاش مجدد") { checkOtpCode() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
                 }
 
                 override fun onSuccess(t: StudentMainResult) {
@@ -434,7 +440,7 @@ class LoginOtpFragment : Fragment() {
         }
     }
 
-    private fun getTeacherInformation() {
+    private fun getTeacherInformation(retries: Int = 5) {
         // receiving teacher information
         loginOtpViewModel.loginTeacher(enteredNumber).asyncRequest()
             .subscribe(object : SingleObserver<TeacherMainResult> {
@@ -443,10 +449,16 @@ class LoginOtpFragment : Fragment() {
                 }
 
                 override fun onError(e: Throwable) {
-                    Snackbar.make(
-                        binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
-                    ).setAction("تلاش مجدد") { checkOtpCode() }.show()
-                    Log.v("testLog", e.message.toString())
+                    if (retries > 0) {
+                        // Retry
+                        getTeacherInformation(retries - 1)
+                    } else {
+                        // Error report to user
+                        Snackbar.make(
+                            binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
+                        ).setAction("تلاش مجدد") { checkOtpCode() }.show()
+                        Log.v("testLog", e.message.toString())
+                    }
                 }
 
                 override fun onSuccess(t: TeacherMainResult) {
