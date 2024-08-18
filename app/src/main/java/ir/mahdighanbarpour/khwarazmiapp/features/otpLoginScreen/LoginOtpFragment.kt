@@ -390,6 +390,7 @@ class LoginOtpFragment : Fragment() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         getStudentInformation(retries - 1)
                     } else {
                         // Error report to user
@@ -451,6 +452,7 @@ class LoginOtpFragment : Fragment() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         getTeacherInformation(retries - 1)
                     } else {
                         // Error report to user

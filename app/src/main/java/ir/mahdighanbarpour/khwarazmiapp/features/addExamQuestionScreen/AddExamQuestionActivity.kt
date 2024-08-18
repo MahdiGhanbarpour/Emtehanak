@@ -214,6 +214,7 @@ class AddExamQuestionActivity : AppCompatActivity(), AddExamQuestionAdapter.AddE
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         addQuestions(parts, retries - 1)
                     } else {
                         // Error report to user

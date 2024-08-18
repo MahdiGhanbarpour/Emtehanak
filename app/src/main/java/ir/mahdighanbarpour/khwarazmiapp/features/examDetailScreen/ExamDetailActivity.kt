@@ -231,6 +231,7 @@ class ExamDetailActivity : AppCompatActivity() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         getExamsQuestion(retries - 1)
                     } else {
                         // Error report to user

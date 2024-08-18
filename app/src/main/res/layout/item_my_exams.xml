@@ -40,6 +40,19 @@
                 android:layout_height="match_parent"
                 android:background="@color/black_transparent_15_percent" />
 
+            <ImageView
+                android:id="@+id/ivMyExamsImageInvisibleItem"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="4dp"
+                android:background="@drawable/shape_all_corner_rounded"
+                android:backgroundTint="@color/white"
+                android:contentDescription="@string/hide_visibility"
+                android:padding="2dp"
+                android:src="@drawable/ic_invisible"
+                android:visibility="gone"
+                app:tint="@color/teacher_color" />
+
         </com.google.android.material.card.MaterialCardView>
 
         <TextView

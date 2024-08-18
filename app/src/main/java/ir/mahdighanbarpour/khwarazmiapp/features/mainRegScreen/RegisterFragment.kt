@@ -433,6 +433,7 @@ class RegisterFragment : Fragment() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         registerStudent(name, phoneNumber, birthday, grade, retries - 1)
                     } else {
                         // Error report to user

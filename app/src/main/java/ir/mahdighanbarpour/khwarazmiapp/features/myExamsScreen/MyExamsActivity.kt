@@ -85,7 +85,7 @@ class MyExamsActivity : AppCompatActivity(), MyExamsAdapter.MyExamsEvents {
     }
 
     // get data
-    private fun initData(search: String = "") {
+    fun initData(search: String = "") {
         // Checking if the user has internet or not
         if (isInternetAvailable(this)) {
             binding.ivErrorMyExams.visibility = View.GONE
@@ -138,6 +138,7 @@ class MyExamsActivity : AppCompatActivity(), MyExamsAdapter.MyExamsEvents {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         getTeachersExams(search, retries - 1)
                     } else {
                         // Error report to user

@@ -159,6 +159,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playPopularExamLoadingAnim()
                         getPopularExams(retries - 1)
                     } else {
                         // Error report to user
@@ -220,6 +221,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLessonLoadingAnim()
                         getLessons(retries - 1)
                     } else {
                         // Error report to user

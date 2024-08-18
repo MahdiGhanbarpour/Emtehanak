@@ -179,6 +179,7 @@ class ExamsListActivity : AppCompatActivity(), ExamsListAdapter.ExamListEvents {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         getExams(retries - 1)
                     } else {
                         // Error report to user
@@ -239,6 +240,7 @@ class ExamsListActivity : AppCompatActivity(), ExamsListAdapter.ExamListEvents {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         searchExams(search, retries - 1)
                     } else {
                         // Error report to user

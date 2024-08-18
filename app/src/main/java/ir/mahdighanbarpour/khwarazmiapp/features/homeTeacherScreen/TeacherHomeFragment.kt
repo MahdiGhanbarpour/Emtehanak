@@ -152,6 +152,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
             override fun onError(e: Throwable) {
                 if (retries > 0) {
                     // Retry
+                    playLoadingAnim()
                     getPopularExams(retries - 1)
                 } else {
                     // Error report to user

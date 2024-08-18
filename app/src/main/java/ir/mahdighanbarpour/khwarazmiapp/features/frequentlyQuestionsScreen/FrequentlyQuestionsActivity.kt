@@ -79,6 +79,7 @@ class FrequentlyQuestionsActivity : AppCompatActivity() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         loadOnlineData(retries - 1)
                     } else {
                         // Error report to user

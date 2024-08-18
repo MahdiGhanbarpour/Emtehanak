@@ -106,6 +106,7 @@ class ToggleVisibilityBottomSheet : BottomSheetDialogFragment() {
                 override fun onError(e: Throwable) {
                     if (retries > 0) {
                         // Retry
+                        playLoadingAnim()
                         changeVisibility(visibility, retries - 1)
                     } else {
                         // Error report to user
@@ -120,6 +121,7 @@ class ToggleVisibilityBottomSheet : BottomSheetDialogFragment() {
                 override fun onSuccess(t: ExamsMainResult) {
                     if (t.status == 200) {
                         makeShortToast(requireContext(), "نمایانی با موفقیت تغییر کرد")
+                        (requireActivity() as MyExamsActivity).initData()
                         dismiss()
                     } else {
                         // Error report to user

@@ -26,6 +26,12 @@ class MyExamsAdapter(
             binding.tvMyExamsNameItem.text = data.name
             binding.tvMyExamsLessonItem.text = data.lesson
 
+            if (data.visibility == "0") {
+                binding.ivMyExamsImageInvisibleItem.visibility = View.VISIBLE
+            } else {
+                binding.ivMyExamsImageInvisibleItem.visibility = View.GONE
+            }
+
             // Load image
             Glide.with(binding.root).load(MEDIA_BASE_URL + data.image).error(R.drawable.img_error)
                 .apply(RequestOptions().centerCrop()).into(binding.ivMyExamsImageItem)
