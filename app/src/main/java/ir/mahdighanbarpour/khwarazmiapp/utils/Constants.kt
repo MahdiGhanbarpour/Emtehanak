@@ -65,6 +65,10 @@ const val SEND_CREATED_EXAM_TO_ADD_EXAM_QUESTION_PAGE_KEY =
 const val SEND_CREATED_EXAM_IMAGE_TO_ADD_EXAM_QUESTION_PAGE_KEY =
     "send_created_exam_image_to_add_exam_question_page"
 
+// Constants used to transfer data from my exams page to toggle visibility bottom sheet
+const val SEND_SELECTED_EXAM_TO_TOGGLE_VISIBILITY_BOTTOM_SHEET_KEY =
+    "send_selected_exam_to_toggle_visibility_bottom_sheet"
+
 // Constants of user roles
 const val TEACHER = "teacher"
 const val STUDENT = "student"

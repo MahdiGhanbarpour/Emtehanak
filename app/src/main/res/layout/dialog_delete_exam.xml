@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="wrap_content"
     android:layoutDirection="rtl">
 
     <TextView
-        android:id="@+id/tv_logout"
+        android:id="@+id/tvDeleteExam"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/logout"
         android:textColor="?attr/colorOnSecondary"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/delete" />
 
     <TextView
-        android:id="@+id/tv_logoutSure"
+        android:id="@+id/tvDeleteExamDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/logout_sure"
+        android:text="آیا میخواهید این آزمون را حذف کنید ؟"
         android:textColor="@color/gray"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_logout" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeleteExam" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_noCancel"
+        android:id="@+id/btCancelDeleteExam"
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
@@ -39,20 +40,20 @@
         android:outlineProvider="none"
         android:text="@string/no_cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bt_yesLogout"
+        app:layout_constraintEnd_toStartOf="@+id/btDeleteExam"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_logoutSure" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDeleteExamDetail" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_yesLogout"
+        android:id="@+id/btDeleteExam"
         android:layout_width="120dp"
         android:layout_height="55dp"
         android:layout_marginTop="32dp"
         android:outlineProvider="none"
-        android:text="@string/yes_logout"
+        android:text="@string/yes_delete"
         app:backgroundTint="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt_noCancel"
-        app:layout_constraintTop_toBottomOf="@+id/tv_logoutSure" />
+        app:layout_constraintStart_toEndOf="@+id/btCancelDeleteExam"
+        app:layout_constraintTop_toBottomOf="@+id/tvDeleteExamDetail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

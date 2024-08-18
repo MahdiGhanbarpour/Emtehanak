@@ -336,6 +336,7 @@ class AddExamActivity : AppCompatActivity() {
             changeAnswer = changeAnswer,
             backToPrevious = backToPrevious,
             showQuestionAnswer = showQuestionAnswer,
+            visibility = "1",
             questions = arrayListOf()
         )
         // Checking if the image is selected

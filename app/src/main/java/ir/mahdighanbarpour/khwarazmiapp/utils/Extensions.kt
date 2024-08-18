@@ -10,6 +10,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Parcelable
@@ -55,6 +56,11 @@ fun makeShortToast(context: Context, text: String) {
 inline fun <reified T : Parcelable> Intent.getParcelable(key: String): T = when {
     Build.VERSION.SDK_INT >= 33 -> getParcelableExtra(key, T::class.java)!!
     else -> getParcelableExtra(key)!!
+}
+
+inline fun <reified T : Parcelable> Bundle.getParcelableCustom(key: String): T = when {
+    Build.VERSION.SDK_INT >= 33 -> getParcelable(key, T::class.java)!!
+    else -> getParcelable(key)!!
 }
 
 // Get parcelable array data from intent

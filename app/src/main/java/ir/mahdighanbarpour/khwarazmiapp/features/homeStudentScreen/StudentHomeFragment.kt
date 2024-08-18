@@ -20,7 +20,6 @@ import io.reactivex.rxjava3.disposables.Disposable
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
-import ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters.LessonsAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.lessonScreen.LessonActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainStudentScreen.StudentMainActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeachersAdapter

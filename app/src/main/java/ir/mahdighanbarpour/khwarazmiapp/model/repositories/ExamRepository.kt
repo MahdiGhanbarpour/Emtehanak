@@ -36,10 +36,23 @@ class ExamRepository(private val apiService: ApiService) {
 
     // Reporting the question with the help of question id and reporter phone number
     fun reportQuestion(
-        questionId: Int,
-        reporterPhoneNum: String
+        questionId: Int, reporterPhoneNum: String
     ): Single<ReportQuestionMainResult> {
         return apiService.reportQuestion(questionId, reporterPhoneNum)
     }
 
+    // Getting the list of teachers exams with the help of phone number
+    fun getTeachersExams(phoneNumber: String, search: String): Single<ExamsMainResult> {
+        return apiService.getTeachersExams(phoneNumber, search)
+    }
+
+    // Deleting the exam with the help of id
+    fun deleteExam(id: Int): Single<ExamsMainResult> {
+        return apiService.deleteExam(id)
+    }
+
+    // Changing the visibility of exam with the help of id
+    fun changeVisibility(id: Int, visibility: String): Single<ExamsMainResult> {
+        return apiService.changeVisibility(id, visibility)
+    }
 }

@@ -14,6 +14,7 @@ data class Exam(
     @SerializedName("grade") val grade: String,
     @SerializedName("id") val id: Int,
     @SerializedName("image") val image: String?,
+    @SerializedName("visibility") val visibility: String,
     @SerializedName("isVerified") val isVerified: Boolean,
     @SerializedName("lesson") val lesson: String,
     @SerializedName("name") val name: String,

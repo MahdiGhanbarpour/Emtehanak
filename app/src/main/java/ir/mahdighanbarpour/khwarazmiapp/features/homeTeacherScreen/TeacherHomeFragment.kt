@@ -22,6 +22,7 @@ import ir.mahdighanbarpour.khwarazmiapp.features.addExamScreen.AddExamActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.mainTeacherScreen.TeacherMainActivity
+import ir.mahdighanbarpour.khwarazmiapp.features.myExamsScreen.MyExamsActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeachersAdapter
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapter
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
@@ -103,6 +104,10 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         }
         binding.linearLayoutBottomEndItemTeacherMain.setOnClickListener {
             val intent = Intent(requireContext(), AddExamActivity::class.java)
+            startActivity(intent)
+        }
+        binding.linearLayoutBottomStartItemTeacherMain.setOnClickListener {
+            val intent = Intent(requireContext(), MyExamsActivity::class.java)
             startActivity(intent)
         }
     }

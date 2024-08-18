@@ -1,4 +1,4 @@
-package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen.adapters
+package ir.mahdighanbarpour.khwarazmiapp.features.homeStudentScreen
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

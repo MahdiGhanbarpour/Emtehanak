@@ -83,4 +83,21 @@ interface ApiService {
     fun reportQuestion(
         @Query("questionId") questionId: Int, @Query("reporterPhoneNum") reporterPhoneNum: String
     ): Single<ReportQuestionMainResult>
+
+    @GET("exam/teachers-exam")
+    fun getTeachersExams(
+        @Query("phone") phoneNumber: String,
+        @Query("search") search: String,
+    ): Single<ExamsMainResult>
+
+    @GET("exam/delete-exam")
+    fun deleteExam(
+        @Query("id") id: Int,
+    ): Single<ExamsMainResult>
+
+    @GET("exam/change-visibility")
+    fun changeVisibility(
+        @Query("id") id: Int,
+        @Query("visibility") visibility: String,
+    ): Single<ExamsMainResult>
 }

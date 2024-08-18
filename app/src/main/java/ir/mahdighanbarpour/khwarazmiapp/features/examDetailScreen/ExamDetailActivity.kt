@@ -43,6 +43,7 @@ class ExamDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityExamDetailBinding
     private lateinit var examDetailAdapter: ExamDetailAdapter
     private lateinit var data: Exam
+    private lateinit var dialog: AlertDialog
 
     private val examViewModel: ExamViewModel by viewModel()
 
@@ -79,7 +80,9 @@ class ExamDetailActivity : AppCompatActivity() {
         }
         binding.btStartExamDetail.setOnClickListener {
             // The start exam button is pressed
-            showDialog()
+            if (binding.animationViewStartExamDetail.visibility == View.GONE && !dialog.isShowing) {
+                showDialog()
+            }
         }
         binding.ivLikeExamDetail.setOnClickListener {
             // Checking if this exam has already been liked or not
@@ -119,6 +122,8 @@ class ExamDetailActivity : AppCompatActivity() {
 
         // Get selected exam information
         data = intent.getParcelable(SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY)
+
+        dialog = AlertDialog.Builder(this).create()
     }
 
     @SuppressLint("SetTextI18n")
@@ -301,7 +306,7 @@ class ExamDetailActivity : AppCompatActivity() {
         }
 
         // Displaying the dialog
-        val dialog = AlertDialog.Builder(this).create()
+        dialog = AlertDialog.Builder(this).create()
 
         // Setting the dialog view
         val dialogBinding = DialogExamDetailBinding.inflate(layoutInflater)

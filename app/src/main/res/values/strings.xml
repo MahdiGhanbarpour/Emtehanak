@@ -107,4 +107,11 @@
     <string name="previous">قبلی</string>
     <string name="scroll_up">حرکت به بالا</string>
     <string name="scroll_down">حرکت به پایین</string>
+    <string name="edit">ویرایش</string>
+    <string name="edit_visibility">تغییر نمایانی</string>
+    <string name="yes_delete">بله، حذف</string>
+    <string name="public_visibility">نمایش عمومی</string>
+    <string name="hide_visibility">عدم نمایش</string>
+    <string name="exclusive_visibility">نمایش اختصاصی</string>
+    <string name="options">گزینه ها</string>
 </resources>
