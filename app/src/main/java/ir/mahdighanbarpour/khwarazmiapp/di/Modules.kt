@@ -46,11 +46,11 @@ val myModules = module {
     viewModel { FrequentlyQuestionsViewModel(get()) }
     viewModel { LoginOtpViewModel(get(), get()) }
     viewModel { RegisterViewModel(get(), get()) }
-    viewModel { StudentHomeViewModel(get(), get()) }
+    viewModel { StudentHomeViewModel(get(), get(), get()) }
     viewModel { ExamViewModel(get()) }
     viewModel { ExamsListViewModel(get()) }
     viewModel { SplashScreenViewModel(get(), get()) }
-    viewModel { TeacherHomeViewModel(get()) }
+    viewModel { TeacherHomeViewModel(get(), get()) }
     viewModel { AddExamQuestionViewModel(get()) }
     viewModel { ExamMainViewModel(get()) }
     viewModel { MyExamsViewModel(get()) }

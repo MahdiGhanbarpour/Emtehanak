@@ -1,6 +1,7 @@
 package ir.mahdighanbarpour.khwarazmiapp.model.repositories
 
 import io.reactivex.rxjava3.core.Single
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.net.ApiService
 
@@ -16,5 +17,10 @@ class StudentRepository(private val apiService: ApiService) {
         name: String, phoneNumber: String, birthday: String, grade: String
     ): Single<StudentMainResult> {
         return apiService.registerStudent(name, phoneNumber, birthday, grade)
+    }
+
+    // Getting slider items
+    fun getSliderItems(role: String): Single<SliderMainResult> {
+        return apiService.getSliderItems(role)
     }
 }

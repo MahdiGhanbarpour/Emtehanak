@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentStudentHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examsListScreen.ExamsListActivity
@@ -28,6 +29,9 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Lesson
 import ir.mahdighanbarpour.khwarazmiapp.model.data.LessonsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderItem
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderMainResult
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_LESSON_TO_LESSON_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
@@ -62,7 +66,6 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSlider()
         initLessonRecycler(arrayListOf())
         initExperiencedTeachersRecycler()
         initPopularExamRecycler(arrayListOf())
@@ -130,6 +133,9 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
 
             playLessonLoadingAnim()
             getLessons()
+
+            playSliderLoadingAnim()
+            getSliderItems()
         } else {
             // Display the error to the user
             binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
@@ -137,6 +143,8 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
 
             binding.ivErrorLessonsStudentMain.visibility = View.VISIBLE
             binding.recyclerLessonsStudentMain.visibility = View.INVISIBLE
+
+            setSlider(arrayListOf())
 
             snackbar = Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
@@ -164,6 +172,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                     } else {
                         // Error report to user
                         binding.ivErrorPopularExamsStudentMain.visibility = View.VISIBLE
+                        binding.recyclerPopularExamsStudentMain.visibility = View.INVISIBLE
 
                         snackbar = Snackbar.make(
                             requireActivity().findViewById(android.R.id.content),
@@ -172,7 +181,6 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                         ).setAction(
                             "تلاش دوباره"
                         ) {
-                            binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
                             getPopularExams()
                         }
                         snackbar.show()
@@ -186,6 +194,9 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                         binding.recyclerPopularExamsStudentMain.visibility = View.GONE
                     } else {
                         // Starting RecyclerView with sent data
+                        binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+                        binding.recyclerPopularExamsStudentMain.visibility = View.VISIBLE
+
                         initPopularExamRecycler(t.result.exams)
                     }
                 }
@@ -198,6 +209,9 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
             requireActivity().runOnUiThread {
                 if (it) {
                     binding.animationViewPopularExamsStudentMain.visibility = View.VISIBLE
+
+                    binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
+                    binding.recyclerPopularExamsStudentMain.visibility = View.GONE
 
                     binding.animationViewPopularExamsStudentMain.playAnimation()
                 } else {
@@ -226,6 +240,7 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                     } else {
                         // Error report to user
                         binding.ivErrorLessonsStudentMain.visibility = View.VISIBLE
+                        binding.recyclerLessonsStudentMain.visibility = View.INVISIBLE
 
                         snackbar = Snackbar.make(
                             requireActivity().findViewById(android.R.id.content),
@@ -234,7 +249,6 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                         ).setAction(
                             "تلاش دوباره"
                         ) {
-                            binding.ivErrorLessonsStudentMain.visibility = View.GONE
                             getPopularExams()
                         }
                         snackbar.show()
@@ -248,6 +262,9 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                         binding.recyclerLessonsStudentMain.visibility = View.GONE
                     } else {
                         // Starting RecyclerView with sent data
+                        binding.ivErrorLessonsStudentMain.visibility = View.GONE
+                        binding.recyclerLessonsStudentMain.visibility = View.VISIBLE
+
                         initLessonRecycler(t.lessonsResult.lessons)
                     }
                 }
@@ -261,6 +278,9 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                 if (it) {
                     binding.animationViewLessonsStudentMain.visibility = View.VISIBLE
 
+                    binding.ivErrorLessonsStudentMain.visibility = View.GONE
+                    binding.recyclerLessonsStudentMain.visibility = View.GONE
+
                     binding.animationViewLessonsStudentMain.playAnimation()
                 } else {
                     binding.animationViewLessonsStudentMain.visibility = View.GONE
@@ -271,25 +291,62 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
         })
     }
 
-    private fun initSlider() {
+    private fun playSliderLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
+        compositeDisposable.add(studentHomeViewModel.isSliderDataLoading.subscribe {
+            requireActivity().runOnUiThread {
+                if (it) {
+                    binding.animationViewSliderStudentMain.visibility = View.VISIBLE
+                    binding.sliderMain.visibility = View.GONE
+
+                    binding.animationViewSliderStudentMain.playAnimation()
+                } else {
+                    binding.animationViewSliderStudentMain.visibility = View.GONE
+                    binding.sliderMain.visibility = View.VISIBLE
+
+                    binding.animationViewSliderStudentMain.pauseAnimation()
+                }
+            }
+        })
+    }
+
+    private fun getSliderItems(retries: Int = 5) {
+        // Getting the list of slider items from the server
+        studentHomeViewModel.getSliderItems("1").asyncRequest()
+            .subscribe(object : SingleObserver<SliderMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to Composite Disposable
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (retries > 0) {
+                        // Retry
+                        playSliderLoadingAnim()
+                        getSliderItems(retries - 1)
+                    } else {
+                        // Error report to user
+                        setSlider(arrayListOf())
+                    }
+                }
+
+                override fun onSuccess(t: SliderMainResult) {
+                    setSlider(t.result.sliderItems)
+                }
+            })
+    }
+
+    private fun setSlider(data: List<SliderItem>) {
         // Setting up data and launch slider
-        val imageList = arrayListOf(
-            SlideModel(
-                "https://www.tasvirezendegi.com/wp-content/uploads/2023/03/Sampad.jpg",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-            SlideModel(
-                "https://goftemanezagros.ir/my_content/uploads/2022/01/DC09F75E-4280-4C5C-8C9A-992FED5B5810-1100x700.png",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-            SlideModel(
-                "https://afallahi.ir/wp-content/uploads/2020/11/logo_vezarat.jpg",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-        )
+        val imageList = arrayListOf<SlideModel>()
+        if (data.isNotEmpty()) {
+            for (item in data) {
+                imageList.add(SlideModel(MEDIA_BASE_URL + item.image, null, ScaleTypes.CENTER_CROP))
+            }
+        } else {
+            // Error report to user
+            imageList.add(SlideModel(R.drawable.img_slider, null, ScaleTypes.CENTER_CROP))
+        }
 
         binding.sliderMain.setImageList(imageList)
     }

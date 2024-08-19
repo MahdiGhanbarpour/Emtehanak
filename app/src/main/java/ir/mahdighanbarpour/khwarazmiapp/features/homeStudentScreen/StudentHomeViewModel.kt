@@ -5,16 +5,21 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.LessonsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.ExamRepository
 import ir.mahdighanbarpour.khwarazmiapp.model.repositories.LessonRepository
+import ir.mahdighanbarpour.khwarazmiapp.model.repositories.StudentRepository
 
 class StudentHomeViewModel(
-    private val examRepository: ExamRepository, private val lessonRepository: LessonRepository
+    private val examRepository: ExamRepository,
+    private val lessonRepository: LessonRepository,
+    private val studentRepository: StudentRepository
 ) : ViewModel() {
 
     // Determines whether something is being received from the server or not
     val isPopularExamsDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
     val isLessonsDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
+    val isSliderDataLoading: BehaviorSubject<Boolean> = BehaviorSubject.create()
 
     // Getting the list of popular exams from the server based on the user's grade
     fun getPopularExams(grade: String, gradeList: String, limit: String): Single<ExamsMainResult> {
@@ -38,4 +43,14 @@ class StudentHomeViewModel(
         }
     }
 
+    // Getting slider items
+    fun getSliderItems(role: String): Single<SliderMainResult> {
+        // Determines whether something is being received from the server or not
+        isSliderDataLoading.onNext(true)
+
+        return studentRepository.getSliderItems(role).doFinally {
+            // Determines whether something is being received from the server or not
+            isSliderDataLoading.onNext(false)
+        }
+    }
 }

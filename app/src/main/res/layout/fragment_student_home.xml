@@ -90,14 +90,6 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="16dp">
 
-                <View
-                    android:id="@+id/viewBackgroundStudentMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="225dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardViewSliderStudentMain"
                     android:layout_width="match_parent"
@@ -126,16 +118,17 @@
                         app:iss_placeholder="@drawable/shape_placeholder"
                         app:iss_selected_dot="@drawable/shape_circle_slider_selector" />
 
-                    <ImageView
-                        android:id="@+id/ivErrorSliderStudentMain"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/animationViewSliderStudentMain"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:contentDescription="@string/error_communicating_server"
                         android:elevation="16dp"
-                        android:src="@drawable/ic_internet_error"
                         android:visibility="gone"
-                        app:tint="@color/student_color" />
+                        app:lottie_autoPlay="false"
+                        app:lottie_colorFilter="@color/student_color"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/dot_loading" />
 
                 </com.google.android.material.card.MaterialCardView>
 

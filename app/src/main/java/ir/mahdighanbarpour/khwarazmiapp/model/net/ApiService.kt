@@ -7,6 +7,7 @@ import ir.mahdighanbarpour.khwarazmiapp.model.data.FrequentlyQuestionsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.LessonsMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.QuestionMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ReportQuestionMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.StudentMainResult
 import ir.mahdighanbarpour.khwarazmiapp.model.data.TeacherMainResult
 import okhttp3.MultipartBody
@@ -100,4 +101,9 @@ interface ApiService {
         @Query("id") id: Int,
         @Query("visibility") visibility: String,
     ): Single<ExamsMainResult>
+
+    @GET("slider/items")
+    fun getSliderItems(
+        @Query("role") role: String,
+    ): Single<SliderMainResult>
 }

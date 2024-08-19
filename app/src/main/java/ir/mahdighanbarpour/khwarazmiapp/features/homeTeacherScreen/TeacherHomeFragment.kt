@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import io.reactivex.rxjava3.core.SingleObserver
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import ir.mahdighanbarpour.khwarazmiapp.R
 import ir.mahdighanbarpour.khwarazmiapp.databinding.FragmentTeacherHomeBinding
 import ir.mahdighanbarpour.khwarazmiapp.features.addExamScreen.AddExamActivity
 import ir.mahdighanbarpour.khwarazmiapp.features.examDetailScreen.ExamDetailActivity
@@ -27,6 +28,9 @@ import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.ExperiencedTeache
 import ir.mahdighanbarpour.khwarazmiapp.features.sharedClasses.PopularExamAdapter
 import ir.mahdighanbarpour.khwarazmiapp.model.data.Exam
 import ir.mahdighanbarpour.khwarazmiapp.model.data.ExamsMainResult
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderItem
+import ir.mahdighanbarpour.khwarazmiapp.model.data.SliderMainResult
+import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
@@ -58,7 +62,6 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSlider()
         initExperiencedTeachersRecycler()
         initPopularExamRecycler(arrayListOf())
 
@@ -123,12 +126,17 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
                 snackbar.dismiss()
             }
 
-            playLoadingAnim()
+            playExamsLoadingAnim()
             getPopularExams()
+
+            playSliderLoadingAnim()
+            getSliderItems()
         } else {
             // Display the error to the user
             binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
             binding.recyclerPopularExamsTeacherMain.visibility = View.INVISIBLE
+
+            setSlider(arrayListOf())
 
             snackbar = Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
@@ -152,11 +160,12 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
             override fun onError(e: Throwable) {
                 if (retries > 0) {
                     // Retry
-                    playLoadingAnim()
+                    playExamsLoadingAnim()
                     getPopularExams(retries - 1)
                 } else {
                     // Error report to user
                     binding.ivErrorPopularExamsTeacherMain.visibility = View.VISIBLE
+                    binding.recyclerPopularExamsTeacherMain.visibility = View.INVISIBLE
 
                     snackbar = Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
@@ -165,7 +174,6 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
                     ).setAction(
                         "تلاش دوباره"
                     ) {
-                        binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
                         getPopularExams()
                     }
                     snackbar.show()
@@ -179,18 +187,24 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
                     binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
                 } else {
                     // Starting RecyclerView with sent data
+                    binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
+                    binding.recyclerPopularExamsTeacherMain.visibility = View.VISIBLE
+
                     initPopularExamRecycler(t.result.exams)
                 }
             }
         })
     }
 
-    private fun playLoadingAnim() {
+    private fun playExamsLoadingAnim() {
         // If the information is being received from the server, an animation will be played
         compositeDisposable.add(teacherHomeViewModel.isPopularExamsDataLoading.subscribe {
             requireActivity().runOnUiThread {
                 if (it) {
                     binding.animationViewPopularExamsTeacherMain.visibility = View.VISIBLE
+
+                    binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE
+                    binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
 
                     binding.animationViewPopularExamsTeacherMain.playAnimation()
                 } else {
@@ -202,25 +216,62 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
         })
     }
 
-    private fun initSlider() {
+    private fun playSliderLoadingAnim() {
+        // If the information is being received from the server, an animation will be played
+        compositeDisposable.add(teacherHomeViewModel.isSliderDataLoading.subscribe {
+            requireActivity().runOnUiThread {
+                if (it) {
+                    binding.animationViewSliderTeacherMain.visibility = View.VISIBLE
+                    binding.sliderMainTeacher.visibility = View.GONE
+
+                    binding.animationViewSliderTeacherMain.playAnimation()
+                } else {
+                    binding.animationViewSliderTeacherMain.visibility = View.GONE
+                    binding.sliderMainTeacher.visibility = View.VISIBLE
+
+                    binding.animationViewSliderTeacherMain.pauseAnimation()
+                }
+            }
+        })
+    }
+
+    private fun getSliderItems(retries: Int = 5) {
+        // Getting the list of slider items from the server
+        teacherHomeViewModel.getSliderItems("0").asyncRequest()
+            .subscribe(object : SingleObserver<SliderMainResult> {
+                override fun onSubscribe(d: Disposable) {
+                    // Add the disposable to Composite Disposable
+                    compositeDisposable.add(d)
+                }
+
+                override fun onError(e: Throwable) {
+                    if (retries > 0) {
+                        // Retry
+                        playSliderLoadingAnim()
+                        getSliderItems(retries - 1)
+                    } else {
+                        // Error report to user
+                        setSlider(arrayListOf())
+                    }
+                }
+
+                override fun onSuccess(t: SliderMainResult) {
+                    setSlider(t.result.sliderItems)
+                }
+            })
+    }
+
+    private fun setSlider(data: List<SliderItem>) {
         // Setting up data and launch slider
-        val imageList = arrayListOf(
-            SlideModel(
-                "https://www.tasvirezendegi.com/wp-content/uploads/2023/03/Sampad.jpg",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-            SlideModel(
-                "https://goftemanezagros.ir/my_content/uploads/2022/01/DC09F75E-4280-4C5C-8C9A-992FED5B5810-1100x700.png",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-            SlideModel(
-                "https://afallahi.ir/wp-content/uploads/2020/11/logo_vezarat.jpg",
-                null,
-                ScaleTypes.CENTER_CROP
-            ),
-        )
+        val imageList = arrayListOf<SlideModel>()
+        if (data.isNotEmpty()) {
+            for (item in data) {
+                imageList.add(SlideModel(MEDIA_BASE_URL + item.image, null, ScaleTypes.CENTER_CROP))
+            }
+        } else {
+            // Error report to user
+            imageList.add(SlideModel(R.drawable.img_slider, null, ScaleTypes.CENTER_CROP))
+        }
 
         binding.sliderMainTeacher.setImageList(imageList)
     }
