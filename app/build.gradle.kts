@@ -103,5 +103,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
     // PDF Viewer
-    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
 }
