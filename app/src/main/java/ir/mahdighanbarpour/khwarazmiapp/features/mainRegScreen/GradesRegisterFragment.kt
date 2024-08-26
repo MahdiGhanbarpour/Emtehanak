@@ -24,6 +24,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_NAME_TO_GRADES_REGIST
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_PHONE_NUMBER_TO_GRADES_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_ENTERED_STUDY_FIELD_TO_GRADES_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ACTIVITY_YEAR
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
@@ -165,7 +166,7 @@ class GradesRegisterFragment : Fragment() {
                 if (t.status == 200) {
                     FirebaseAnalytics.getInstance(requireContext())
                         .logEvent(FirebaseAnalytics.Event.SIGN_UP, null)
-                    openTeacherHomePage(name, phoneNumber, grade, studyField)
+                    openTeacherHomePage(name, phoneNumber, grade, studyField, activityYear)
                 } else {
                     Snackbar.make(
                         binding.root, "خطا! لطفا دوباره تلاش کنید", Snackbar.LENGTH_LONG
@@ -176,7 +177,7 @@ class GradesRegisterFragment : Fragment() {
     }
 
     private fun openTeacherHomePage(
-        name: String, phoneNumber: String, grade: String, studyField: String
+        name: String, phoneNumber: String, grade: String, studyField: String, activityYear: String
     ) {
         // Saves the teacher's login and then opens the teacher's home page
         editor.putBoolean(IS_USER_LOGGED_IN, true)
@@ -185,6 +186,7 @@ class GradesRegisterFragment : Fragment() {
         editor.putString(USER_GRADE, grade)
         editor.putString(USER_ROLE, TEACHER)
         editor.putString(USER_STUDY_FIELD, studyField)
+        editor.putString(USER_ACTIVITY_YEAR, activityYear)
         editor.commit()
 
         // Opens the teacher's home page

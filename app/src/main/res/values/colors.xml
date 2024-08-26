@@ -12,6 +12,7 @@
 
     <color name="white">#FFFFFFFF</color>
     <color name="white_dark">#F6F6F6</color>
+    <color name="white_sightly_dark">#F8F8F8</color>
     <color name="white_very_dark">#F0F0F0</color>
     <color name="white_transparent_50_percent">#80FFFFFF</color>
     <color name="white_transparent_65_percent">#A6FFFFFF</color>
@@ -23,6 +24,7 @@
 
     <color name="teacher_color">#2d7de2</color>
     <color name="teacher_color_light">#4698FF</color>
+    <color name="teacher_color_transparent_15_percent">#262d7de2</color>
 
     <color name="orange">#ec9d52</color>
 

@@ -29,6 +29,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_PAGE_NAME_TO_FREQUENTLY_QUEST
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_HELP_BOTTOM_SHEET_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT_MAIN
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ACTIVITY_YEAR
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
@@ -188,7 +189,8 @@ class StudentMainActivity : AppCompatActivity() {
 
         val tvUsername = headerView.findViewById<View>(R.id.tvUsernameDrawerHeader) as TextView
         val tvGrade = headerView.findViewById<View>(R.id.tvUserDetailDrawerHeader) as TextView
-        val cardViewProfile = headerView.findViewById<View>(R.id.cardViewProfileImageDrawerHeader) as MaterialCardView
+        val cardViewProfile =
+            headerView.findViewById<View>(R.id.cardViewProfileImageDrawerHeader) as MaterialCardView
 
         cardViewProfile.setCardBackgroundColor(ContextCompat.getColor(this, R.color.student_color))
         tvUsername.text = sharedPreferences.getString(USER_FULL_NAME, "خطا")
@@ -216,6 +218,7 @@ class StudentMainActivity : AppCompatActivity() {
             editor.putString(USER_GRADE, null)
             editor.putString(USER_ROLE, null)
             editor.putString(USER_STUDY_FIELD, null)
+            editor.putString(USER_ACTIVITY_YEAR, null)
             editor.commit()
 
             val intent = Intent(this, LoginActivity::class.java)

@@ -90,6 +90,7 @@ const val USER_PHONE_NUM = "user_phone_num"
 const val USER_GRADE = "user_grade"
 const val USER_ROLE = "user_role"
 const val USER_STUDY_FIELD = "user_study_field"
+const val USER_ACTIVITY_YEAR = "user_activity_year"
 
 // Constants related to connection with the server
 const val BASE_URL = "https://khwarizmi.persiadev.net/"

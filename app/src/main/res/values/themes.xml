@@ -71,4 +71,8 @@
     <style name="SnackBarTheme" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:layoutDirection">rtl</item>
     </style>
+
+    <style name="SmallLineBgColor">
+        <item name="android:background">@color/transparent_color_5_percent</item>
+    </style>
 </resources>

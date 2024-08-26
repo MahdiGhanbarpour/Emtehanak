@@ -40,6 +40,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_LOGIN_OTP_FR
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_ROLE_TO_REGISTER_FRAGMENT_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.STUDENT
 import ir.mahdighanbarpour.khwarazmiapp.utils.TEACHER
+import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ACTIVITY_YEAR
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_FULL_NAME
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
@@ -479,6 +480,7 @@ class LoginOtpFragment : Fragment() {
             editor.putString(USER_GRADE, result.result.teacher.grades)
             editor.putString(USER_ROLE, selectedRole)
             editor.putString(USER_STUDY_FIELD, result.result.teacher.studyField)
+            editor.putString(USER_ACTIVITY_YEAR, result.result.teacher.activityYear)
             editor.commit()
 
             FirebaseAnalytics.getInstance(requireContext())

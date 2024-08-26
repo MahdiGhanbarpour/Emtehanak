@@ -115,4 +115,10 @@
     <string name="exclusive_visibility">نمایش اختصاصی</string>
     <string name="options">گزینه ها</string>
     <string name="my_exams">آزمون های من</string>
+    <string name="profile_image">تصویر پروفابل</string>
+    <string name="general_information">اطلاعات کلی</string>
+    <string name="professional_information">اطلاعات تخصصی</string>
+    <string name="phone_number">شماره تلفن</string>
+    <string name="edit_general_information">ویرایش اطلاعات کلی</string>
+    <string name="edit_professional_information">ویرایش اطلاعات تخصصی</string>
 </resources>

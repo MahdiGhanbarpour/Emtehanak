@@ -34,6 +34,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.MEDIA_BASE_URL
 import ir.mahdighanbarpour.khwarazmiapp.utils.SEND_SELECTED_EXAM_TO_EXAM_DETAIL_PAGE_KEY
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_GRADE
 import ir.mahdighanbarpour.khwarazmiapp.utils.asyncRequest
+import ir.mahdighanbarpour.khwarazmiapp.utils.changeStatusBarColor
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
 import org.koin.android.ext.android.inject
@@ -62,6 +63,7 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onFragmentShowed()
         initExperiencedTeachersRecycler()
         initPopularExamRecycler(arrayListOf())
 
@@ -81,7 +83,6 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
             snackbar.dismiss()
         }
     }
-
 
     private fun listener() {
         binding.cardViewOpenDrawerTeacherMain.setOnClickListener {
@@ -145,6 +146,10 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
             ).setAction("تلاش مجدد") { initData() }
             snackbar.show()
         }
+    }
+
+    fun onFragmentShowed() {
+        changeStatusBarColor(requireActivity().window, "#FFFFFFFF", true)
     }
 
     private fun getPopularExams(retries: Int = 5) {

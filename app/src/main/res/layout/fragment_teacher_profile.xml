@@ -1,9 +1,367 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".features.profileTeachersScreen.TeacherProfileFragment">
+    android:background="@color/white_sightly_dark"
+    android:layoutDirection="rtl">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teacher_color">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/ivLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/logout"
+            android:focusable="true"
+            android:padding="4dp"
+            android:src="@drawable/ic_exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewImageTeacherProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/teacher_color"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogout">
+
+            <ImageView
+                android:id="@+id/ivImageTeacherProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profile_image"
+                android:padding="12dp"
+                android:src="@drawable/ic_logo"
+                app:tint="@color/white" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/tvNameTeacherProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewImageTeacherProfile"
+            tools:text="مهدی قنبرپور" />
+
+        <TextView
+            android:id="@+id/tvDescriptionTeacherProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white_very_dark"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/tvNameTeacherProfile"
+            app:layout_constraintStart_toStartOf="@+id/tvNameTeacherProfile"
+            app:layout_constraintTop_toBottomOf="@+id/tvNameTeacherProfile"
+            tools:text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shape_rounded_top_corners_24dp"
+            android:backgroundTint="@color/white_sightly_dark"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionTeacherProfile">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewUserGeneralInfoTeacherProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:outlineProvider="none"
+                app:cardCornerRadius="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvGeneralInformationTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/general_information"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvFullNameTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/full_name"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view1"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvGeneralInformationTeacherProfile" />
+
+                    <TextView
+                        android:id="@+id/tvFullNameValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxWidth="180dp"
+                        android:maxLines="1"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvFullNameTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvFullNameTitleTeacherProfile"
+                        tools:text="مهدی قنبرپور" />
+
+                    <View
+                        android:id="@+id/view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="48dp"
+                        android:theme="@style/SmallLineBgColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvGeneralInformationTeacherProfile" />
+
+                    <TextView
+                        android:id="@+id/tvPhoneNumberTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/phone_number"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view2"
+                        app:layout_constraintStart_toStartOf="@+id/tvFullNameTitleTeacherProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+                    <TextView
+                        android:id="@+id/tvPhoneNumberValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumberTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvPhoneNumberTitleTeacherProfile"
+                        tools:text="09027877341" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="48dp"
+                        android:theme="@style/SmallLineBgColor"
+                        app:layout_constraintBottom_toTopOf="@id/btEditGeneralInformationTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view1" />
+
+                    <TextView
+                        android:id="@+id/tvDescriptionTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/btEditGeneralInformationTeacherProfile"
+                        app:layout_constraintStart_toStartOf="@+id/tvPhoneNumberTitleTeacherProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+                    <TextView
+                        android:id="@+id/tvDescriptionValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxWidth="120dp"
+                        android:maxLines="1"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvDescriptionTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvDescriptionTitleTeacherProfile"
+                        tools:text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btEditGeneralInformationTeacherProfile"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/edit_general_information"
+                        android:textColor="@color/teacher_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:rippleColor="@color/teacher_color_transparent_15_percent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewUserProfessionalInfoTeacherProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:outlineProvider="none"
+                app:cardCornerRadius="14dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardViewUserGeneralInfoTeacherProfile">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvProfessionalInformationTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/professional_information"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvActivityYearTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="@string/activity_year"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvProfessionalInformationTeacherProfile" />
+
+                    <TextView
+                        android:id="@+id/tvActivityYearValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvActivityYearTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvActivityYearTitleTeacherProfile"
+                        tools:text="1392" />
+
+                    <View
+                        android:id="@+id/view3"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="48dp"
+                        android:theme="@style/SmallLineBgColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvProfessionalInformationTeacherProfile" />
+
+                    <TextView
+                        android:id="@+id/tvStudyFieldTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/teacher_expertise"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/view4"
+                        app:layout_constraintStart_toStartOf="@+id/tvActivityYearTitleTeacherProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                    <TextView
+                        android:id="@+id/tvStudyFieldValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxWidth="180dp"
+                        android:maxLines="1"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvStudyFieldTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvStudyFieldTitleTeacherProfile"
+                        tools:text="علوم تجربی" />
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="48dp"
+                        android:theme="@style/SmallLineBgColor"
+                        app:layout_constraintBottom_toTopOf="@id/btEditProfessionalInformationTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/view3" />
+
+                    <TextView
+                        android:id="@+id/tvGradesTitleTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/grade"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toTopOf="@+id/btEditProfessionalInformationTeacherProfile"
+                        app:layout_constraintStart_toStartOf="@+id/tvStudyFieldTitleTeacherProfile"
+                        app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+                    <TextView
+                        android:id="@+id/tvGradesValueTeacherProfile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:maxWidth="150dp"
+                        android:maxLines="1"
+                        android:textColor="?attr/colorOnSecondary"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvGradesTitleTeacherProfile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvGradesTitleTeacherProfile"
+                        tools:text="هفتم،هشتم،نهم" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btEditProfessionalInformationTeacherProfile"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/edit_professional_information"
+                        android:textColor="@color/teacher_color"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:rippleColor="@color/teacher_color_transparent_15_percent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
