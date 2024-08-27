@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -77,9 +79,9 @@ class StudentMainActivity : AppCompatActivity() {
                         .commitNow()
                     active = firstFragment
 
-//                    Handler(Looper.getMainLooper()).post {
-//                        firstFragment.onFragmentShowed()
-//                    }
+                    Handler(Looper.getMainLooper()).post {
+                        firstFragment.onFragmentShowed()
+                    }
 
                     true
                 }
@@ -89,9 +91,9 @@ class StudentMainActivity : AppCompatActivity() {
                         .commitNow()
                     active = secondFragment
 
-//                    Handler(Looper.getMainLooper()).post {
-//                        secondFragment.onFragmentShowed()
-//                    }
+                    Handler(Looper.getMainLooper()).post {
+                        secondFragment.onFragmentShowed()
+                    }
 
                     true
                 }
@@ -101,9 +103,9 @@ class StudentMainActivity : AppCompatActivity() {
                         .commitNow()
                     active = thirdFragment
 
-//                    Handler(Looper.getMainLooper()).post {
-//                        thirdFragment.onFragmentShowed()
-//                    }
+                    Handler(Looper.getMainLooper()).post {
+                        thirdFragment.onFragmentShowed()
+                    }
 
                     true
                 }

@@ -121,4 +121,7 @@
     <string name="phone_number">شماره تلفن</string>
     <string name="edit_general_information">ویرایش اطلاعات کلی</string>
     <string name="edit_professional_information">ویرایش اطلاعات تخصصی</string>
+    <string name="your_honors">افتخارات شما</string>
+    <string name="honor_image">تصویر افتخار</string>
+    <string name="you_have_earned_this_honor">شما این افتخار را کسب کرده اید</string>
 </resources>
