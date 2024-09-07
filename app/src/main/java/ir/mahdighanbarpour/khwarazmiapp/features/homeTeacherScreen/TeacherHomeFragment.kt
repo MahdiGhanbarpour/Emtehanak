@@ -190,6 +190,11 @@ class TeacherHomeFragment : Fragment(), PopularExamAdapter.PopularExamEvents,
                 if (t.result.exams.isEmpty()) {
                     binding.cardViewPopularExamsTeacherMain.visibility = View.GONE
                     binding.recyclerPopularExamsTeacherMain.visibility = View.GONE
+
+                    val param =
+                        binding.cardViewExperiencedTeachersTeacherMain.layoutParams as ViewGroup.MarginLayoutParams
+                    param.setMargins(42, 48, 42, 0)
+                    binding.cardViewExperiencedTeachersTeacherMain.layoutParams = param
                 } else {
                     // Starting RecyclerView with sent data
                     binding.ivErrorPopularExamsTeacherMain.visibility = View.GONE

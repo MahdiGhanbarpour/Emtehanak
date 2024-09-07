@@ -198,6 +198,11 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                     if (t.result.exams.isEmpty()) {
                         binding.cardViewPopularExamsStudentMain.visibility = View.GONE
                         binding.recyclerPopularExamsStudentMain.visibility = View.GONE
+
+                        val param =
+                            binding.cardViewExperiencedTeachersStudentMain.layoutParams as ViewGroup.MarginLayoutParams
+                        param.setMargins(42, 48, 42, 0)
+                        binding.cardViewExperiencedTeachersStudentMain.layoutParams = param
                     } else {
                         // Starting RecyclerView with sent data
                         binding.ivErrorPopularExamsStudentMain.visibility = View.GONE
@@ -266,6 +271,11 @@ class StudentHomeFragment : Fragment(), LessonsAdapter.LessonEvents,
                     if (t.lessonsResult.lessons.isEmpty()) {
                         binding.cardViewLessonsStudentMain.visibility = View.GONE
                         binding.recyclerLessonsStudentMain.visibility = View.GONE
+
+                        val param =
+                            binding.cardViewExperiencedTeachersStudentMain.layoutParams as ViewGroup.MarginLayoutParams
+                        param.setMargins(42, 48, 42, 0)
+                        binding.cardViewExperiencedTeachersStudentMain.layoutParams = param
                     } else {
                         // Starting RecyclerView with sent data
                         binding.ivErrorLessonsStudentMain.visibility = View.GONE
