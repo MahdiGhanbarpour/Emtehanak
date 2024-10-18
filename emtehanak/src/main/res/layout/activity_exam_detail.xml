@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="64dp">
+
+        <ImageView
+            android:id="@+id/ivImageExamDetail"
+            android:layout_width="match_parent"
+            android:layout_height="425dp"
+            android:contentDescription="@string/exam_image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_test"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#33000000"
+            app:layout_constraintBottom_toBottomOf="@+id/ivImageExamDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ivImageExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivImageExamDetail" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/shape_transparent_to_white_gradiant"
+            app:layout_constraintBottom_toBottomOf="@+id/ivImageExamDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/back"
+            android:focusable="true"
+            android:padding="8dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/ivHelpExamDetail"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:contentDescription="@string/help"
+            android:focusable="true"
+            android:padding="2dp"
+            android:src="@drawable/ic_help"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivBack"
+            app:tint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btStartExamDetail"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:outlineProvider="none"
+            android:padding="12dp"
+            android:text="@string/start_exam"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivImageExamDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationViewStartExamDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="16dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/btStartExamDetail"
+            app:layout_constraintEnd_toEndOf="@+id/btStartExamDetail"
+            app:layout_constraintStart_toStartOf="@+id/btStartExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/btStartExamDetail"
+            app:lottie_autoPlay="false"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dot_loading" />
+
+
+        <TextView
+            android:id="@+id/tvNameExamDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="175dp"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            app:fontFamily="@font/iran_sans_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivImageExamDetail"
+            tools:text="آزمون نهایی نهم 1398" />
+
+        <com.varunest.sparkbutton.SparkButton
+            android:id="@+id/ivBookmarkExamDetail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/add_remove_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/tvNameExamDetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvNameExamDetail"
+            app:sparkbutton_activeImage="@drawable/ic_bookmark_selected"
+            app:sparkbutton_iconSize="24dp"
+            app:sparkbutton_inActiveImage="@drawable/ic_bookmark_not_selected"
+            app:sparkbutton_primaryColor="@color/orange"
+            app:sparkbutton_secondaryColor="@color/orange" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_circle_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookmarkExamDetail"
+            app:layout_constraintEnd_toEndOf="@+id/ivBookmarkExamDetail"
+            app:layout_constraintStart_toStartOf="@+id/ivBookmarkExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivBookmarkExamDetail" />
+
+        <com.varunest.sparkbutton.SparkButton
+            android:id="@+id/ivDislikeExamDetail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/add_remove_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/ivBookmarkExamDetail"
+            app:layout_constraintEnd_toStartOf="@id/ivBookmarkExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivBookmarkExamDetail"
+            app:sparkbutton_activeImage="@drawable/ic_dislike_selected"
+            app:sparkbutton_iconSize="24dp"
+            app:sparkbutton_inActiveImage="@drawable/ic_dislike_not_selected"
+            app:sparkbutton_primaryColor="@color/orange"
+            app:sparkbutton_secondaryColor="@color/orange" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_circle_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/ivLikeExamDetail"
+            app:layout_constraintEnd_toEndOf="@+id/ivLikeExamDetail"
+            app:layout_constraintStart_toStartOf="@+id/ivLikeExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivLikeExamDetail" />
+
+        <com.varunest.sparkbutton.SparkButton
+            android:id="@+id/ivLikeExamDetail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="4dp"
+            android:contentDescription="@string/add_remove_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDislikeExamDetail"
+            app:layout_constraintEnd_toStartOf="@id/ivDislikeExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivDislikeExamDetail"
+            app:sparkbutton_activeImage="@drawable/ic_like_selected"
+            app:sparkbutton_iconSize="24dp"
+            app:sparkbutton_inActiveImage="@drawable/ic_like_not_selected"
+            app:sparkbutton_primaryColor="@color/orange"
+            app:sparkbutton_secondaryColor="@color/orange" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/shape_circle_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDislikeExamDetail"
+            app:layout_constraintEnd_toEndOf="@+id/ivDislikeExamDetail"
+            app:layout_constraintStart_toStartOf="@+id/ivDislikeExamDetail"
+            app:layout_constraintTop_toTopOf="@+id/ivDislikeExamDetail" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollViewDetailExamDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNameExamDetail">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerDetailExamDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:nestedScrollingEnabled="true"
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_exam_detail" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <View
+            android:id="@+id/viewExamDetail"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_margin="20dp"
+            android:background="@color/transparent_color_15_percent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollViewDetailExamDetail" />
+
+
+        <TextView
+            android:id="@+id/tvDescriptionTitleExamDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:fontFamily="@font/iran_sans_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewExamDetail" />
+
+        <TextView
+            android:id="@+id/tvDescriptionExamDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:justificationMode="inter_word"
+            android:lineSpacingExtra="4dp"
+            android:textColor="@color/black_transparent_65_percent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvNameExamDetail"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionTitleExamDetail"
+            tools:text="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد، در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها، و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد." />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

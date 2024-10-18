@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teacher_color"
+    android:layoutDirection="rtl">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/back"
+        android:padding="4dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAddExam"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvAddExam"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvAddExam"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:text="@string/add_exam"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rounded_top_corners_24dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddExam">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutExamNameAddExam"
+                style="@style/CustomTextInputLayoutTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="36dp"
+                android:hint="@string/exam_name"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholderText="مثلا : آزمون مستمر ریاضی"
+                app:placeholderTextAppearance="@style/CustomHintTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExamNameAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingVertical="2dp"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutExamDescAddExam"
+                style="@style/CustomTextInputLayoutTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/exam_description"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutExamNameAddExam">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExamDescAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxHeight="100dp"
+                    android:minHeight="50dp"
+                    android:paddingVertical="2dp"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutGradeAddExam"
+                style="@style/CustomAutoCompleteTextViewTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/grade"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="@+id/etLayoutExamDescAddExam"
+                app:layout_constraintStart_toEndOf="@+id/etLayoutLessonAddExam"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutExamDescAddExam">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/etGradeAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutLessonAddExam"
+                style="@style/CustomAutoCompleteTextViewTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/lesson"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toStartOf="@id/etLayoutGradeAddExam"
+                app:layout_constraintStart_toStartOf="@+id/etLayoutExamDescAddExam"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutExamDescAddExam">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/etLessonAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutExamPriceAddExam"
+                style="@style/CustomTextInputLayoutTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/exam_price"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutLessonAddExam"
+                app:placeholderText="در صورت رایگان بودن آزمون 0 را وارد کنید"
+                app:placeholderTextAppearance="@style/CustomHintTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etExamPriceAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:paddingVertical="2dp"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutDifficultyAddExam"
+                style="@style/CustomAutoCompleteTextViewTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/exam_level"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:errorIconDrawable="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutExamPriceAddExam">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/etDifficultyAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:id="@+id/viewPickImageAddExam"
+                android:layout_width="0dp"
+                android:layout_height="175dp"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape_all_corner_rounded"
+                android:backgroundTint="@color/transparent_color_7_percent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/etLayoutDifficultyAddExam" />
+
+            <ImageView
+                android:id="@+id/ivIconPickImageAddExam"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="24dp"
+                android:contentDescription="@string/add_exam"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toTopOf="@+id/tvPickImageAddExam"
+                app:layout_constraintEnd_toEndOf="@+id/viewPickImageAddExam"
+                app:layout_constraintStart_toStartOf="@+id/viewPickImageAddExam"
+                app:layout_constraintTop_toTopOf="@+id/viewPickImageAddExam"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:tint="@color/teacher_color" />
+
+            <TextView
+                android:id="@+id/tvPickImageAddExam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_to_select_exam_image"
+                android:textColor="@color/teacher_color"
+                app:layout_constraintBottom_toBottomOf="@+id/viewPickImageAddExam"
+                app:layout_constraintEnd_toEndOf="@+id/viewPickImageAddExam"
+                app:layout_constraintStart_toStartOf="@+id/viewPickImageAddExam"
+                app:layout_constraintTop_toBottomOf="@+id/ivIconPickImageAddExam" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewExamImageAddExam"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="0dp"
+                app:layout_constraintBottom_toBottomOf="@+id/viewPickImageAddExam"
+                app:layout_constraintEnd_toEndOf="@+id/viewPickImageAddExam"
+                app:layout_constraintStart_toStartOf="@+id/viewPickImageAddExam"
+                app:layout_constraintTop_toTopOf="@+id/viewPickImageAddExam"
+                app:strokeColor="@color/grey_font"
+                app:strokeWidth="1.5dp">
+
+                <ImageView
+                    android:id="@+id/ivExamImageAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/exam_image"
+                    tools:src="@tools:sample/avatars" />
+
+                <ImageView
+                    android:id="@+id/ivDeleteExamImageAddExam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|top"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/shape_all_corner_rounded"
+                    android:backgroundTint="@color/teacher_color"
+                    android:contentDescription="@string/delete"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_delete" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/etLayoutTeacherMessageAddExam"
+                style="@style/CustomTextInputLayoutTeacherTheme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/teacher_message"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                app:boxStrokeWidth="1.5dp"
+                app:cursorColor="@color/black"
+                app:cursorErrorColor="@color/red"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewPickImageAddExam"
+                app:placeholderText="این پیام بعد از پایان آزمون به دانش آموز نمایش داده می شود"
+                app:placeholderTextAppearance="@style/CustomHintTextAppearance">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etTeacherMessageAddExam"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionDone"
+                    android:inputType="textMultiLine"
+                    android:maxHeight="100dp"
+                    android:minHeight="50dp"
+                    android:paddingVertical="2dp"
+                    android:textCursorDrawable="@drawable/shape_text_cursor"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchQuestionCorrectAnswerAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="16dp"
+                android:checked="true"
+                android:text="نمایش پاسخ صحیح هر سوال بعد از پاسخگویی"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etLayoutTeacherMessageAddExam" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchChangeAnswerAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="4dp"
+                android:checked="false"
+                android:text="قابلیت تغییر پاسخ بعد از پاسخگویی"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchQuestionCorrectAnswerAddExam" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBackToPreviousAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="4dp"
+                android:checked="true"
+                android:text="قابلیت برگشت به سوال قبل"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchChangeAnswerAddExam" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchTotalPercentAddExam"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginTop="4dp"
+                android:checked="true"
+                android:text="نمایش تعداد پاسخ صحیح و غلط و درصد کل"
+                android:theme="@style/CustomTeacherSwitchTheme"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchBackToPreviousAddExam" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btAddExam"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginVertical="8dp"
+                android:backgroundTint="@color/teacher_color"
+                android:contentDescription="@string/add_exam"
+                android:outlineProvider="none"
+                android:text="مرحله بعد"
+                app:cornerRadius="6dp"
+                app:icon="@drawable/ic_arrow"
+                app:iconGravity="end"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchTotalPercentAddExam" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationViewAddExam"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btAddExam"
+                app:layout_constraintEnd_toEndOf="@+id/btAddExam"
+                app:layout_constraintStart_toStartOf="@+id/btAddExam"
+                app:layout_constraintTop_toTopOf="@+id/btAddExam"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dot_loading" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

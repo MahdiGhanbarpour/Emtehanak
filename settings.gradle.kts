@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Khwarazmi App"
 include(":app")
- 
+include(":emtehanak")

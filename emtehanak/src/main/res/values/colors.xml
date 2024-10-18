@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="black_light">#161616</color>
+    <color name="black_transparent_15_percent">#26000000</color>
+    <color name="black_transparent_65_percent">#A6000000</color>
+
+    <color name="gray">#787878</color>
+    <color name="gray_light">#E6E6E6</color>
+    <color name="gray_sightly_light">#A5A5A5</color>
+    <color name="gray_dark">#6E6E6E</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="white_dark">#F6F6F6</color>
+    <color name="white_sightly_dark">#F8F8F8</color>
+    <color name="white_very_dark">#F0F0F0</color>
+    <color name="white_transparent_50_percent">#80FFFFFF</color>
+    <color name="white_transparent_65_percent">#A6FFFFFF</color>
+
+    <color name="student_color">#20A84D</color>
+    <color name="student_color_dark">#1a8d41</color>
+    <color name="student_color_light">#2ad561</color>
+    <color name="student_color_transparent_15_percent">#262AD561</color>
+
+    <color name="teacher_color">#2d7de2</color>
+    <color name="teacher_color_light">#4698FF</color>
+    <color name="teacher_color_transparent_15_percent">#262d7de2</color>
+
+    <color name="orange">#ec9d52</color>
+
+    <color name="green">#2ACF31</color>
+
+    <color name="red">#FF6054</color>
+
+    <color name="bottom_nav_item_color">#292D32</color>
+
+    <color name="text_highlight_color">#33674DC4</color>
+
+    <color name="error_bg_color">#F6F6F6</color>
+
+    <color name="transparent_color_0_percent">#00000000</color>
+    <color name="transparent_color_5_percent">#0D000000</color>
+    <color name="transparent_color_7_percent">#12000000</color>
+    <color name="transparent_color_10_percent">#1A000000</color>
+    <color name="transparent_color_15_percent">#26000000</color>
+    <color name="transparent_color_30_percent">#4D000000</color>
+
+    <color name="ic_launcher_background">#FFF</color>
+</resources>

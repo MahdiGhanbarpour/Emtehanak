@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/teacher_color"
+    android:layoutDirection="rtl">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:contentDescription="@string/back"
+        android:padding="4dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAddExamQuestion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvAddExamQuestion"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tvAddExamQuestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:text="@string/add_exam_question"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape_rounded_top_corners_24dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAddExamQuestion">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerAddExamQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:nestedScrollingEnabled="true"
+                android:overScrollMode="never"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_add_exam_question" />
+
+            <View
+                android:id="@+id/viewAddExamQuestion"
+                android:layout_width="0dp"
+                android:layout_height="125dp"
+                android:layout_marginHorizontal="36dp"
+                android:background="@drawable/shape_all_corner_rounded"
+                android:backgroundTint="@color/transparent_color_7_percent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerAddExamQuestion" />
+
+            <ImageView
+                android:id="@+id/ivIconAddExamQuestion"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/add_question"
+                android:src="@drawable/ic_add"
+                app:layout_constraintBottom_toTopOf="@+id/tvViewAddExamQuestion"
+                app:layout_constraintEnd_toEndOf="@+id/viewAddExamQuestion"
+                app:layout_constraintStart_toStartOf="@+id/viewAddExamQuestion"
+                app:layout_constraintTop_toTopOf="@+id/viewAddExamQuestion"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:tint="@color/teacher_color" />
+
+            <TextView
+                android:id="@+id/tvViewAddExamQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tap_to_add_exam_question"
+                android:textColor="@color/teacher_color"
+                app:layout_constraintBottom_toBottomOf="@+id/viewAddExamQuestion"
+                app:layout_constraintEnd_toEndOf="@+id/viewAddExamQuestion"
+                app:layout_constraintStart_toStartOf="@+id/viewAddExamQuestion"
+                app:layout_constraintTop_toBottomOf="@+id/ivIconAddExamQuestion" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btAddExamQuestion"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="36dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/teacher_color"
+                android:contentDescription="@string/add_exam"
+                android:outlineProvider="none"
+                android:text="@string/add_questions"
+                app:cornerRadius="6dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animationViewAddExamQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/btAddExamQuestion"
+                app:layout_constraintEnd_toEndOf="@+id/btAddExamQuestion"
+                app:layout_constraintStart_toStartOf="@+id/btAddExamQuestion"
+                app:layout_constraintTop_toTopOf="@+id/btAddExamQuestion"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dot_loading" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

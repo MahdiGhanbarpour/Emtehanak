@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".features.examsListScreen.ExamsListActivity">
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/back"
+        android:padding="4dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/etSearchExamList"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etSearchExamList" />
+
+    <EditText
+        android:id="@+id/etSearchExamList"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/shape_circle_edit_text"
+        android:backgroundTint="@color/transparent_color_7_percent"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="16dp"
+        android:hint="@string/search_exam"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:paddingStart="16dp"
+        android:textColorHint="#66000000"
+        android:textCursorDrawable="@drawable/shape_text_cursor"
+        android:textSize="14sp"
+        app:drawableTint="#66000000"
+        app:layout_constraintEnd_toStartOf="@+id/btFilterExamList"
+        app:layout_constraintStart_toEndOf="@+id/ivBack"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btFilterExamList"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:layout_marginEnd="16dp"
+        android:outlineProvider="none"
+        android:text="@string/filter"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_filter"
+        app:iconPadding="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/etSearchExamList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etSearchExamList" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerExamList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSearchExamList"
+        tools:listitem="@layout/item_exam_list" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationViewExamList"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:elevation="16dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="false"
+        app:lottie_colorFilter="@color/student_color"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading" />
+
+    <ImageView
+        android:id="@+id/ivErrorExamList"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/error_communicating_server"
+        android:elevation="16dp"
+        android:src="@drawable/ic_internet_error"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/student_color" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

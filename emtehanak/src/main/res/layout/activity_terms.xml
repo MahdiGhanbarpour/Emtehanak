@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewTermsToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:elevation="4dp"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/back"
+                android:padding="4dp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:layout_marginStart="8dp"
+                android:text="@string/terms_and_conditions_title"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBack"
+                app:layout_constraintStart_toEndOf="@+id/ivBack"
+                app:layout_constraintTop_toTopOf="@+id/ivBack" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardViewTermsToolBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp">
+
+            <!-- بخش ۱: حریم خصوصی و امنیت -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="حریم خصوصی و امنیت"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۱.۱: حریم خصوصی دانش‌آموزان و دبیران -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۱.۱. حریم خصوصی دانش‌آموزان و دبیران"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="تضمین حفظ حریم خصوصی: این اپلیکیشن با اطمینان حریم خصوصی اطلاعات شخصی شما را تضمین می‌کند. هرگونه اطلاعاتی که جمع‌آوری می‌شود، صرفاً برای اهداف آموزشی مورد استفاده قرار می‌گیرد." />
+
+            <!-- زیربخش ۱.۲: امنیت داده‌ها -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۱.۲. امنیت داده‌ها"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="فناوری‌های امنیتی: این اپلیکیشن از تکنولوژی‌های رمزنگاری پیشرفته و پروتکل‌های امنیتی برای حفاظت از اطلاعات شخصی و نتایج امتحانات استفاده می‌کند. این امنیت در انتقال و ذخیره داده‌ها فراهم شده است." />
+
+            <!-- بخش ۲: ثبت‌نام و احراز هویت -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="ثبت‌نام و احراز هویت"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۲.۱: ثبت‌نام دانش‌آموزان و دبیران -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۲.۱. ثبت‌نام دانش‌آموزان و دبیران"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="اهمیت اطلاعات کامل: ثبت‌نام با اطلاعات دقیق و کامل الزامی است. این اطلاعات به منظور اطمینان از هویت و اطلاعات صحیح کاربران جمع‌آوری می‌شود." />
+
+            <!-- بخش ۳: نقش‌ها و دسترسی‌ها -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="نقش‌ها و دسترسی‌ها"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۳.۱: نقش دانش‌آموزان -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۳.۱. نقش دانش‌آموزان"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="حق دسترسی به اطلاعات: دانش‌آموزان تنها به نتایج و سوالات خود و اطلاعات آموزشی خود دسترسی دارند. این محدودیت‌ها برای حفظ حریم خصوصی و تضمین امنیت اطلاعات تعبیه شده است." />
+
+            <!-- زیربخش ۳.۲: نقش دبیران -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۳.۲. نقش دبیران"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="مسئولیت‌های دبیران: دبیران مسئول افزودن و مدیریت سوالات امتحانی هستند و دسترسی به نتایج تمامی دانش‌آموزان در کلاس مربوطه را دارند. این دسترسی با رعایت قوانین حریم خصوصی انجام می‌شود." />
+
+            <!-- بخش ۴: قوانین استفاده -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="قوانین استفاده"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۴.۱: محتوا و سوالات -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۴.۱. محتوا و سوالات"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="محتوای مناسب: دبیران موظف به ارسال محتوایی هستند که با استانداردهای اخلاقی و آموزشی هماهنگ باشد و هرگونه محتوای توهین‌آمیز یا غیراخلاقی ممنوع است." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="ممنوعیت تقلب: دانش‌آموزان و دبیران موظف به استفاده منصفانه از امکانات اپلیکیشن هستند و از هرگونه تقلب خودداری کنند." />
+
+            <!-- بخش ۵: پشتیبانی فنی -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="پشتیبانی فنی"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۵.۱: ارتباط با پشتیبانی -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۵.۱. ارتباط با پشتیبانی"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="پیگیری مشکلات فنی: تیم پشتیبانی همیشه در دسترس است تا به مشکلات فنی شما پاسخ دهد و اطلاعات بیشتری ارائه کند." />
+
+            <!-- بخش ۶: به‌روزرسانی قوانین -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="به‌روزرسانی قوانین"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- زیربخش ۶.۱: به‌روزرسانی قوانین -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="۶.۱. به‌روزرسانی قوانین"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:justificationMode="inter_word"
+                android:paddingStart="8dp"
+                android:text="اطلاع رسانی تغییرات: هر تغییر در قوانین از طریق اطلاعیه‌ها در اپلیکیشن به شما اطلاع داده خواهد شد. این اطلاع رسانی به منظور آگاهی به موقع از تغییرات و اعمال به‌روزرسانی‌ها ارائه شده است." />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

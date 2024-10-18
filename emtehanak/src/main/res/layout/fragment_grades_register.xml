@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".features.mainRegScreen.GradesRegisterFragment">
+
+    <TextView
+        android:id="@+id/tvSelectGradesRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="کدام پایه ها را تدریس می کنید ؟"
+        android:textAlignment="center"
+        android:textColor="@color/black_light"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginVertical="16dp"
+        android:backgroundTint="@color/transparent_color_7_percent"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSelectGradesRegister"
+        app:strokeWidth="0dp">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbFirstGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="4dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/first"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbSecondGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/second"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbThirdGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/third"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbFourthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/fourth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbFifthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/fifth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbSixthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/sixth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbSeventhGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/seventh"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbEighthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/eighth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbNinthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/ninth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbTenthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/tenth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbEleventhGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/eleventh"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbTwelfthGradesRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:buttonTint="@color/teacher_color"
+                    android:focusable="false"
+                    android:paddingStart="4dp"
+                    android:text="@string/twelfth"
+                    android:textIsSelectable="false"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

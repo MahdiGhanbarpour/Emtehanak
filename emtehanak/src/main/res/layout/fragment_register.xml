@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    tools:context=".features.mainRegScreen.RegisterFragment">
+
+    <TextView
+        android:id="@+id/tvRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:text="@string/register_to_use_features"
+        android:textAlignment="center"
+        android:textColor="@color/black_light"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etLayoutFullNameReg"
+        style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="42dp"
+        android:hint="@string/full_name"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
+        app:cursorErrorColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegister"
+        app:placeholderText="مثلا : سینا دیندارلو"
+        app:startIconDrawable="@drawable/ic_user">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFullNameReg"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutBirthdayReg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLayoutFullNameReg">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayoutDayReg"
+            style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:hint="@string/day"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
+            app:cursorErrorColor="@color/red"
+            app:errorIconDrawable="@null"
+            app:errorTextAppearance="@style/CustomErrorTextAppearance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupRoleReg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDayReg"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:layoutDirection="ltr"
+                android:maxLength="2"
+                android:maxLines="1"
+                android:paddingVertical="2dp"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
+                android:textSize="13sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayoutMonthReg"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_weight="1"
+            android:hint="@string/month"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
+            app:cursorErrorColor="@color/red"
+            app:errorIconDrawable="@null"
+            app:errorTextAppearance="@style/CustomErrorTextAppearance">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/tvMonthReg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLength="8"
+                android:maxLines="2"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
+                android:textSize="13sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etLayoutYearReg"
+            style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/year"
+            app:boxCornerRadiusBottomEnd="8dp"
+            app:boxCornerRadiusBottomStart="8dp"
+            app:boxCornerRadiusTopEnd="8dp"
+            app:boxCornerRadiusTopStart="8dp"
+            app:boxStrokeWidth="1.5dp"
+            app:cursorColor="@color/black"
+            app:cursorErrorColor="@color/red"
+            app:errorIconDrawable="@null"
+            app:errorTextAppearance="@style/CustomErrorTextAppearance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupRoleReg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etYearReg"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:layoutDirection="ltr"
+                android:maxLength="4"
+                android:maxLines="1"
+                android:paddingVertical="2dp"
+                android:textCursorDrawable="@drawable/shape_text_cursor"
+                android:textSize="13sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etLayoutStudentGradeReg"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/grade"
+        android:visibility="visible"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
+        app:cursorErrorColor="@color/red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBirthdayReg"
+        app:placeholderText="مثلا : نهم"
+        app:startIconDrawable="@drawable/ic_logo">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/tvStudentGradeReg"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etLayoutTeacherExpertiseReg"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="8dp"
+        android:hint="@string/teacher_expertise"
+        android:visibility="gone"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeColor="@color/teacher_color"
+        app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
+        app:cursorErrorColor="@color/red"
+        app:hintTextColor="@color/teacher_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutBirthdayReg"
+        app:placeholderText="مثلا : علوم تجربی"
+        app:startIconDrawable="@drawable/ic_logo">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/tvTeacherExpertiseReg"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etLayoutTeacherActivityYearReg"
+        style="@style/CustomTextInputLayoutPlaceHolderTextTheme"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_weight="1"
+        android:hint="@string/activity_year"
+        android:visibility="gone"
+        app:boxCornerRadiusBottomEnd="8dp"
+        app:boxCornerRadiusBottomStart="8dp"
+        app:boxCornerRadiusTopEnd="8dp"
+        app:boxCornerRadiusTopStart="8dp"
+        app:boxStrokeColor="@color/teacher_color"
+        app:boxStrokeWidth="1.5dp"
+        app:cursorColor="@color/black"
+        app:cursorErrorColor="@color/red"
+        app:hintTextColor="@color/teacher_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etLayoutTeacherExpertiseReg"
+        app:placeholderText="مثلا : 1392"
+        app:startIconDrawable="@drawable/ic_calender">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etActivityYearReg"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="number"
+            android:maxLength="4"
+            android:maxLines="1"
+            android:paddingVertical="2dp"
+            android:textCursorDrawable="@drawable/shape_text_cursor"
+            android:textSize="14sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_group_top"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/menu_home"
+            android:icon="@drawable/ic_home"
+            android:title="@string/home" />
+
+        <item
+            android:id="@+id/menu_classes"
+            android:icon="@drawable/ic_teacher_selected"
+            android:title="@string/classes" />
+
+        <item
+            android:id="@+id/menu_exams"
+            android:icon="@drawable/ic_exam"
+            android:title="@string/exams" />
+
+        <item
+            android:id="@+id/menu_bookmarks"
+            android:icon="@drawable/ic_bookmark_selected"
+            android:title="@string/bookmarks" />
+
+        <item
+            android:id="@+id/menu_setting"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/setting" />
+
+        <item
+            android:id="@+id/menu_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/logout" />
+
+    </group>
+
+    <group
+        android:id="@+id/menu_group_bottom"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/menu_about_us"
+            android:icon="@drawable/ic_about_us"
+            android:title="@string/about_us" />
+
+        <item
+            android:id="@+id/menu_terms"
+            android:icon="@drawable/ic_terms_conditions"
+            android:title="@string/terms_and_conditions_title" />
+
+        <item
+            android:id="@+id/menu_support"
+            android:icon="@drawable/ic_support"
+            android:title="@string/contact_support" />
+
+    </group>
+
+</menu>
