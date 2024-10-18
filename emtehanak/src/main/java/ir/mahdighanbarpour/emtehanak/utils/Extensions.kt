@@ -23,9 +23,11 @@ import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.SimpleColorFilter
@@ -252,4 +254,20 @@ fun isValidContextForGlide(context: Context?): Boolean {
         }
     }
     return true
+}
+
+fun Activity.onBackButtonPressed(callback: (() -> Boolean)) {
+    (this as? FragmentActivity)?.onBackPressedDispatcher?.addCallback(this,
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!callback()) {
+                    remove()
+                    performBackPress()
+                }
+            }
+        })
+}
+
+fun Activity.performBackPress() {
+    (this as? FragmentActivity)?.onBackPressedDispatcher?.onBackPressed()
 }

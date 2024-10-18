@@ -47,6 +47,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelable
 import ir.mahdighanbarpour.khwarazmiapp.utils.getParcelableArray
 import ir.mahdighanbarpour.khwarazmiapp.utils.isInternetAvailable
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import ir.mahdighanbarpour.khwarazmiapp.utils.onBackButtonPressed
 import ir.mahdighanbarpour.khwarazmiapp.utils.translateAnimation
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -88,6 +89,10 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
 
         // Get the user phone number
         userPhoneNum = sharedPreferences.getString(USER_PHONE_NUM, "")!!
+
+        onBackButtonPressed {
+            customOnBackPressed()
+        }
 
         // Changing the color of the Status Bar
         changeStatusBarColor(window, "#20A84D", false)
@@ -443,9 +448,9 @@ class ExamMainActivity : AppCompatActivity(), ExamOptionAdapter.ExamOptionEvents
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
+    private fun customOnBackPressed(): Boolean {
         // Show exit bottom sheet
         exitBottomSheet.show(supportFragmentManager, null)
+        return true
     }
 }

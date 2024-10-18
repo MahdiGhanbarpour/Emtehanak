@@ -37,6 +37,7 @@ import ir.mahdighanbarpour.khwarazmiapp.utils.USER_PHONE_NUM
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_ROLE
 import ir.mahdighanbarpour.khwarazmiapp.utils.USER_STUDY_FIELD
 import ir.mahdighanbarpour.khwarazmiapp.utils.makeShortToast
+import ir.mahdighanbarpour.khwarazmiapp.utils.onBackButtonPressed
 import org.koin.android.ext.android.inject
 
 class TeacherMainActivity : AppCompatActivity() {
@@ -60,6 +61,10 @@ class TeacherMainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         editor = sharedPreferences.edit()
+
+        onBackButtonPressed {
+            customOnBackPressed()
+        }
 
         initBottomNav()
         setDrawerData()
@@ -250,14 +255,14 @@ class TeacherMainActivity : AppCompatActivity() {
         binding.drawerLayTeacherMain.openDrawer(GravityCompat.START)
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
+    private fun customOnBackPressed(): Boolean {
         // When the user presses the back button, if the drawer was open, it will be closed
         // and if it was closed, the user will be returned to the previous page
-        if (binding.root.isDrawerOpen(GravityCompat.START)) {
+        return if (binding.root.isDrawerOpen(GravityCompat.START)) {
             binding.root.closeDrawer(GravityCompat.START)
+            true
         } else {
-            super.onBackPressed()
+            false
         }
     }
 }
