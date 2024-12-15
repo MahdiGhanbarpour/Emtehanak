@@ -43,7 +43,7 @@
   <img src="images/Screenshot_20240905_125436.png" alt="تصویر 16" style="width: 200px; height: auto;">
   <img src="images/Screenshot_20240905_125528.png" alt="تصویر 16" style="width: 200px; height: auto;">
   <img src="images/Screenshot_20240905_125735.png" alt="تصویر 16" style="width: 200px; height: auto;">
-  <img src="images/Screenshot%20(173).png" alt="تصویر 17" style="width: 200px; height: auto;">
+  <img src="images/Screenshot%20(173).png" alt="تصویر 17" style="width: 800px; height: auto;">
 </div>
 
 ### دانلود فایل ارائه پروژه
@@ -80,6 +80,10 @@
 
 این اپلیکیشن موفق شده است در **دهمین جشنواره نوجوان خوارزمی** در محور **برنامه
 ‌نویسی** زیر محور **اپلیکیشن**، رتبه **سوم کشوری** را کسب کند.
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px;">
+  <img src="images/photo15612544291.jpg" alt="تصویر گواهینامه" style="width: auto; height: auto;">
+</div>
 
 ## تشکر ویژه
 
