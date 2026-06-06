@@ -82,7 +82,7 @@
 ‌نویسی** زیر محور **اپلیکیشن**، رتبه **سوم کشوری** را کسب کند.
 
 <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-  <img src="images/photo15612544291.jpg" alt="تصویر گواهینامه" style="width: auto; height: auto;">
+  <img src="images/1734257950770.jpg" alt="تصویر گواهینامه" style="width: auto; height: auto;">
 </div>
 
 ## تشکر ویژه
